@@ -1,0 +1,171 @@
+/* PAGE CONTAINER */
+.booking-container {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #F6EEE2;
+  display: flex;
+  justify-content: center;
+}
+
+/* CONTENT WRAPPER (MATCH SHORTLETS PAGE) */
+.booking-content {
+  width: 100%;
+  max-width: 1300px;
+  padding: 2rem 3rem;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* BACK BUTTON */
+.booking-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: none;
+  border: none;
+  color: #274B3E;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+.booking-back-btn:hover {
+  opacity: 0.7;
+}
+
+/* CARD */
+.booking-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 620px;
+  padding: 2.4rem;
+  border-radius: 1.4rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  margin: 0 auto;
+}
+
+/* TITLE */
+.booking-title {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #0F4D3C;
+  margin-bottom: 0.3rem;
+}
+
+.booking-title span {
+  color: #274B3E;
+}
+
+.booking-location {
+  color: #6b7f73;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+/* FORM */
+.booking-form input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.8rem;
+  border: 1px solid #e2e2e2;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.booking-form input:focus {
+  border-color: #0F4D3C;
+}
+
+/* DATE ROW */
+.date-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.date-row div {
+  flex: 1;
+}
+
+.date-row label {
+  font-size: 0.75rem;
+  color: #6b7f73;
+  margin-bottom: 0.2rem;
+  display: block;
+}
+
+/* SUMMARY */
+.booking-summary {
+  margin-top: 1.5rem;
+  background: #F6EEE2;
+  border-radius: 1rem;
+  padding: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.booking-summary span {
+  font-size: 0.85rem;
+  color: #6b7f73;
+}
+
+.booking-summary strong {
+  display: block;
+  font-size: 1.2rem;
+  color: #0F4D3C;
+}
+
+/* BUTTON */
+.booking-btn {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #0F4D3C;
+  color: #ffffff;
+  border: none;
+  border-radius: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.booking-btn:hover {
+  background: #0c3d30;
+}
+
+/* ==========================
+   RESPONSIVENESS
+========================== */
+
+@media (max-width: 1024px) {
+  .booking-content {
+    padding: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .booking-content {
+    padding: 1.5rem;
+  }
+
+  .booking-card {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .booking-card {
+    padding: 1.6rem;
+  }
+
+  .booking-title {
+    font-size: 1.6rem;
+  }
+
+  .date-row {
+    flex-direction: column;
+  }
+}

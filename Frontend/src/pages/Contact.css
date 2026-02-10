@@ -1,0 +1,63 @@
+.contact-container {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  max-width: 1200px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.contact-page {
+  text-align: center;
+  color: #274B3E;
+}
+
+.contact-page h1 {
+  font-size: 2.2rem;
+  color: #0F4D3C;
+}
+
+.contact-subtitle {
+  color: #666;
+  margin: 1rem 0 2.5rem;
+  font-size: 0.95rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.contact-grid div {
+  background: #ffffff;
+  padding: 1.8rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+
+.contact-grid h3 {
+  margin-bottom: 0.5rem;
+  color: #0F4D3C;
+}
+
+.contact-grid a {
+  color: #274B3E;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.contact-grid a:hover {
+  text-decoration: underline;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .contact-page h1 {
+    font-size: 1.9rem;
+  }
+
+  .contact-subtitle {
+    font-size: 0.9rem;
+  }
+}

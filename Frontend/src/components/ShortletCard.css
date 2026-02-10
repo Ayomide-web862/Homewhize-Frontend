@@ -1,0 +1,92 @@
+.shortlet-card {
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: 0.3s ease;
+}
+
+/* IMAGE WRAPPER */
+.shortlet-img-wrapper {
+  position: relative;
+}
+
+.shortlet-card-image {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+}
+
+/* IMAGE DOTS */
+.shortlet-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+}
+
+.shortlet-dots span {
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  opacity: 0.7;
+  border-radius: 50%;
+}
+
+/* CARD BODY */
+.shortlet-card-body {
+  padding: 1.3rem;
+}
+
+.shortlet-title {
+  color: #0F4D3C;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.shortlet-price {
+  color: #000;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.shortlet-location {
+  color: #555;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.shortlet-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.shortlet-reviews {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.shortlet-meta {
+  color: #444;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.shortlet-minstay {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .shortlet-card-image {
+    height: 200px;
+  }
+}

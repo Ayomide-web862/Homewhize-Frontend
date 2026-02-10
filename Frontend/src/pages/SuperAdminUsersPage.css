@@ -1,0 +1,170 @@
+.users-container {
+  padding: 2rem;
+}
+
+.users-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0F4D3C;
+  margin-bottom: 2rem;
+}
+
+.users-card {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 2.5rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #0F4D3C;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.create-owner-form {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #274B3E;
+  margin-bottom: 0.3rem;
+}
+
+.form-group input {
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  outline: none;
+  font-size: 1rem;
+  transition: 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #0F4D3C;
+}
+
+.create-btn {
+  grid-column: 1 / -1;
+  padding: 0.9rem;
+  background-color: #0F4D3C;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.create-btn:hover {
+  background-color: #0d3f32;
+}
+
+/* TABLE */
+.owners-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.owners-table th,
+.owners-table td {
+  padding: 1rem;
+  text-align: left;
+}
+
+.owners-table th {
+  background: #F2F7F5;
+  color: #0F4D3C;
+  font-weight: 700;
+}
+
+.owners-table tr:nth-child(even) {
+  background: #FAFAFA;
+}
+
+.status-badge {
+  padding: 0.4rem 0.8rem;
+  background-color: #D7F2E3;
+  color: #0F4D3C;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* TABLET */
+@media (max-width: 768px) {
+  .users-container {
+    padding: 1rem;
+  }
+
+  .users-title {
+    font-size: 1.6rem;
+  }
+
+  .create-owner-form {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .users-card {
+    padding: 1.5rem;
+    overflow-x: auto;
+  }
+
+  .owners-table {
+    min-width: 500px;
+    font-size: 0.9rem;
+  }
+}
+
+/* SMALL PHONES */
+@media (max-width: 480px) {
+  .users-container {
+    padding: 0.75rem;
+  }
+
+  .users-title {
+    font-size: 1.2rem;
+  }
+
+  .users-card {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1rem;
+  }
+
+  .create-owner-form {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .create-btn {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .owners-table {
+    font-size: 0.75rem;
+    min-width: 400px;
+  }
+
+  .owners-table th,
+  .owners-table td {
+    padding: 0.6rem;
+  }
+}

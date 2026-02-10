@@ -1,0 +1,176 @@
+/* NAVBAR CONTAINER */
+.padup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  width: 100%;
+}
+
+/* LEFT SIDE */
+.padup-left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.padup-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.padup-icon-bg {
+  width: 45px;
+  height: 45px;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.padup-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+.padup-brand {
+  color: #0F4D3C;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+/* NAV LINKS */
+.padup-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.padup-nav .nav-link {
+  color: #274B3E;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.padup-nav .nav-link:hover {
+  opacity: 0.7;
+}
+
+/* ACTIVE LINK */
+.padup-nav .nav-link.active {
+  color: #0F4D3C;
+  font-weight: 700;
+  border-bottom: 2px solid #0F4D3C;
+}
+
+/* RIGHT SIDE */
+.padup-right {
+  display: flex;
+  gap: 1rem;
+  color: #274B3E;
+}
+
+.padup-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+  color: #274B3E !important;
+}
+
+.padup-icon a,
+.padup-icon svg,
+.padup-right a {
+  color: #274B3E !important;
+  text-decoration: none;
+}
+
+.padup-icon:hover {
+  background-color: #E6DACD;
+}
+
+/* RESPONSIVENESS */
+@media (max-width: 768px) {
+  .padup-header {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .padup-left {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .padup-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* EXISTING STYLES REMAIN UNCHANGED ABOVE */
+
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #274B3E;
+}
+
+/* MOBILE NAV */
+@media (max-width: 900px) {
+  .padup-header {
+    flex-direction: row;
+  }
+
+  .padup-nav {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    background-color: #F6EEE2;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.5rem 0;
+    display: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    z-index: 99;
+  }
+
+  .padup-nav.open {
+    display: flex;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .padup-left {
+    gap: 1rem;
+  }
+}
+
+/* SMALL PHONES */
+@media (max-width: 480px) {
+  .padup-brand {
+    font-size: 1.3rem;
+  }
+
+  .padup-icon-bg {
+    width: 38px;
+    height: 38px;
+  }
+}

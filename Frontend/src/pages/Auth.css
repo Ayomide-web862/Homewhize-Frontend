@@ -1,0 +1,199 @@
+.auth-page {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #F6EEE2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.auth-card {
+  background: white;
+  width: 100%;
+  max-width: 420px;
+  padding: 2.2rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* BRAND */
+.auth-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.auth-logo img {
+  max-width: 160px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Divider */
+.auth-divider {
+  margin: 1rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* Messages */
+.auth-message {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.auth-message.error {
+  color: red;
+}
+
+
+/* HEADINGS */
+.auth-title {
+  font-size: 1.8rem;
+  color: #0F4D3C;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.auth-subtext {
+  font-size: 0.95rem;
+  color: #546C5F;
+  margin-bottom: 1.8rem;
+}
+
+/* FORMS */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid #DCD4C8;
+  background: #FAF6F0;
+  font-size: 0.95rem;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.auth-input:focus {
+  border-color: #0F4D3C;
+}
+
+/* Password wrapper with eye icon */
+.auth-password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.auth-eye {
+  position: absolute;
+  right: 1rem;
+  cursor: pointer;
+  color: #0F4D3C;
+  font-size: 1.2rem;
+}
+
+/* BUTTON */
+.auth-btn {
+  background-color: #0F4D3C;
+  color: white;
+  padding: 0.9rem;
+  border-radius: 0.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.auth-btn:hover {
+  background-color: #0c3f31;
+}
+
+/* Link */
+.auth-link {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.auth-link a {
+  color: #0F4D3C;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-link a:hover {
+  opacity: 0.7;
+}
+
+/* PASSWORD RULES */
+.password-rules {
+  text-align: left;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.password-rules p {
+  margin: 2px 0;
+}
+
+.password-rules .valid {
+  color: #0F4D3C;
+  font-weight: 600;
+}
+
+.password-rules .invalid {
+  color: #8b6f5a;
+  opacity: 0.7;
+}
+
+/* Disable button when password is invalid */
+.auth-btn:disabled {
+  background-color: #a7baaf;
+  cursor: not-allowed;
+}
+
+
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 1.8rem 1.4rem;
+  }
+  .auth-title {
+    font-size: 1.5rem;
+  }
+}
+
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.auth-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}

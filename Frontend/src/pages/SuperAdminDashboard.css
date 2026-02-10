@@ -1,0 +1,150 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* === KPI GRID === */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.5rem;
+}
+
+.kpi-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.kpi-card h3 {
+  font-size: 1.6rem;
+  color: #0F4D3C;
+  margin: 0;
+}
+
+.kpi-card p {
+  margin: 0;
+  color: #5a6c62;
+}
+
+.kpi-icon {
+  font-size: 2rem;
+  color: #1A6F54;
+}
+
+/* === CHARTS GRID === */
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 2rem;
+}
+
+.chart-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* === TABLE === */
+.table-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.table-card table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.table-card th,
+.table-card td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.status.paid {
+  color: #0F4D3C;
+  font-weight: 600;
+}
+
+.status.pending {
+  color: #C27B3E;
+  font-weight: 600;
+}
+
+/* TABLET */
+@media (max-width: 768px) {
+  .dashboard {
+    gap: 1.5rem;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .kpi-card {
+    padding: 1rem;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .kpi-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .table-card {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 500px;
+    font-size: 0.9rem;
+  }
+}
+
+/* SMALL PHONES */
+@media (max-width: 480px) {
+  .dashboard {
+    gap: 1rem;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kpi-card {
+    padding: 0.9rem;
+  }
+
+  .kpi-card h3 {
+    font-size: 1rem;
+  }
+
+  .kpi-icon {
+    font-size: 1.5rem;
+  }
+
+  table {
+    font-size: 0.75rem;
+  }
+
+  .table-card th,
+  .table-card td {
+    padding: 6px;
+  }
+}

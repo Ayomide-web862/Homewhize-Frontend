@@ -1,0 +1,158 @@
+/* CONTAINER */
+.shortlet-detail-container {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 2rem 3rem;
+  max-width: 1200px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* CONTENT */
+.shortlet-detail-content {
+  max-width: 1100px;
+  margin: auto;
+  padding: 2rem;
+}
+
+/* GALLERY */
+.shortlet-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.shortlet-gallery img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* TEXT */
+.shortlet-detail-content h1 {
+  color: #0F4D3C;
+  font-size: 2.2rem;
+  margin-bottom: 0.4rem;
+}
+
+.location {
+  color: #555;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.price {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0F4D3C;
+}
+
+.meta {
+  color: #444;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.description {
+  margin-bottom: 2rem;
+  line-height: 1.65;
+  font-size: 1rem;
+}
+
+/* MAP */
+.shortlet-map {
+  height: 300px;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+/* BUTTON */
+.book-btn {
+  background: #0F4D3C;
+  color: white;
+  padding: 1rem 2.5rem;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.book-btn:hover {
+  background: #0c3d30;
+}
+
+/* =========================
+   RESPONSIVENESS
+========================= */
+
+/* TABLETS */
+@media (max-width: 1024px) {
+  .shortlet-detail-container {
+    padding: 1.8rem;
+  }
+
+  .shortlet-detail-content {
+    padding: 1.5rem;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .shortlet-detail-container {
+    padding: 1.2rem;
+  }
+
+  .shortlet-detail-content {
+    padding: 1rem;
+  }
+
+  .shortlet-detail-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .price {
+    font-size: 1.2rem;
+  }
+
+  .description {
+    font-size: 0.95rem;
+  }
+
+  .shortlet-map {
+    height: 240px;
+  }
+
+  .book-btn {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+
+/* SMALL PHONES */
+@media (max-width: 480px) {
+  .shortlet-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .shortlet-gallery img {
+    height: 200px;
+  }
+
+  .shortlet-detail-content h1 {
+    font-size: 1.6rem;
+  }
+
+  .meta,
+  .location {
+    font-size: 0.9rem;
+  }
+
+  .shortlet-map {
+    height: 200px;
+  }
+}

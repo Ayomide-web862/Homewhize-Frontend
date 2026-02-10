@@ -1,0 +1,163 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: #F6EEE2;
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+}
+
+/* MAIN CONTAINER */
+.padup-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: #F6EEE2;
+}
+
+.padup-content {
+  width: 100%;
+  max-width: 1250px;
+  padding: 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ======================= */
+/* ===== HERO AREA ======= */
+/* ======================= */
+
+.padup-hero {
+  text-align: center;
+  margin-top: 5rem;
+  margin-bottom: 4rem;
+}
+
+.padup-hero h1 {
+  font-size: 3.4rem;
+  font-weight: 800;
+  color: #0F4D3C;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  margin-bottom: 1.2rem;
+}
+
+.padup-hero-subtext {
+  font-size: 1.2rem;
+  color: #2A4C3E;
+  max-width: 750px;
+  margin: 0 auto 2.5rem auto;
+  opacity: 0.9;
+  line-height: 1.7;
+}
+
+/* SEARCH BOX */
+.padup-searchbox {
+  background: white;
+  border-radius: 1.2rem;
+  padding: 1.1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+  margin: auto;
+  gap: 1rem;
+  border: 1px solid #E4D6C7;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+}
+
+.padup-searchbox input {
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  font-size: 1rem;
+  color: #274B3E;
+}
+
+.padup-searchbox input::placeholder {
+  color: #A2B3A6;
+}
+
+/* VALUE CARDS (under hero) */
+.padup-values {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2.5rem;
+}
+
+.padup-value-card {
+  background: white;
+  padding: 0.9rem 1.4rem;
+  border-radius: 12px;
+  color: #0F4D3C;
+  font-weight: 600;
+  border: 1px solid #E6DACD;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* ============================== */
+/* ===== CATEGORY SECTION ======= */
+/* ============================== */
+
+.padup-section {
+  margin-top: 3rem;
+}
+
+.padup-subheading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #274B3E;
+  margin-bottom: 0.7rem;
+}
+
+.padup-section-subtext {
+  font-size: 1rem;
+  color: #3a5a4d;
+  margin-bottom: 2rem;
+  opacity: 0.8;
+}
+
+/* GRID */
+.padup-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .padup-content {
+    padding: 1.5rem;
+  }
+
+  .padup-hero h1 {
+    font-size: 2.6rem;
+  }
+
+  .padup-hero-subtext {
+    font-size: 1.05rem;
+  }
+
+  .padup-searchbox {
+    padding: 1rem 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .padup-hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .padup-value-card {
+    font-size: 0.85rem;
+    padding: 0.7rem 1rem;
+  }
+}

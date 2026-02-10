@@ -1,0 +1,192 @@
+.bookings-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* HEADER */
+.bookings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bookings-header h2 {
+  font-size: 1.8rem;
+  color: #0F4D3C;
+}
+
+.export-btn {
+  padding: 10px 18px;
+  background: #0F4D3C;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.export-btn:hover {
+  background: #1A6F54;
+}
+
+/* FILTER BAR */
+.filter-bar {
+  display: flex;
+  gap: 1rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.filter-bar select,
+.filter-bar input {
+  padding: 10px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  width: 200px;
+}
+
+.filter-btn {
+  background: #1A6F54;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.filter-btn:hover {
+  background: #0F4D3C;
+}
+
+/* TABLE */
+.table-wrapper {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  overflow-x: auto;
+}
+
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bookings-table th,
+.bookings-table td {
+  padding: 14px 10px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.bookings-table th {
+  color: #1A6F54;
+  font-weight: 600;
+}
+
+/* STATUS BADGES */
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-badge.paid {
+  background: #DFF6EA;
+  color: #0F4D3C;
+}
+
+.status-badge.pending {
+  background: #FFF1DB;
+  color: #C27B3E;
+}
+
+.status-badge.cancelled {
+  background: #FFE3E3;
+  color: #C94141;
+}
+
+/* TABLET */
+@media (max-width: 768px) {
+  .bookings-page {
+    gap: 1rem;
+  }
+
+  .bookings-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .export-btn {
+    width: 100%;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .filter-bar select,
+  .filter-bar input {
+    width: 100%;
+  }
+
+  .filter-btn {
+    width: 100%;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  .bookings-table {
+    min-width: 600px;
+    font-size: 0.9rem;
+  }
+
+  .bookings-table th,
+  .bookings-table td {
+    padding: 10px 8px;
+  }
+}
+
+/* SMALL PHONES */
+@media (max-width: 480px) {
+  .bookings-page {
+    gap: 0.8rem;
+  }
+
+  .bookings-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .export-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .filter-bar {
+    padding: 0.75rem;
+    gap: 0.6rem;
+  }
+
+  .filter-bar input,
+  .filter-bar select {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .bookings-table {
+    min-width: 500px;
+    font-size: 0.75rem;
+  }
+
+  .bookings-table th,
+  .bookings-table td {
+    padding: 6px 4px;
+  }
+}
