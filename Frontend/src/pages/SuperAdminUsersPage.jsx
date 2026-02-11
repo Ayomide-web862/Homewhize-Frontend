@@ -110,6 +110,8 @@ export default function SuperAdminUsersPage() {
         <div className="users-card">
           <h3 className="section-title">Registered Owners</h3>
 
+          <div className="table-wrapper">
+
           <table className="owners-table">
             <thead>
               <tr>
@@ -131,6 +133,7 @@ export default function SuperAdminUsersPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </SuperAdminLayout>

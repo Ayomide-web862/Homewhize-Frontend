@@ -1,38 +1,84 @@
+/* =========================================
+   TOPBAR BASE
+========================================= */
+
 .admin-topbar {
   background: white;
-  padding: 1rem 2rem;
+  padding: clamp(0.6rem, 1.5vw, 1.2rem)
+           clamp(1rem, 3vw, 2.5rem);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 1rem;
 }
+
+/* =========================================
+   SEARCH BAR
+========================================= */
 
 .admin-search {
   display: flex;
   align-items: center;
   gap: 10px;
   background: #F6EEE2;
-  padding: 0.7rem 1rem;
-  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  width: clamp(180px, 30vw, 350px);
+  transition: 0.3s ease;
 }
 
 .admin-search input {
   border: none;
   outline: none;
   background: transparent;
+  font-size: clamp(0.8rem, 1vw, 0.95rem);
+  width: 100%;
 }
+
+/* =========================================
+   RIGHT SECTION
+========================================= */
 
 .admin-topbar-right {
   display: flex;
-  gap: 1.5rem;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.8rem);
 }
 
 .admin-icon {
-  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
   cursor: pointer;
   color: #0F4D3C;
+  transition: 0.2s ease;
 }
 
+.admin-icon:hover {
+  transform: scale(1.08);
+}
+
+.admin-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+
+.menu-toggle {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #0F4D3C;
+  display: none;
+}
+
+
+/* =========================================
+   DROPDOWN
+========================================= */
 
 .user-dropdown-wrapper {
   position: relative;
@@ -40,33 +86,49 @@
 
 .user-dropdown {
   position: absolute;
-  top: 40px;
+  top: 45px;
   right: 0;
   background: white;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  width: 140px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  z-index: 100;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  width: clamp(130px, 12vw, 160px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  z-index: 200;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .user-dropdown button {
   width: 100%;
   background: none;
   border: none;
-  padding: 0.8rem 1rem;
+  padding: 0.9rem 1rem;
   display: flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: clamp(0.8rem, 1vw, 0.95rem);
   color: #0F4D3C;
+  transition: 0.2s ease;
 }
 
 .user-dropdown button:hover {
-  background: #f5f5f5;
+  background: #f8f8f8;
 }
 
+/* =========================================
+   SPINNER
+========================================= */
 
 .spinner {
   width: 14px;
@@ -88,27 +150,38 @@
   cursor: not-allowed;
 }
 
-.hamburger {
-  display: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #0F4D3C;
+/* =========================================
+   LARGE SCREENS (1400px+)
+========================================= */
+
+@media (min-width: 1400px) {
+  .admin-topbar {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
 }
 
-/* TABLET & MOBILE */
-@media (max-width: 767px) {
+/* =========================================
+   TABLET (≤ 992px)
+========================================= */
+
+@media (max-width: 992px) {
+  .admin-search {
+    width: 220px;
+  }
+}
+
+/* =========================================
+   MOBILE (≤ 768px)
+========================================= */
+
+@media (max-width: 768px) {
   .admin-topbar {
     padding: 0.8rem 1rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .hamburger {
-    display: block;
   }
 
   .admin-search {
-    display: none;
+    display: none; /* Hide search on smaller screens */
   }
 
   .admin-topbar-right {
@@ -116,10 +189,13 @@
   }
 }
 
-/* SMALL PHONES */
+/* =========================================
+   SMALL PHONES (≤ 480px)
+========================================= */
+
 @media (max-width: 480px) {
   .admin-topbar {
-    padding: 0.6rem 0.75rem;
+    padding: 0.6rem 0.8rem;
   }
 
   .admin-icon {
@@ -128,5 +204,33 @@
 
   .user-dropdown {
     width: 120px;
+  }
+}
+
+/* =========================================
+   VERY SMALL PHONES (≤ 360px)
+========================================= */
+
+@media (max-width: 360px) {
+  .admin-topbar {
+    gap: 0.5rem;
+  }
+
+  .admin-topbar-right {
+    gap: 0.8rem;
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .menu-toggle {
+    display: block;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .admin-search {
+    display: none;
   }
 }

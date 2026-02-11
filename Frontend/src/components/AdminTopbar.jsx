@@ -55,7 +55,7 @@ export default function AdminTopbar({ setSidebarOpen }) {
       </div>
 
       <div className="admin-topbar-right">
-        <FiBell className="admin-icon" />
+        {/* <FiBell className="admin-icon" /> */}
 
         <div className="user-dropdown-wrapper" ref={dropdownRef}>
           <FiUser className="admin-icon" onClick={toggleDropdown} />

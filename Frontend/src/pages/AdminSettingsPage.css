@@ -1,4 +1,25 @@
 .settings-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+h1{
+  color: #0f4d3c;
+}
+
+.profile-info, .change-password {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 6px;
+}
+.pw-field { display:flex; gap:8px; align-items:center; }
+.pw-field input { flex:1; padding:8px; }
+.pw-field .eye { background:#eee; border:0; padding:8px 10px; cursor:pointer; }
+.message { margin-top:10px; color:#333 }
+.settings-page main h1 { margin-bottom:12px }.settings-container {
   padding: 2rem;
 }
 

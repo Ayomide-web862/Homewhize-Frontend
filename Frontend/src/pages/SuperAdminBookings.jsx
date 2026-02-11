@@ -71,12 +71,12 @@ export default function SuperAdminBookings() {
             <tbody>
               {bookings.map((row, index) => (
                 <tr key={index}>
-                  <td>{row.guest}</td>
-                  <td>{row.property}</td>
-                  <td>{row.checkIn}</td>
-                  <td>{row.checkOut}</td>
-                  <td>{row.amount}</td>
-                  <td>
+                  <td data-label="Guest">{row.guest}</td>
+                  <td data-label="Property">{row.property}</td>
+                  <td data-label="Check-in">{row.checkIn}</td>
+                  <td data-label="Check-out">{row.checkOut}</td>
+                  <td data-label="Amount">{row.amount}</td>
+                  <td data-label="Status">
                     <span className={`status-badge ${row.status.toLowerCase()}`}>
                       {row.status}
                     </span>
@@ -84,6 +84,7 @@ export default function SuperAdminBookings() {
                 </tr>
               ))}
             </tbody>
+
           </table>
         </div>
 

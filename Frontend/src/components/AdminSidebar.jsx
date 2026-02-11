@@ -34,12 +34,12 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
           <FaBuilding /> My Properties
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/admin/bookings"
           className={({ isActive }) => (isActive ? "active" : "")}
         >
           <FaClipboardList /> Bookings
-        </NavLink>
+        </NavLink> */}
 
         <NavLink
           to="/admin/kyc"
@@ -48,19 +48,19 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
           <FaIdCard /> KYC
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/admin/revenue"
           className={({ isActive }) => (isActive ? "active" : "")}
         >
           <FaChartPie /> Revenue & Earnings
-        </NavLink>
+        </NavLink> */}
 
-        <NavLink
+        {/* <NavLink
           to="/admin/availability-manager"
           className={({ isActive }) => (isActive ? "active" : "")}
         >
           <FaCalendarCheck /> Availability Manager
-        </NavLink>
+        </NavLink> */}
 
         <NavLink
           to="/admin/settingspage"

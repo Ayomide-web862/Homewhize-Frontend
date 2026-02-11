@@ -30,8 +30,10 @@
 .create-owner-form {
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: 1fr 1fr;
 }
+
+
 
 .form-group {
   display: flex;
@@ -104,6 +106,12 @@
   font-weight: 600;
 }
 
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
 /* TABLET */
 @media (max-width: 768px) {
   .users-container {
@@ -120,11 +128,9 @@
 
   .users-card {
     padding: 1.5rem;
-    overflow-x: auto;
   }
 
   .owners-table {
-    min-width: 500px;
     font-size: 0.9rem;
   }
 }
@@ -160,7 +166,6 @@
 
   .owners-table {
     font-size: 0.75rem;
-    min-width: 400px;
   }
 
   .owners-table th,

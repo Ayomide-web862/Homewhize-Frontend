@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* HEADER */
@@ -33,6 +35,7 @@
 /* FILTER BAR */
 .filter-bar {
   display: flex;
+  flex-wrap: wrap; /* IMPORTANT */
   gap: 1rem;
   background: white;
   padding: 1rem;
@@ -42,20 +45,18 @@
 
 .filter-bar select,
 .filter-bar input {
+  flex: 1;          /* instead of fixed width */
+  min-width: 180px; /* prevents too small */
   padding: 10px;
   border: 1px solid #dcdcdc;
   border-radius: 8px;
-  width: 200px;
 }
 
 .filter-btn {
-  background: #1A6F54;
-  color: white;
   padding: 10px 18px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  white-space: nowrap;
 }
+
 
 .filter-btn:hover {
   background: #0F4D3C;
@@ -67,13 +68,17 @@
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  width: 100%;
   overflow-x: auto;
 }
+
 
 .bookings-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: auto;
 }
+
 
 .bookings-table th,
 .bookings-table td {
@@ -144,7 +149,6 @@
   }
 
   .bookings-table {
-    min-width: 600px;
     font-size: 0.9rem;
   }
 
@@ -181,7 +185,6 @@
   }
 
   .bookings-table {
-    min-width: 500px;
     font-size: 0.75rem;
   }
 
@@ -190,3 +193,48 @@
     padding: 6px 4px;
   }
 }
+
+
+@media (max-width: 480px) {
+
+  .table-wrapper {
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .bookings-table thead {
+    display: none;
+  }
+
+  .bookings-table,
+  .bookings-table tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .bookings-table tr {
+    display: block;
+    background: white;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  }
+
+  .bookings-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border: none;
+    font-size: 0.9rem;
+  }
+
+  .bookings-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #1A6F54;
+  }
+}
+

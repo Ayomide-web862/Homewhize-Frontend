@@ -4,7 +4,34 @@ html, body, #root {
 
 body {
   margin: 0;
+  padding: 0;
 }
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+.bookings-page {
+  overflow-x: hidden;
+}
+
+
+.users-container,
+.users-card {
+  width: 100%;
+  max-width: 100%;
+}
+
+
 
 .app-layout {
   min-height: 100vh;

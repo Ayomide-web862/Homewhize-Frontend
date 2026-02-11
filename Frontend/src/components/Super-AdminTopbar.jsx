@@ -16,7 +16,6 @@ export default function SuperAdminTopbar({ setSidebarOpen }) {
   const handleLogout = () => {
     setLoggingOut(true);
 
-    // Small delay so spinner is visible (UX polish)
     setTimeout(() => {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
@@ -36,25 +35,31 @@ export default function SuperAdminTopbar({ setSidebarOpen }) {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
   }, [loggingOut]);
 
   return (
     <div className="admin-topbar">
+      
+      {/* LEFT SECTION */}
+      <div className="admin-left">
         <button
-          className="menu-button"
-          aria-label="Toggle sidebar"
-          onClick={() => setSidebarOpen((s) => !s)}
+          className="menu-toggle"
+          onClick={() => setSidebarOpen(prev => !prev)}
         >
-          <FiMenu className="menu-icon" />
+          <FiMenu />
         </button>
-      <div className="admin-search">
-        <FiSearch />
-        <input type="text" placeholder="Search..." />
+
+        <div className="admin-search">
+          <FiSearch />
+          <input type="text" placeholder="Search..." />
+        </div>
       </div>
 
+      {/* RIGHT SECTION */}
       <div className="admin-topbar-right">
-        <FiBell className="admin-icon" />
+        {/* <FiBell className="admin-icon" /> */}
 
         <div className="user-dropdown-wrapper" ref={dropdownRef}>
           <FiUser className="admin-icon" onClick={toggleDropdown} />

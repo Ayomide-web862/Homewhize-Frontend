@@ -67,35 +67,35 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="kpi-card">
+          {/* <div className="kpi-card">
             <FaCalendarCheck className="kpi-icon" />
             <div>
               <h3>92</h3>
               <p>Total Bookings</p>
             </div>
-          </div>
+          </div> */}
 
-          <div className="kpi-card">
+          {/* <div className="kpi-card">
             <FaMoneyBill className="kpi-icon" />
             <div>
               <h3>₦2.4M</h3>
               <p>Total Earnings</p>
             </div>
-          </div>
+          </div> */}
 
-          <div className="kpi-card">
+          {/* <div className="kpi-card">
             <FaHome className="kpi-icon" />
             <div>
               <h3>78%</h3>
               <p>Occupancy Rate</p>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* CHART GRID */}
         <div className="chart-grid">
 
-          <div className="chart-card">
+          {/* <div className="chart-card">
             <h3>Earnings (Last 6 Months)</h3>
             <ResponsiveContainer width="100%" height={260}>
               <LineChart data={revenueData}>
@@ -110,9 +110,9 @@ export default function AdminDashboard() {
                 />
               </LineChart>
             </ResponsiveContainer>
-          </div>
+          </div> */}
 
-          <div className="chart-card">
+          {/* <div className="chart-card">
             <h3>Bookings Trend</h3>
             <ResponsiveContainer width="100%" height={260}>
               <BarChart data={bookingTrend}>
@@ -122,7 +122,7 @@ export default function AdminDashboard() {
                 <Bar dataKey="bookings" fill="#1A6F54" />
               </BarChart>
             </ResponsiveContainer>
-          </div>
+          </div> */}
 
           <div className="chart-card">
             <h3>Property Status</h3>
@@ -146,7 +146,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* RECENT BOOKINGS TABLE */}
-        <div className="table-card">
+        {/* <div className="table-card">
           <h3>Recent Bookings</h3>
           <table>
             <thead>
@@ -185,7 +185,7 @@ export default function AdminDashboard() {
               </tr>
             </tbody>
           </table>
-        </div>
+        </div> */}
 
       </div>
     </AdminLayout>

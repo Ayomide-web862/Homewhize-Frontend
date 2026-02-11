@@ -273,13 +273,13 @@ const handleDeleteProperty = async () => {
             </div>
           </div>
 
-          <div className="kpi-card">
+          {/* <div className="kpi-card">
             <FaMoneyBill className="kpi-icon" />
             <div>
               <h3>₦860k</h3>
               <p>Monthly Earnings</p>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* CHARTS */}
@@ -303,7 +303,7 @@ const handleDeleteProperty = async () => {
             </ResponsiveContainer>
           </div>
 
-          <div className="chart-card">
+          {/* <div className="chart-card">
             <h3>Monthly Performance</h3>
             <ResponsiveContainer width="100%" height={250}>
               <BarChart
@@ -320,7 +320,7 @@ const handleDeleteProperty = async () => {
                 <Bar dataKey="earnings" fill="#0F4D3C" />
               </BarChart>
             </ResponsiveContainer>
-          </div>
+          </div> */}
         </div>
 
         {/* TABLE */}

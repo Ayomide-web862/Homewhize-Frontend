@@ -1,0 +1,154 @@
+.settings-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.settings-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  color: #0F4D3C;
+  margin-bottom: 1.5rem;
+}
+
+/* GRID */
+.settings-grid {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1A6F54;
+}
+
+.form-group input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e5e5;
+  transition: 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.form-group input:focus {
+  border-color: #0F4D3C;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(15, 77, 60, 0.1);
+}
+
+/* Input with Eye */
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  color: #0F4D3C;
+  font-size: 1.1rem;
+}
+
+/* BUTTON */
+.primary-btn {
+  background: linear-gradient(135deg, #0F4D3C, #1A6F54);
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.primary-btn:hover {
+  opacity: 0.9;
+}
+
+.primary-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* MESSAGE */
+.form-message {
+  font-size: 0.85rem;
+  color: #C27B3E;
+}
+
+/* TOGGLES */
+.toggle-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.toggle-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 24px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #ccc;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.switch input:checked + .slider {
+  background-color: #0F4D3C;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(21px);
+}

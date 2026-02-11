@@ -41,9 +41,9 @@ export default function Navbar() {
       </div>
 
       <div className="padup-right">
-        <NavLink to="" className="padup-icon">
+        {/* <NavLink to="" className="padup-icon">
           <FiClipboard size={18} />
-        </NavLink>
+        </NavLink> */}
 
         <NavLink to="/login" className="padup-icon">
           <FiUser size={18} />

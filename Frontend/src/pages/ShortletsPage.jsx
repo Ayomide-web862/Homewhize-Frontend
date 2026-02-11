@@ -66,14 +66,16 @@ export default function ShortletsPage() {
   useEffect(() => {
     const fetchShortlets = async () => {
       try {
-        try {
-          const { data } = await api.get("/properties/public");
-          setShortlets(Array.isArray(data) ? data : []);
-        } catch (err) {
-          console.error("Failed to fetch shortlets:", err);
-        }
+        setLoading(true);
+        const { data } = await api.get("/properties/public");
+        console.log("✅ Shortlets loaded:", data);
+        setShortlets(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error("Failed to fetch shortlets:", error);
+        console.error("❌ Failed to fetch shortlets:", error);
+        setMessage("Failed to load shortlets. Please refresh the page.");
+        setShortlets([]);
+      } finally {
+        setLoading(false);
       }
     };
 
