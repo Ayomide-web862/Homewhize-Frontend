@@ -63,6 +63,35 @@ export default function SuperAdminKYC() {
     }
   };
 
+const downloadFile = async (id, type) => {
+  try {
+    // First, ask backend for a signed URL we can open in a new tab.
+    const res = await api.get(`/kyc/signed-url/${id}/${type}`);
+    const signed = res?.data?.url;
+    if (!signed) throw new Error("No signed URL returned");
+
+    // Open signed URL in a new tab — top-level navigation avoids CORS/XHR issues.
+    window.open(signed, "_blank");
+  } catch (err) {
+    console.error("Download failed:", err);
+    // Fallback: open the direct Cloudinary URL in a new tab so the browser can handle the download.
+    console.warn("Attempting fallback direct URL open for download.");
+    try {
+      const owner = owners.find(o => o.id === id);
+      const direct = type === "id" ? owner?.id_document_url : owner?.ownership_document_url;
+      if (direct) {
+        window.open(direct, "_blank");
+        return;
+      }
+    } catch (e) {
+      console.error("Fallback failed:", e);
+    }
+    alert("Download failed");
+  }
+};
+
+
+
   // Filter owners based on status
   const filteredOwners = filter === "All" 
     ? owners 
@@ -188,6 +217,8 @@ export default function SuperAdminKYC() {
               <p><strong>Email:</strong> {selectedOwner.email}</p>
               <p><strong>Phone:</strong> {selectedOwner.phone}</p>
               <p><strong>Address:</strong> {selectedOwner.address}</p>
+              <p><strong>Bank Name:</strong> {selectedOwner.bank_name || "N/A"}</p>
+              <p><strong>Account Number:</strong> {selectedOwner.account_number || "N/A"}</p>
               <p><strong>Status:</strong> <span className={`kyc-status ${(selectedOwner.status || "Pending").toLowerCase()}`}>{selectedOwner.status || "Pending"}</span></p>
 
               <div className="kyc-modal-documents">
@@ -198,13 +229,14 @@ export default function SuperAdminKYC() {
                       {selectedOwner.id_document_url.includes('.pdf') ? (
                         <div className="doc-preview-pdf">
                           <p>PDF Document</p>
-                          <a href={selectedOwner.id_document_url} target="_blank" rel="noopener noreferrer" className="doc-download-link">
-                            <FaDownload /> View/Download PDF
-                          </a>
+                          <button onClick={() => downloadFile(selectedOwner.id, "id")} download className="doc-download-link">
+                            <FaDownload /> Download
+                          </button>
+
                         </div>
                       ) : (
                         <img
-                          src={selectedOwner.id_document_url}
+                          src={`${import.meta.env.VITE_API_BASE_URL}/kyc/download/${selectedOwner.id}/id`}
                           alt="ID Document"
                           className="kyc-modal-img"
                           onError={(e) => {
@@ -214,9 +246,10 @@ export default function SuperAdminKYC() {
                         />
                       )}
                       <p className="doc-error" style={{ display: "none" }}>
-                        Failed to load document. <a href={selectedOwner.id_document_url} target="_blank" rel="noopener noreferrer">
-                          <FaDownload /> Download
-                        </a>
+                        Failed to load document. 
+                        <button onClick={() => downloadFile(selectedOwner.id, "id")}>
+                          <FaDownload /> Download PDF
+                        </button>
                       </p>
                     </>
                   ) : (
@@ -231,13 +264,14 @@ export default function SuperAdminKYC() {
                       {selectedOwner.ownership_document_url.includes('.pdf') ? (
                         <div className="doc-preview-pdf">
                           <p>PDF Document</p>
-                          <a href={selectedOwner.ownership_document_url} target="_blank" rel="noopener noreferrer" className="doc-download-link">
-                            <FaDownload /> View/Download PDF
-                          </a>
+                          <button onClick={() => downloadFile(selectedOwner.id, "ownership")} download className="doc-download-link">
+                            <FaDownload /> Download
+                          </button>
+
                         </div>
                       ) : (
                         <img
-                          src={selectedOwner.ownership_document_url}
+                          src={`/api/kyc/download/${selectedOwner.id}/ownership`}
                           alt="Ownership Document"
                           className="kyc-modal-img"
                           onError={(e) => {
@@ -246,11 +280,11 @@ export default function SuperAdminKYC() {
                           }}
                         />
                       )}
-                      <p className="doc-error" style={{ display: "none" }}>
-                        Failed to load document. <a href={selectedOwner.ownership_document_url} target="_blank" rel="noopener noreferrer">
+                      {/* <p className="doc-error" style={{ display: "none" }}>
+                        <button onClick={() => downloadFile(selectedOwner.id, "ownership")} download className="doc-download-link">
                           <FaDownload /> Download
-                        </a>
-                      </p>
+                        </button>
+                      </p> */}
                     </>
                   ) : (
                     <p>No document uploaded</p>

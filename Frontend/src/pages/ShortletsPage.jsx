@@ -8,11 +8,20 @@ import api from "../api/axios";
 import ShortletCard from "../components/ShortletCard";
 import Navbar from "../components/Navbar";
 import "./ShortletsPage.css";
+import Loader from "../components/Loader";
 
 export default function ShortletsPage() {
   const navigate = useNavigate();
 
-  const [shortlets, setShortlets] = useState([]);
+  const [shortlets, setShortlets] = useState(() => {
+    try {
+      const cached = localStorage.getItem("cachedShortlets");
+      return cached ? JSON.parse(cached) : [];
+    } catch (e) {
+      console.warn("Failed to parse cachedShortlets", e);
+      return [];
+    }
+  });
   const [searchQuery, setSearchQuery] = useState("");
   const [showAuthModal, setShowAuthModal] = useState(false);
 
@@ -69,7 +78,13 @@ export default function ShortletsPage() {
         setLoading(true);
         const { data } = await api.get("/properties/public");
         console.log("✅ Shortlets loaded:", data);
-        setShortlets(Array.isArray(data) ? data : []);
+        const list = Array.isArray(data) ? data : [];
+        setShortlets(list);
+        try {
+          localStorage.setItem("cachedShortlets", JSON.stringify(list));
+        } catch (e) {
+          console.warn("Failed to cache shortlets", e);
+        }
       } catch (error) {
         console.error("❌ Failed to fetch shortlets:", error);
         setMessage("Failed to load shortlets. Please refresh the page.");
@@ -123,8 +138,17 @@ export default function ShortletsPage() {
           <section>
             <h2 className="shortlets-subheading">Available Shortlets</h2>
 
+            {/* small inline refresh indicator when we have cached items but are fetching */}
+            {loading && shortlets.length > 0 && (
+              <div className="shortlets-refresh-indicator">Refreshing shortlets…</div>
+            )}
+
             <div className="shortlets-card-grid">
-              {filteredShortlets.length > 0 ? (
+              {loading && shortlets.length === 0 ? (
+                <div className="shortlets-grid-spinner">
+                  <Loader />
+                </div>
+              ) : filteredShortlets.length > 0 ? (
                 filteredShortlets.map(item => (
                   <ShortletCard
                     key={item.id}

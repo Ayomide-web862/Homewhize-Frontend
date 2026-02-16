@@ -298,8 +298,6 @@
   text-decoration: none;
   color: white;
 }
-  font-size: 0.85rem;
-}
 
 .doc-error a {
   color: #0F4D3C;
@@ -445,4 +443,3 @@
     width: 95%;
     padding: 1.5rem;
   }
-}

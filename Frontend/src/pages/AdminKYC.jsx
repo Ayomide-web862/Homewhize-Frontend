@@ -7,7 +7,9 @@ import {
   FaFileUpload,
   FaIdCard,
   FaPhoneAlt,
-  FaEnvelope
+  FaEnvelope,
+  FaUniversity,
+  FaCreditCard
 } from "react-icons/fa";
 
 export default function AdminKYC() {
@@ -15,7 +17,9 @@ export default function AdminKYC() {
     fullName: "",
     email: "",
     phone: "",
-    address: ""
+    address: "",
+    bankName: "",
+    accountNumber: ""
   });
 
   const [idDocument, setIdDocument] = useState(null);
@@ -103,8 +107,8 @@ export default function AdminKYC() {
     setSuccess("");
 
     // Validate form fields
-    if (!form.fullName || !form.email || !form.phone || !form.address) {
-      setError("Please fill all fields");
+    if (!form.fullName || !form.email || !form.phone || !form.address || !form.bankName || !form.accountNumber) {
+      setError("Please fill all fields including bank details");
       return;
     }
 
@@ -131,6 +135,8 @@ export default function AdminKYC() {
     data.append("email", form.email);
     data.append("phone", form.phone);
     data.append("address", form.address);
+    data.append("bankName", form.bankName);
+    data.append("accountNumber", form.accountNumber);
     data.append("idDocument", idDocument);
     data.append("ownershipDocument", ownershipDocument);
 
@@ -146,7 +152,7 @@ export default function AdminKYC() {
       setStatus("Pending");
       
       // Reset form
-      setForm({ fullName: "", email: "", phone: "", address: "" });
+      setForm({ fullName: "", email: "", phone: "", address: "", bankName: "", accountNumber: "" });
       setIdDocument(null);
       setOwnershipDocument(null);
       setPreviews({ idDocument: null, ownershipDocument: null });
@@ -240,6 +246,34 @@ export default function AdminKYC() {
                 value={form.address}
                 onChange={handleInputChange}
               />
+            </div>
+
+            <div className="form-group">
+              <label>Bank Name</label>
+              <div className="input-icon">
+                <FaUniversity />
+                <input
+                  type="text"
+                  name="bankName"
+                  placeholder="e.g., First Bank, UBA, Guaranty Trust"
+                  value={form.bankName}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>Account Number</label>
+              <div className="input-icon">
+                <FaCreditCard />
+                <input
+                  type="text"
+                  name="accountNumber"
+                  placeholder="Enter bank account number"
+                  value={form.accountNumber}
+                  onChange={handleInputChange}
+                />
+              </div>
             </div>
           </div>
 

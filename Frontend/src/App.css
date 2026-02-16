@@ -1,15 +1,12 @@
-html, body, #root {
+#root {
   height: 100%;
-}
-
-body {
-  margin: 0;
-  padding: 0;
 }
 
 html, body {
   max-width: 100%;
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 
@@ -25,11 +22,11 @@ html, body {
 }
 
 
-.users-container,
+/* .users-container,
 .users-card {
   width: 100%;
   max-width: 100%;
-}
+} */
 
 
 

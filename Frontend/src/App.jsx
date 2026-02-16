@@ -34,6 +34,7 @@ import SuperAdminSettingsPage from "./pages/SuperAdminSettingsPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
+import api from "./api/axios";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -41,6 +42,28 @@ export default function App() {
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1500);
     return () => clearTimeout(timer);
+  }, []);
+
+  // Prefetch public shortlets into localStorage so ShortletsPage can render instantly
+  useEffect(() => {
+    let cancelled = false;
+    const prefetch = async () => {
+      try {
+        const { data } = await api.get("/properties/public");
+        if (!cancelled) {
+          try {
+            localStorage.setItem("cachedShortlets", JSON.stringify(data || []));
+          } catch (e) {
+            console.warn("Failed to write cachedShortlets during prefetch", e);
+          }
+        }
+      } catch (e) {
+        // ignore prefetch errors
+      }
+    };
+
+    prefetch();
+    return () => { cancelled = true; };
   }, []);
 
   return (

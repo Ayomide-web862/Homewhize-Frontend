@@ -162,6 +162,22 @@ html, body {
   width: 100%;
 }
 
+/* small refresh indicator shown above grid when updating cached data */
+.shortlets-refresh-indicator {
+  color: #0F4D3C;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+/* center the Loader when there are no items yet */
+.shortlets-grid-spinner {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0;
+}
+
 /* ===============================
    AUTH MODAL
 ================================ */

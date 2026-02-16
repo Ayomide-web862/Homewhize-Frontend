@@ -397,8 +397,22 @@ const handleDeleteProperty = async () => {
 
                   <div className="icon-input">
                     <FaMoneyBill />
-                    <input name="price" placeholder="Price per night (₦)" onChange={handleChange} required />
+                    <input
+                      name="price"
+                      placeholder="Price per night (₦)"
+                      required
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/,/g, "");
+                        setNewProperty(prev => ({ ...prev, price: value }));
+                      }}
+                    />
+
                   </div>
+
+                  <p className="input-hint">
+                    ⚠️ Enter amount without commas (e.g., 50000)
+                  </p>
+
 
                   <select name="propertyType" onChange={handleChange}>
                     <option>Apartment</option>

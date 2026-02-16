@@ -34,6 +34,18 @@ export default function ServicesPage() {
         </div>
       </div>
 
+      {/* COMING SOON NOTICE */}
+      <div className="coming-soon-banner">
+        <div className="coming-soon-card">
+          <h2>Services Launching Soon </h2>
+          <p>
+            We’re preparing our professional cleaning packages for online booking.<br></br>
+            Stay tuned!
+          </p>
+        </div>
+      </div>
+
+
       {/* MAIN CONTENT WRAPPER - matches ShortletsPage */}
       <div className="services-content">
         <section className="services-grid">

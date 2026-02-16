@@ -115,33 +115,33 @@ export default function SuperAdminDashboard() {
             </div>
           </div>
 
-          <div className="kpi-card">
+          {/* <div className="kpi-card">
             <FaCalendarCheck className="kpi-icon" />
             <div>
               <h3>247</h3>
               <p>Total Bookings</p>
             </div>
-          </div>
+          </div> */}
 
-          <div className="kpi-card">
+          {/* <div className="kpi-card">
             <FaMoneyBill className="kpi-icon" />
             <div>
               <h3>₦12.4M</h3>
               <p>Total Revenue</p>
             </div>
-          </div>
+          </div> */}
 
-          <div className="kpi-card">
+          {/* <div className="kpi-card">
             <FaPercent className="kpi-icon" />
             <div>
               <h3>88%</h3>
               <p>Occupancy Rate</p>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* CHARTS */}
-        <div className="chart-grid">
+        {/* <div className="chart-grid">
 
           <div className="chart-card">
             <h3>Revenue (Last 12 Months)</h3>
@@ -192,10 +192,10 @@ export default function SuperAdminDashboard() {
               </PieChart>
             </ResponsiveContainer>
           </div>
-        </div>
+        </div> */}
 
         {/* RECENT BOOKINGS */}
-        <div className="table-card">
+        {/* <div className="table-card">
           <h3>Recent Bookings</h3>
           <table>
             <thead>
@@ -231,7 +231,7 @@ export default function SuperAdminDashboard() {
               </tr>
             </tbody>
           </table>
-        </div>
+        </div> */}
 
       </div>
     </SuperAdminLayout>

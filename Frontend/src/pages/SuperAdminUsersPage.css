@@ -1,39 +1,72 @@
-.users-container {
-  padding: 2rem;
+/* ================= GLOBAL RESET ================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
+:root {
+  --primary: #0F4D3C;
+  --primary-light: #1f7a63;
+  --bg: #f6f8f7;
+  --card-bg: #ffffff;
+  --border: #e6ece9;
+  --text-dark: #0b2e25;
+  --text-light: #6b7c76;
+}
+
+/* ================= PAGE CONTAINER ================= */
+
+.users-container {
+  padding: 2rem;
+  background: var(--bg);
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ================= PAGE TITLE ================= */
+
 .users-title {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  color: #0F4D3C;
+  color: var(--text-dark);
+  margin-bottom: 1.8rem;
+}
+
+/* ================= CARD ================= */
+
+.users-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.8rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+  border: 1px solid var(--border);
   margin-bottom: 2rem;
 }
 
-.users-card {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
-  margin-bottom: 2.5rem;
-}
+/* ================= SECTION TITLE ================= */
 
 .section-title {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: #0F4D3C;
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
+  gap: 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 1.4rem;
 }
+
+/* ================= FORM ================= */
 
 .create-owner-form {
   display: grid;
-  gap: 1.5rem;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem;
 }
 
-
+/* ================= INPUT GROUP ================= */
 
 .form-group {
   display: flex;
@@ -41,135 +74,176 @@
 }
 
 .form-group label {
+  font-size: 0.85rem;
   font-weight: 600;
-  color: #274B3E;
-  margin-bottom: 0.3rem;
+  color: var(--text-light);
+  margin-bottom: 0.35rem;
 }
 
 .form-group input {
-  padding: 0.75rem;
-  border-radius: 8px;
-  border: 1px solid #dcdcdc;
-  outline: none;
-  font-size: 1rem;
-  transition: 0.2s ease;
+  padding: 0.75rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-size: 0.95rem;
+  background: #fbfdfc;
+  transition: all 0.2s ease;
+  width: 100%;
 }
 
 .form-group input:focus {
-  border-color: #0F4D3C;
+  border-color: var(--primary);
+  background: #ffffff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(15,77,60,0.08);
 }
+
+/* ================= BUTTON ================= */
 
 .create-btn {
   grid-column: 1 / -1;
   padding: 0.9rem;
-  background-color: #0F4D3C;
-  color: white;
-  border-radius: 8px;
+  border-radius: 10px;
   border: none;
-  font-size: 1rem;
-  cursor: pointer;
+  background: var(--primary);
+  color: white;
   font-weight: 600;
-  transition: 0.2s ease;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .create-btn:hover {
-  background-color: #0d3f32;
+  background: var(--primary-light);
+  transform: translateY(-1px);
 }
 
-/* TABLE */
-.owners-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.owners-table th,
-.owners-table td {
-  padding: 1rem;
-  text-align: left;
-}
-
-.owners-table th {
-  background: #F2F7F5;
-  color: #0F4D3C;
-  font-weight: 700;
-}
-
-.owners-table tr:nth-child(even) {
-  background: #FAFAFA;
-}
-
-.status-badge {
-  padding: 0.4rem 0.8rem;
-  background-color: #D7F2E3;
-  color: #0F4D3C;
-  border-radius: 6px;
-  font-weight: 600;
-}
+/* ================= TABLE ================= */
 
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
+.owners-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
 
-/* TABLET */
-@media (max-width: 768px) {
+.owners-table th {
+  text-align: left;
+  padding: 0.9rem;
+  background: #f3f7f5;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-light);
+  border-bottom: 1px solid var(--border);
+}
+
+.owners-table td {
+  padding: 0.95rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+.owners-table tr:hover {
+  background: #f9fbfa;
+}
+
+/* ================= PAGINATION ================= */
+
+.pagination {
+  margin-top: 1.4rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.page-btn,
+.page-number {
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--text-dark);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.page-number:hover,
+.page-btn:hover:not(:disabled) {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.active-page {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* Tablets */
+@media (max-width: 900px) {
   .users-container {
-    padding: 1rem;
+    padding: 1.5rem;
   }
+}
 
+/* Phones */
+@media (max-width: 600px) {
   .users-title {
-    font-size: 1.6rem;
-  }
-
-  .create-owner-form {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    font-size: 1.4rem;
   }
 
   .users-card {
-    padding: 1.5rem;
+    padding: 1.3rem;
   }
 
-  .owners-table {
+  .create-owner-form {
+    grid-template-columns: 1fr;
+  }
+
+  .create-btn {
     font-size: 0.9rem;
   }
 }
 
-/* SMALL PHONES */
-@media (max-width: 480px) {
+/* Ensure table can shrink / not force page overflow on small screens */
+@media (max-width: 600px) {
+  .owners-table {
+    min-width: 0; /* allow columns to wrap/scroll inside wrapper */
+    font-size: 0.9rem;
+  }
+
+  .table-wrapper {
+    margin-left: -0.25rem; /* small nudge to avoid accidental scrollbars */
+    margin-right: -0.25rem;
+  }
+}
+
+/* Very small devices */
+@media (max-width: 380px) {
   .users-container {
-    padding: 0.75rem;
+    padding: 1rem;
   }
 
   .users-title {
     font-size: 1.2rem;
   }
 
-  .users-card {
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .section-title {
-    font-size: 1rem;
-  }
-
-  .create-owner-form {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .create-btn {
-    padding: 0.8rem;
-    font-size: 0.95rem;
-  }
-
   .owners-table {
-    font-size: 0.75rem;
-  }
-
-  .owners-table th,
-  .owners-table td {
-    padding: 0.6rem;
+    font-size: 0.8rem;
   }
 }

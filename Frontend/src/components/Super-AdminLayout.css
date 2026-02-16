@@ -13,6 +13,7 @@
 
 .admin-content {
   padding: 2rem;
+  overflow-x: hidden;
 }
 
 /* MOBILE OVERLAY */
