@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import Modal from "../components/Modal";
 import Navbar from "../components/Navbar";
 import "./BookingPage.css";
 
@@ -8,6 +9,26 @@ export default function BookingPage() {
   const { state } = useLocation();
   const navigate = useNavigate();
   const shortlet = state?.shortlet;
+  
+  const [modalConfig, setModalConfig] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    type: "info",
+  });
+
+  const showModal = (title, message, type = "info") => {
+    setModalConfig({
+      isOpen: true,
+      title,
+      message,
+      type,
+    });
+  };
+
+  const closeModal = () => {
+    setModalConfig(prev => ({ ...prev, isOpen: false }));
+  };
 
   if (!shortlet) {
     return (
@@ -51,14 +72,22 @@ export default function BookingPage() {
         price_per_night: shortlet.price,
       };
       const { data } = await api.post("/bookings", payload);
-      alert(`Booking Created! Ref: ${data.booking_reference}`);
+      showModal("Success", `Booking Created! Ref: ${data.booking_reference}`, "success");
+      setTimeout(() => navigate(-1), 1500);
     } catch (err) {
-      alert(err.response?.data?.message || "Booking failed");
+      showModal("Error", err.response?.data?.message || "Booking failed", "error");
     }
   };
 
   return (
     <div className="booking-container">
+      <Modal
+        isOpen={modalConfig.isOpen}
+        title={modalConfig.title}
+        message={modalConfig.message}
+        type={modalConfig.type}
+        onClose={closeModal}
+      />
       <div className="booking-content">
         <Navbar />
 

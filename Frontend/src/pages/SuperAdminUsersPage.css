@@ -21,9 +21,12 @@
 .users-container {
   padding: 2rem;
   background: var(--bg);
-  min-height: 100vh;
+  min-height: auto;
   width: 100%;
-  overflow-x: hidden;
+  max-width: 100vw;
+  overflow-x: clip;
+  box-sizing: border-box;
+  position: relative;
 }
 
 /* ================= PAGE TITLE ================= */
@@ -44,6 +47,10 @@
   box-shadow: 0 10px 25px rgba(0,0,0,0.04);
   border: 1px solid var(--border);
   margin-bottom: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
 }
 
 /* ================= SECTION TITLE ================= */
@@ -62,8 +69,9 @@
 
 .create-owner-form {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.2rem;
+  width: 100%;
 }
 
 /* ================= INPUT GROUP ================= */
@@ -123,12 +131,19 @@
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  border-radius: 10px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  max-width: 100%;
+  position: relative;
 }
 
 .owners-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 650px;
+  min-width: 100%;
+  table-layout: auto;
 }
 
 .owners-table th {
@@ -197,11 +212,13 @@
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .password-input-wrapper input {
   width: 100%;
   padding-right: 40px;
+  box-sizing: border-box;
 }
 
 .eye-icon {
@@ -302,48 +319,291 @@
 }
 
 /* Phones */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .users-container {
+    padding: 1.2rem;
+  }
+
   .users-title {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .users-card {
-    padding: 1.3rem;
+    padding: 1.2rem;
+    border-radius: 12px;
   }
 
   .create-owner-form {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .form-group input {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 0.7rem 0.85rem;
   }
 
   .create-btn {
+    padding: 0.85rem;
+    font-size: 0.95rem;
+  }
+
+  /* Table responsiveness on mobile */
+  .owners-table th,
+  .owners-table td {
+    padding: 0.8rem 0.7rem;
     font-size: 0.9rem;
+  }
+
+  .section-title {
+    font-size: 1rem;
+  }
+
+  .actions-cell {
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .action-icon {
+    font-size: 16px;
+  }
+
+  .action-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
   }
 }
 
-/* Ensure table can shrink / not force page overflow on small screens */
+/* Small phones */
 @media (max-width: 600px) {
-  .owners-table {
-    min-width: 0; /* allow columns to wrap/scroll inside wrapper */
-    font-size: 0.9rem;
-  }
-
-  .table-wrapper {
-    margin-left: -0.25rem; /* small nudge to avoid accidental scrollbars */
-    margin-right: -0.25rem;
-  }
-}
-
-/* Very small devices */
-@media (max-width: 380px) {
   .users-container {
     padding: 1rem;
   }
 
   .users-title {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    margin-bottom: 1.3rem;
+  }
+
+  .users-card {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+  }
+
+  .section-title {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  .form-group label {
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .form-group input {
+    font-size: 16px;
+    padding: 0.65rem 0.75rem;
+  }
+
+  .create-btn {
+    grid-column: 1 / -1;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Table mobile optimizations */
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   .owners-table {
+    min-width: 100%;
+    font-size: 0.85rem;
+  }
+
+  .owners-table th,
+  .owners-table td {
+    padding: 0.7rem 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .owners-table th {
     font-size: 0.8rem;
+  }
+
+  /* Actions on mobile */
+  .actions-cell {
+    gap: 6px;
+    flex-wrap: nowrap;
+  }
+
+  .action-icon {
+    font-size: 15px;
+    min-width: 15px;
+  }
+
+  .action-btn {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  .pagination {
+    gap: 0.3rem;
+    margin-top: 1rem;
+  }
+
+  .page-btn,
+  .page-number {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 480px) {
+  .users-container {
+    padding: 0.8rem;
+  }
+
+  .users-title {
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .users-card {
+    padding: 0.9rem;
+    margin-bottom: 1.3rem;
+  }
+
+  .section-title {
+    font-size: 0.9rem;
+    gap: 0.4rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .form-group label {
+    font-size: 0.75rem;
+  }
+
+  .form-group input {
+    font-size: 16px;
+    padding: 0.6rem 0.7rem;
+  }
+
+  .create-btn {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .owners-table {
+    font-size: 0.75rem;
+  }
+
+  .owners-table th,
+  .owners-table td {
+    padding: 0.6rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .action-icon {
+    font-size: 13px;
+  }
+
+  .action-btn {
+    padding: 0.3rem 0.4rem;
+    font-size: 0.7rem;
+  }
+
+  .pagination {
+    gap: 0.25rem;
+  }
+
+  .page-btn,
+  .page-number {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .edit-input {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.6rem;
+  }
+}
+
+/* Ultra small devices */
+@media (max-width: 380px) {
+  .users-container {
+    padding: 0.6rem;
+  }
+
+  .users-title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .users-card {
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-size: 0.85rem;
+    gap: 0.3rem;
+  }
+
+  .form-group label {
+    font-size: 0.7rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .form-group input {
+    font-size: 16px;
+    padding: 0.55rem 0.65rem;
+  }
+
+  .create-btn {
+    padding: 0.7rem;
+    font-size: 0.8rem;
+  }
+
+  .owners-table {
+    font-size: 0.7rem;
+  }
+
+  .owners-table th {
+    font-size: 0.7rem;
+    padding: 0.5rem 0.4rem;
+  }
+
+  .owners-table td {
+    padding: 0.5rem 0.4rem;
+    font-size: 0.7rem;
+  }
+
+  .action-icon {
+    font-size: 12px;
+  }
+
+  .action-btn {
+    padding: 0.25rem 0.35rem;
+    font-size: 0.65rem;
+  }
+
+  .page-btn,
+  .page-number {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.7rem;
   }
 }

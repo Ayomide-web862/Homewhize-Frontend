@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Loader from "../components/Loader";
@@ -6,6 +6,7 @@ import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./ShortletDetailPage.css";
+import { optimizeCloudinaryUrl } from "../utils/imageUtils";
 
 /* ✅ FIX LEAFLET ICON */
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
@@ -24,7 +25,6 @@ export default function ShortletDetailPage() {
   const navigate = useNavigate();
   const [shortlet, setShortlet] = useState(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     (async () => {
       try {
@@ -38,12 +38,34 @@ export default function ShortletDetailPage() {
       }
     })();
   }, [slug]);
+  // Hooks for gallery (must be declared unconditionally)
+  const [index, setIndex] = useState(0);
+  const touchStartX = useRef(null);
+
+  const images = Array.isArray(shortlet?.images) ? shortlet.images : [];
+
+  useEffect(() => {
+    if (!images.length) return;
+    const timer = setInterval(() => setIndex((i) => (i + 1) % images.length), 3500);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  const onPrev = () => setIndex((i) => (i - 1 + images.length) % images.length);
+  const onNext = () => setIndex((i) => (i + 1) % images.length);
+  const onTouchStart = (e) => (touchStartX.current = e.touches[0].clientX);
+  const onTouchEnd = (e) => {
+    if (touchStartX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 50) {
+      if (dx < 0) onNext();
+      else onPrev();
+    }
+    touchStartX.current = null;
+  };
 
   // ✅ USE YOUR CUSTOM LOADER
   if (loading) return <Loader />;
   if (!shortlet) return <p>Shortlet not found</p>;
-
-  const images = Array.isArray(shortlet.images) ? shortlet.images : [];
 
   return (
     <div className="shortlet-detail-container">
@@ -51,11 +73,18 @@ export default function ShortletDetailPage() {
 
       <div className="shortlet-detail-content">
         {/* GALLERY */}
-        <div className="shortlet-gallery">
+        <div className="shortlet-gallery" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
           {images.length > 0 ? (
-            images.map((img, i) => (
-              <img key={i} src={img} alt={shortlet.name} />
-            ))
+            <>
+              <button className="gallery-nav prev" onClick={onPrev} aria-label="Previous image">‹</button>
+              <img src={optimizeCloudinaryUrl(images[index], 1200)} alt={shortlet.name} loading="lazy" />
+              <button className="gallery-nav next" onClick={onNext} aria-label="Next image">›</button>
+              <div className="gallery-dots">
+                {images.map((_, i) => (
+                  <span key={i} className={`dot ${i === index ? 'active' : ''}`} onClick={() => setIndex(i)} />
+                ))}
+              </div>
+            </>
           ) : (
             <p>No images available</p>
           )}

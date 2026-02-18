@@ -48,7 +48,7 @@ export default function Footer() {
 
           <div className="footer-socials">
             {/* <a href="#"><FaFacebookF /></a> */}
-            <a href="#"><FaInstagram /></a>
+            <a href="https://instagram.com/homewhize.ltd?igsh=MTk1OWt2aDM2MGpjcg=="><FaInstagram /></a>
             <a href="#"><FaTwitter /></a>
             <a href="#"><FaLinkedinIn /></a>
           </div>

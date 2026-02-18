@@ -17,18 +17,62 @@
 
 /* GALLERY */
 .shortlet-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem;
+  position: relative;
+  width: 100%;
+  height: 420px;
   margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #f7f7f7;
 }
 
 .shortlet-gallery img {
   width: 100%;
-  height: 220px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 12px;
 }
+
+.gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.45);
+  color: white;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.gallery-nav.prev { left: 12px; }
+.gallery-nav.next { right: 12px; }
+
+.gallery-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.gallery-dots .dot {
+  width: 10px;
+  height: 10px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.gallery-dots .dot.active { background: #0F4D3C; }
 
 /* TEXT */
 .shortlet-detail-content h1 {

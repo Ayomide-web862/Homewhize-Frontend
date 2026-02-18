@@ -1,14 +1,32 @@
-#root {
-  height: 100%;
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
 }
 
-html, body {
+body {
+  width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
+  overflow-y: auto;
   margin: 0;
   padding: 0;
+  position: relative;
 }
 
+body.sidebar-open {
+  overflow: hidden;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
 
 *,
 *::before,
@@ -34,4 +52,13 @@ html, body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Prevent any element from stretching beyond viewport */
+body > * {
+  max-width: 100vw;
+  overflow-x: hidden;
 }

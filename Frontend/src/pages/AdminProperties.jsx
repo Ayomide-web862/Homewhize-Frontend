@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { optimizeCloudinaryUrl } from "../utils/imageUtils";
 import AdminLayout from "../components/AdminLayout";
 import "./AdminProperties.css";
 
@@ -17,6 +18,7 @@ import {
   FaInfoCircle,
   FaMap,
 } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 
 import {
   BarChart,
@@ -109,6 +111,20 @@ export default function AdminProperties() {
 
   const [imgFile, setImgFile] = useState([]);
   const [imgPreview, setImgPreview] = useState([]);
+  const previewsRef = useRef([]);
+
+  useEffect(() => {
+    previewsRef.current = imgPreview;
+  }, [imgPreview]);
+
+  useEffect(() => {
+    return () => {
+      // revoke any leftover object URLs on unmount
+      previewsRef.current?.forEach((u) => {
+        try { URL.revokeObjectURL(u); } catch (e) {}
+      });
+    };
+  }, []);
 
   const token = localStorage.getItem("token");
 
@@ -160,6 +176,16 @@ export default function AdminProperties() {
     setNewProperty((prev) => ({ ...prev, [name]: value }));
   };
 
+  /* REMOVE IMAGE FROM PREVIEW */
+  const removeImage = (indexToRemove) => {
+    // Revoke the object URL to free memory
+    URL.revokeObjectURL(imgPreview[indexToRemove]);
+    
+    // Remove from both file and preview arrays
+    setImgFile(prev => prev.filter((_, i) => i !== indexToRemove));
+    setImgPreview(prev => prev.filter((_, i) => i !== indexToRemove));
+  };
+
   /* ADD PROPERTY */
   const handleAddProperty = async (e) => {
     e.preventDefault();
@@ -178,6 +204,8 @@ export default function AdminProperties() {
       await fetchProperties();
       setShowModal(false);
       setImgFile([]);
+      // revoke preview object URLs before clearing
+      previewsRef.current?.forEach((u) => { try { URL.revokeObjectURL(u); } catch (e) {} });
       setImgPreview([]);
       setPopup({ show: true, message: "Property added successfully", type: "success" });
     } catch {
@@ -203,25 +231,17 @@ const handleDeleteProperty = async () => {
 
   try {
     const api = (await import("../api/axios")).default;
-    await api.delete(`/properties/${propertyToDelete.id}`);
+    const res = await api.delete(`/properties/${propertyToDelete.id}`);
 
-    if (!res.ok) throw new Error();
+    if (res.status < 200 || res.status >= 300) {
+      throw new Error("Delete request failed");
+    }
 
-    setProperties((prev) =>
-      prev.filter((p) => p.id !== propertyToDelete.id)
-    );
+    setProperties((prev) => prev.filter((p) => p.id !== propertyToDelete.id));
 
-    setPopup({
-      show: true,
-      message: "Property deleted successfully",
-      type: "success",
-    });
+    setPopup({ show: true, message: "Property deleted successfully", type: "success" });
   } catch {
-    setPopup({
-      show: true,
-      message: "Failed to delete property",
-      type: "error",
-    });
+    setPopup({ show: true, message: "Failed to delete property", type: "error" });
   } finally {
     setIsDeleting(false);
     setShowDeleteModal(false);
@@ -339,14 +359,15 @@ const handleDeleteProperty = async () => {
             <tbody>
               {properties.map((p) => (
                 <tr key={p.id}>
-                  <td className="property-info-cell">
-                    <img
-                      src={p.images?.[0] || "/placeholder-property.jpg"}
-                      alt={p.name}
-                    />
+                              <td className="property-info-cell">
+                                <img
+                                  src={optimizeCloudinaryUrl(p.images?.[0] || "/placeholder-property.jpg", 400)}
+                                  alt={p.name}
+                                  loading="lazy"
+                                />
 
-                    <span>{p.name}</span>
-                  </td>
+                                <span>{p.name}</span>
+                              </td>
                   <td>{p.location}</td>
                   <td>{p.price}</td>
                   <td>
@@ -472,16 +493,32 @@ const handleDeleteProperty = async () => {
                     accept="image/*"
                     onChange={(e) => {
                       const files = Array.from(e.target.files);
+                      // revoke old previews
+                      imgPreview.forEach((url) => URL.revokeObjectURL(url));
+                      const previews = files.map((f) => URL.createObjectURL(f));
                       setImgFile(files);
-                      setImgPreview(files.map(f => URL.createObjectURL(f)));
+                      setImgPreview(previews);
                     }}
                   />
 
                   <div className="preview-grid">
                     {imgPreview?.map((img, i) => (
-                      <img key={i} src={img} alt="preview" />
+                      <div key={i} className="preview-card">
+                        <img src={img} alt="preview" loading="lazy" />
+                        <button
+                          type="button"
+                          className="remove-image-btn"
+                          onClick={() => removeImage(i)}
+                          title="Remove this image"
+                        >
+                          <IoClose size={20} />
+                        </button>
+                      </div>
                     ))}
                   </div>
+                  {imgPreview.length > 0 && (
+                    <p className="image-count">Selected: {imgPreview.length} image(s)</p>
+                  )}
 
                   {/* MAP PICKER (ADDED BELOW FORM FIELDS) */}
                 <div className="map-section">

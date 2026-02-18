@@ -74,6 +74,8 @@
     z-index: 50;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
+    max-width: 90vw;
+    box-sizing: border-box;
   }
 
   .admin-sidebar.open {

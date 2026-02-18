@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SuperAdminLayout from "../components/Super-AdminLayout";
+import Modal from "../components/Modal";
+import ConfirmationModal from "../components/ConfirmationModal";
 import "./SuperAdminUsersPage.css";
 import { FiUserPlus, FiEdit2, FiTrash2, FiEye, FiEyeOff } from "react-icons/fi";
 import api from "../api/axios";
@@ -14,16 +16,44 @@ export default function SuperAdminUsersPage() {
   });
   const [deleteLoading, setDeleteLoading] = useState(null);
   const [saveLoading, setSaveLoading] = useState(false);
-
   const [showPassword, setShowPassword] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 25;
+
+  // Modal state
+  const [modalConfig, setModalConfig] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    type: "info",
+  });
+
+  // Delete confirmation modal state
+  const [deleteConfirmation, setDeleteConfirmation] = useState({
+    isOpen: false,
+    userId: null,
+    userName: "",
+  });
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
+
+  // Show modal function
+  const showModal = (title, message, type = "info") => {
+    setModalConfig({
+      isOpen: true,
+      title,
+      message,
+      type,
+    });
+  };
+
+  const closeModal = () => {
+    setModalConfig(prev => ({ ...prev, isOpen: false }));
+  };
 
   const fetchAdmins = async () => {
     try {
@@ -35,16 +65,34 @@ export default function SuperAdminUsersPage() {
   };
 
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this user? This action cannot be undone.")) return;
+  const openDeleteConfirmation = (id, name) => {
+    setDeleteConfirmation({
+      isOpen: true,
+      userId: id,
+      userName: name,
+    });
+  };
+
+  const closeDeleteConfirmation = () => {
+    setDeleteConfirmation({
+      isOpen: false,
+      userId: null,
+      userName: "",
+    });
+  };
+
+  const handleDelete = async () => {
+    const id = deleteConfirmation.userId;
+    closeDeleteConfirmation();
 
     setDeleteLoading(id);
     try {
       await api.delete(`/admin/delete-admin/${id}`);
       setAdmins(admins.filter(admin => admin.id !== id));
+      showModal("Success", "User deleted successfully", "success");
     } catch (error) {
       console.error("Error deleting user:", error);
-      alert(error.response?.data?.message || "Error deleting user");
+      showModal("Error", error.response?.data?.message || "Error deleting user", "error");
     } finally {
       setDeleteLoading(null);
     }
@@ -68,7 +116,7 @@ export default function SuperAdminUsersPage() {
 
   const handleSaveEdit = async (id) => {
     if (!editFormData.name.trim() || !editFormData.email.trim()) {
-      alert("Name and email are required");
+      showModal("Validation Error", "Name and email are required", "error");
       return;
     }
 
@@ -87,10 +135,10 @@ export default function SuperAdminUsersPage() {
       ));
       
       setEditingId(null);
-      alert("User updated successfully");
+      showModal("Success", "User updated successfully", "success");
     } catch (error) {
       console.error("Error updating user:", error);
-      alert(error.response?.data?.message || "Error updating user");
+      showModal("Error", error.response?.data?.message || "Error updating user", "error");
     } finally {
       setSaveLoading(false);
     }
@@ -114,12 +162,12 @@ export default function SuperAdminUsersPage() {
     try {
       await api.post("/admin/create-admin", formData);
 
-      alert("Admin account created successfully");
+      showModal("Success", "Admin account created successfully", "success");
 
       setFormData({ name: "", email: "", password: "" });
       fetchAdmins();
     } catch (error) {
-      alert(error.response?.data?.message || "Error creating owner");
+      showModal("Error", error.response?.data?.message || "Error creating owner", "error");
     } finally {
       setLoading(false);
     }
@@ -141,6 +189,25 @@ export default function SuperAdminUsersPage() {
 
   return (
     <SuperAdminLayout>
+      <Modal
+        isOpen={modalConfig.isOpen}
+        title={modalConfig.title}
+        message={modalConfig.message}
+        type={modalConfig.type}
+        onClose={closeModal}
+      />
+      <ConfirmationModal
+        isOpen={deleteConfirmation.isOpen}
+        title="Delete User"
+        message={`Are you sure you want to delete "${deleteConfirmation.userName}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        type="delete"
+        isDangerous={true}
+        isLoading={deleteLoading === deleteConfirmation.userId}
+        onConfirm={handleDelete}
+        onCancel={closeDeleteConfirmation}
+      />
       <div className="users-container">
         <h2 className="users-title">Property Owners</h2>
 
@@ -290,7 +357,7 @@ export default function SuperAdminUsersPage() {
 
                           <FiTrash2
                             className="action-icon delete"
-                            onClick={() => handleDelete(admin.id)}
+                            onClick={() => openDeleteConfirmation(admin.id, admin.name)}
                             title="Delete user"
                             style={{ opacity: deleteLoading === admin.id ? 0.5 : 1, cursor: deleteLoading === admin.id ? 'not-allowed' : 'pointer' }}
                           />

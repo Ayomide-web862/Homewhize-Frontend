@@ -36,6 +36,12 @@
   opacity: 0.7;
   border-radius: 50%;
 }
+.shortlet-dots .dot.active {
+  background: #0F4D3C;
+  opacity: 1;
+  width: 10px;
+  height: 10px;
+}
 
 /* CARD BODY */
 .shortlet-card-body {

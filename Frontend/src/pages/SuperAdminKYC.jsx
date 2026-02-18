@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SuperAdminLayout from "../components/Super-AdminLayout";
+import Modal from "../components/Modal";
 import "./SuperAdminKYC.css";
 import api from "../api/axios";
 import { FaEye, FaCheckCircle, FaTimesCircle, FaDownload } from "react-icons/fa";
@@ -11,6 +12,27 @@ export default function SuperAdminKYC() {
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("All");
   const [updating, setUpdating] = useState(null);
+  
+  // Modal state
+  const [modalConfig, setModalConfig] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    type: "info",
+  });
+
+  const showModal = (title, message, type = "info") => {
+    setModalConfig({
+      isOpen: true,
+      title,
+      message,
+      type,
+    });
+  };
+
+  const closeModal = () => {
+    setModalConfig(prev => ({ ...prev, isOpen: false }));
+  };
 
   useEffect(() => {
     fetchKYC();
@@ -44,7 +66,7 @@ export default function SuperAdminKYC() {
 
   const updateStatus = async (id, status) => {
     if (!id || !status) {
-      alert("Invalid KYC ID or status");
+      showModal("Validation Error", "Invalid KYC ID or status", "error");
       return;
     }
 
@@ -52,11 +74,11 @@ export default function SuperAdminKYC() {
       setUpdating(id);
       const res = await api.put(`/kyc/${id}/status`, { status });
 
-      alert(`KYC ${status} successfully`);
+      showModal("Success", `KYC ${status} successfully`, "success");
       await fetchKYC();
     } catch (err) {
       const errorMsg = err.response?.data?.message || `Failed to ${status} KYC`;
-      alert(errorMsg);
+      showModal("Error", errorMsg, "error");
       console.error("Update KYC status error:", err);
     } finally {
       setUpdating(null);
@@ -86,7 +108,7 @@ const downloadFile = async (id, type) => {
     } catch (e) {
       console.error("Fallback failed:", e);
     }
-    alert("Download failed");
+    showModal("Error", "Download failed", "error");
   }
 };
 
@@ -99,6 +121,13 @@ const downloadFile = async (id, type) => {
 
   return (
     <SuperAdminLayout>
+      <Modal
+        isOpen={modalConfig.isOpen}
+        title={modalConfig.title}
+        message={modalConfig.message}
+        type={modalConfig.type}
+        onClose={closeModal}
+      />
       <div className="kyc-container">
 
         <div className="kyc-header">

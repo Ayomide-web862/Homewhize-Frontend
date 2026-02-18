@@ -1,19 +1,28 @@
 .admin-layout {
   display: flex;
   min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
   background: #F6EEE2;
   font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  position: relative;
 }
 
 .admin-main {
   flex: 1;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .admin-content {
   padding: 2rem;
-  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 /* MOBILE OVERLAY */
@@ -24,6 +33,14 @@
     inset: 0;
     background: rgba(0,0,0,0.4);
     z-index: 40;
+  }
+
+  .admin-layout.sidebar-open {
+    overflow: hidden;
+  }
+
+  .admin-layout.sidebar-open body {
+    overflow: hidden;
   }
 }
 
