@@ -151,16 +151,16 @@ export default function ShortletsPage() {
               ) : filteredShortlets.length > 0 ? (
                 filteredShortlets.map(item => (
                   <ShortletCard
-                    key={item.id}
-                    images={Array.isArray(item.images) && item.images.length ? item.images : [item.image_url || "/placeholder-property.jpg"]}
-                    title={item.name}
-                    price={item.price}
-                    location={`${item.address}, ${item.location}`}
-                    guests={item.max_guests}
-                    bedrooms={item.bedrooms}
-                    minStay={1}
-                    onClick={() => navigate(`/shortlets/${slugify(item.name)}`)}
-                  />
+                  key={item.id}
+                  images={Array.isArray(item.images) && item.images.length ? item.images : [item.image_url || "/placeholder-property.jpg"]}
+                  title={item.name}
+                  price={item.price}
+                  location={`${item.address}, ${item.location}`}
+                  guests={item.max_guests}
+                  bedrooms={item.bedrooms}
+                  minStay={1}
+                  onClick={() => navigate(`/shortlets/${item.slug || slugify(item.name)}`)}
+                />
                 ))
               ) : (
                 <p>No shortlets found.</p>
