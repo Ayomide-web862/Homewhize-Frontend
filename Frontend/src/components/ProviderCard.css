@@ -1,0 +1,163 @@
+.provider-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  transition: all 0.35s ease;
+  border: 1px solid #f1f1f1;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.provider-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+}
+
+.provider-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.provider-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#1A6F54,#0F4D3C);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.provider-title {
+  flex: 1;
+}
+
+.provider-title h3 {
+  font-size: 17px;
+  margin: 0;
+  color: #222;
+}
+
+.provider-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: #777;
+}
+
+.provider-rating svg {
+  color: #FFC107;
+}
+
+.category-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f3f7f6;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1A6F54;
+}
+
+.category-icon {
+  font-size: 13px;
+}
+
+.provider-description {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.service-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.service-chip {
+  background: #ecf7f3;
+  color: #1A6F54;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.provider-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.price-range {
+  font-weight: 600;
+  color: #1A6F54;
+  font-size: 14px;
+}
+
+.provider-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 10px;
+  font-size: 13px;
+  padding: 8px 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn svg {
+  font-size: 13px;
+}
+
+.btn.chat {
+  background: #f3f3f3;
+  color: #333;
+}
+
+.btn.chat:hover {
+  background: #e7e7e7;
+}
+
+.btn.book {
+  background: #1A6F54;
+  color: white;
+}
+
+.btn.book:hover {
+  background: #145542;
+}
+
+@media (max-width: 768px) {
+
+  .provider-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .provider-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+}

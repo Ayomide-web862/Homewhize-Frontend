@@ -1,0 +1,110 @@
+.sp-bookings-page {
+  width: 100%;
+}
+
+.sp-bookings-page h1 {
+  margin-bottom: 20px;
+}
+
+/* GRID */
+
+.sp-bookings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+/* CARD */
+
+.sp-booking-card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* HEADER */
+
+.sp-booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.status.pending {
+  background: #fff4e5;
+  color: #ff9800;
+}
+
+.status.accepted {
+  background: #e6f4ea;
+  color: #1f7a63;
+}
+
+.status.rejected {
+  background: #fdecea;
+  color: #d9534f;
+}
+
+.status.completed {
+  background: #e0f2f1;
+  color: #0f4d3c;
+}
+
+/* NOTES */
+
+.notes {
+  font-size: 14px;
+  color: #555;
+}
+
+/* ACTIONS */
+
+.sp-booking-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.accept-btn {
+  background: #1f7a63;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.reject-btn {
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.complete-btn {
+  background: #0f4d3c;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.completed-label {
+  color: #1f7a63;
+  font-weight: 600;
+}

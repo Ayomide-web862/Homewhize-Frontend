@@ -1,0 +1,129 @@
+.provider-detail-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 3rem;
+  font-family: 'Poppins', sans-serif;
+  color: #274B3E;
+}
+
+.provider-detail-container {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.provider-main {
+  flex: 2;
+}
+
+.provider-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.provider-avatar-large {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #e6f3f0, #d0e8e2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--primary, #1A6F54);
+}
+
+.provider-header h1 {
+  font-size: 28px;
+  color: #0F4D3C;
+  margin-bottom: 5px;
+}
+
+.provider-desc {
+  font-size: 16px;
+  color: #555;
+}
+
+.section-title {
+  font-size: 22px;
+  color: #0F4D3C;
+  margin-bottom: 16px;
+}
+
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.service-card-detail {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #ffffff, #e6f0ef);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+}
+
+.service-card-detail:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.service-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: #0F4D3C;
+}
+
+.service-desc {
+  font-size: 13px;
+  color: #666;
+}
+
+.service-price {
+  text-align: right;
+  font-weight: 600;
+  color: #1A6F54;
+}
+
+.service-duration {
+  font-size: 12px;
+  color: #666;
+}
+
+.provider-sidebar {
+  flex: 1;
+  min-width: 280px;
+}
+
+.messages-box {
+  height: 420px;
+  border-radius: 16px;
+  background: #f3f8f6;
+  border: 1px solid #e0f3eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #888;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .provider-detail-container {
+    flex-direction: column;
+  }
+
+  .provider-sidebar {
+    min-width: 100%;
+  }
+}

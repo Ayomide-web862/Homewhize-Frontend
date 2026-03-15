@@ -269,7 +269,7 @@ export default function SuperAdminUsersPage() {
 
 
             <button type="submit" className="create-btn" disabled={loading}>
-              {loading ? "Creating..." : "Create Owner Account"}
+              {loading ? "Creating..." : "Create Admin Account"}
             </button>
           </form>
         </div>

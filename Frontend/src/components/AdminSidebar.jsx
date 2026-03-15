@@ -34,12 +34,12 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
           <FaBuilding /> My Properties
         </NavLink>
 
-        {/* <NavLink
+        <NavLink
           to="/admin/bookings"
           className={({ isActive }) => (isActive ? "active" : "")}
         >
           <FaClipboardList /> Bookings
-        </NavLink> */}
+        </NavLink>
 
         <NavLink
           to="/admin/kyc"

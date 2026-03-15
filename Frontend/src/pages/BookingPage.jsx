@@ -71,11 +71,29 @@ export default function BookingPage() {
         property_id: shortlet.id,
         price_per_night: shortlet.price,
       };
+
+      // 1) Create booking on server
       const { data } = await api.post("/bookings", payload);
-      showModal("Success", `Booking Created! Ref: ${data.booking_reference}`, "success");
-      setTimeout(() => navigate(-1), 1500);
+      const bookingReference = data.booking_reference;
+      const amount = Number(data.total_amount || 0);
+
+      // 2) Initialize Paystack transaction (server-side uses secret key)
+      const initRes = await api.post("/payments/initialize", {
+        email: formData.email,
+        amount,
+        booking_reference: bookingReference,
+      });
+
+      const { authorization_url } = initRes.data;
+      if (!authorization_url) {
+        showModal("Error", "Failed to initialize payment. Try again.", "error");
+        return;
+      }
+
+      // Redirect user to Paystack payment page
+      window.location.href = authorization_url;
     } catch (err) {
-      showModal("Error", err.response?.data?.message || "Booking failed", "error");
+      showModal("Error", err.response?.data?.message || "Booking or payment initialization failed", "error");
     }
   };
 

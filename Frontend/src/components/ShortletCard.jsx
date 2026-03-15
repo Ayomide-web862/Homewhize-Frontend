@@ -12,6 +12,7 @@ function ShortletCard({
   bedrooms,
   minStay,
   onClick,
+  is_booked = false,
 }) {
   const [index, setIndex] = useState(0);
   const intervalRef = useRef(null);
@@ -59,6 +60,10 @@ function ShortletCard({
     >
       <div className="shortlet-img-wrapper">
         <img src={imgSrc} alt={title} className="shortlet-card-image" loading="lazy" />
+        {/* Availability badge */}
+        <div className={`shortlet-availability ${is_booked ? 'booked' : 'available'}`}>
+          {is_booked ? 'Booked' : 'Available'}
+        </div>
         {images.length > 1 && (
           <div className="shortlet-dots">
             {images.map((_, i) => (

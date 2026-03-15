@@ -5,11 +5,14 @@ import PadupLanding from "./pages/PadupLanding";
 import ShortletsPage from "./pages/ShortletsPage";
 import ShortletDetailPage from "./pages/ShortletDetailPage";
 import ServicesPage from "./pages/ServicesPage";
+import ServiceProvidersPage from "./pages/ServiceProvidersPage";
+import ProviderDetail from "./pages/ProviderDetail";
 import CommunityPage from "./pages/CommunityPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AboutUs from "./pages/AboutUS";
 import BookingPage from "./pages/BookingPage";
+import PaymentVerify from "./pages/PaymentVerify";
 import AdminDashboard from "./pages/AdminDashboard";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
@@ -17,11 +20,22 @@ import Contact from "./pages/Contact";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 
+import ServiceProviderDashboard from "./pages/ServiceProviderDashboard";
+import ServiceProviderBookingRequests from "./pages/ServiceProviderBookingRequests";
+import ServiceProviderMessages from "./pages/ServiceProviderMessages";
+import ServiceProviderSettingsPage from "./pages/ServiceProviderSettingsPage";
+import ServiceProviderServiceManagement from "./pages/ServiceProviderServiceManagement";
+import ServicePrServiceProviderKYC from "./pages/ServiceProviderKYC";
+
+
+
 import AdminKYC from "./pages/AdminKYC";
 import AdminBookings from "./pages/AdminBookings";
 import AdminProperties from "./pages/AdminProperties";
 import AdminAvailabilityManager from "./pages/AdminAvailabilityManager";
 import AdminSettingsPage from "./pages/AdminSettingsPage";
+
+
 import SuperAdminDashboard from "./pages/SuperAdminDashboard";
 import SuperAdminKYC from "./pages/SuperAdminKYC";
 import SuperAdminBookings from "./pages/SuperAdminBookings";
@@ -29,12 +43,15 @@ import SuperAdminUsersPage from "./pages/SuperAdminUsersPage";
 import SuperAdminRevenueAnalytics from "./pages/SuperAdminRevenueAnalytics";
 import SuperAdminCommunityPage from "./pages/SuperAdminCommunityPage";
 import SuperAdminSettingsPage from "./pages/SuperAdminSettingsPage";
+import SuperAdminCreateProvider from "./pages/SuperAdminCreateProvider";
+
 
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
 import api from "./api/axios";
+import ServiceProviderKYC from "./pages/ServiceProviderKYC";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -80,9 +97,12 @@ export default function App() {
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="/services" element={<ServicesPage />} />
+            <Route path="/services/:category" element={<ServiceProvidersPage />} />
+            <Route path="/provider/:slug" element={<ProviderDetail />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/booking" element={<BookingPage />} />
+            <Route path="/payments/verify" element={<PaymentVerify />} />
             <Route path="/shortlets/:slug" element={<ShortletDetailPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<Terms />} />
@@ -93,8 +113,59 @@ export default function App() {
             <Route path="/super-admin/kyc" element={<SuperAdminKYC />} />
             <Route path="/super-admin/settingspage" element={<SuperAdminSettingsPage />} />
             <Route path="/super-admin/userspage" element={<SuperAdminUsersPage />} />
+            <Route path="/super-admin/create-provider" element={<SuperAdminCreateProvider />} />
+            <Route path="/provider-dashboard/*" element={
+
             <Route path="/super-admin/revenueanalytics" element={<SuperAdminRevenueAnalytics />} /> */}
 
+
+            <Route path="/service-provider/dashboard" 
+              element={
+                <ProtectedRoute roles={["cleaner"]}>
+                  <ServiceProviderDashboard />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/service-provider/messages" 
+              element={
+                <ProtectedRoute roles={["cleaner"]}>
+                  <ServiceProviderMessages />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/service-provider/booking-requests" 
+              element={
+                <ProtectedRoute roles={["cleaner"]}>
+                  <ServiceProviderBookingRequests />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/service-provider/service-management" 
+              element={
+                <ProtectedRoute roles={["cleaner"]}>
+                  <ServiceProviderServiceManagement />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/service-provider/kyc" 
+              element={
+                <ProtectedRoute roles={["cleaner"]}>
+                  <ServiceProviderKYC />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/service-provider/settings" 
+              element={
+                <ProtectedRoute roles={["cleaner"]}>
+                  <ServiceProviderSettingsPage />
+                </ProtectedRoute>
+              }
+            />
 
 
             <Route path="/admin/dashboard" 
@@ -186,6 +257,15 @@ export default function App() {
               element={
                 <ProtectedRoute roles={["superadmin"]}>
                   <SuperAdminRevenueAnalytics />
+                </ProtectedRoute>
+              }
+            />
+
+
+            <Route path="/super-admin/create-provider" 
+              element={
+                <ProtectedRoute roles={["superadmin"]}>
+                  <SuperAdminCreateProvider />
                 </ProtectedRoute>
               }
             />

@@ -30,6 +30,7 @@ export default function Login() {
       const role = res.data.user.role;
       if (role === "superadmin") window.location.href = "/super-admin/dashboard";
       else if (role === "admin") window.location.href = "/admin/dashboard";
+      else if (role === "cleaner") window.location.href = "/service-provider/dashboard";
       else window.location.href = "/";
     } catch (error) {
       setMessage(error.response?.data?.message || "Login failed");

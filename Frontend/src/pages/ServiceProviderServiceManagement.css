@@ -1,0 +1,156 @@
+.sp-services-page {
+  width: 100%;
+}
+
+/* HEADER */
+
+.sp-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.sp-section-header h1 {
+  margin: 0;
+  color: #0f4d3c;
+}
+
+.sp-section-header p {
+  margin: 4px 0 0;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.sp-primary-btn {
+  background: #0f4d3c;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-weight: 600;
+}
+
+/* FORM */
+
+.sp-service-form {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 28px;
+  display: grid;
+  gap: 14px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sp-service-form input,
+.sp-service-form select,
+.sp-service-form textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #e6ece9;
+}
+
+/* SERVICE GRID */
+
+.sp-service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+/* CARD */
+
+.sp-service-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+}
+
+.sp-service-card:hover {
+  transform: translateY(-4px);
+}
+
+.sp-card-image {
+  height: 160px;
+  background: #f4f7f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #aaa;
+}
+
+.sp-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sp-card-content {
+  padding: 16px;
+}
+
+.sp-card-content h3 {
+  margin: 0;
+}
+
+.category {
+  display: inline-block;
+  background: #e7f2ee;
+  color: #0f4d3c;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin: 8px 0;
+}
+
+.sp-card-meta {
+  display: flex;
+  gap: 14px;
+  margin: 10px 0;
+  font-size: 0.9rem;
+}
+
+.availability {
+  color: #777;
+  font-size: 0.85rem;
+}
+
+.sp-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.sp-card-actions button {
+  border: none;
+  background: #f0f4f3;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .sp-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

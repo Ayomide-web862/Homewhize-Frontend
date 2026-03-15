@@ -1,0 +1,122 @@
+/* ==============================
+   TOPBAR
+============================== */
+.sp-topbar {
+  background: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  z-index: 100;
+  position: sticky;
+  top: 0;
+}
+
+/* LEFT SECTION (menu toggle, optional) */
+.sp-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* MENU TOGGLE BUTTON */
+.menu-toggle {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #0F4D3C;
+  display: none; /* shown on mobile/tablet via media query */
+}
+
+/* RIGHT SECTION (user dropdown) */
+.sp-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sp-icon {
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #0F4D3C;
+  transition: transform 0.2s ease;
+}
+
+.sp-icon:hover {
+  transform: scale(1.1);
+}
+
+/* ==============================
+   USER DROPDOWN
+============================== */
+.user-dropdown-wrapper {
+  position: relative;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  width: 140px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  z-index: 200;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.user-dropdown button {
+  width: 100%;
+  border: none;
+  background: none;
+  padding: 0.9rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: #0F4D3C;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.user-dropdown button:hover {
+  background: #f8f8f8;
+}
+
+.user-dropdown button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* SPINNER */
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #cfd8d5;
+  border-top: 2px solid #0F4D3C;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ==============================
+   RESPONSIVE
+============================== */
+@media (max-width: 992px) {
+  .menu-toggle { display: block; }
+}
+
+@media (max-width: 768px) {
+  .sp-topbar {
+    padding: 0.8rem 1rem;
+  }
+}

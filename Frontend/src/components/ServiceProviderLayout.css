@@ -1,0 +1,156 @@
+/* LAYOUT */
+.sp-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.sp-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sp-content {
+  padding: 2rem;
+}
+
+/* SIDEBAR */
+.sp-sidebar {
+  width: 260px;
+  height: 100vh;
+  background: linear-gradient(180deg, #0F4D3C, #0c3d30);
+  color: white;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  transition: all 0.3s ease;
+  z-index: 200;
+}
+
+.sp-sidebar-header {
+  margin-bottom: 2rem;
+}
+
+.sp-logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.sp-sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sp-sidebar a {
+  color: white;
+  text-decoration: none;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  transition: 0.2s ease;
+}
+
+.sp-sidebar a:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.sp-sidebar a.active {
+  background: rgba(255, 255, 255, 0.2);
+  border-left: 4px solid #FFD700;
+  font-weight: 600;
+}
+
+/* MOBILE OVERLAY */
+.sp-sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 150;
+}
+
+/* TOPBAR */
+.sp-topbar {
+  background: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.sp-icon {
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #0F4D3C;
+}
+
+.user-dropdown-wrapper {
+  position: relative;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  width: 140px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  z-index: 200;
+}
+
+.user-dropdown button {
+  width: 100%;
+  border: none;
+  background: none;
+  padding: 0.9rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: #0F4D3C;
+}
+
+.user-dropdown button:hover {
+  background: #f8f8f8;
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #cfd8d5;
+  border-top: 2px solid #0F4D3C;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .sp-sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+  }
+  .sp-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: #0F4D3C;
+  }
+}

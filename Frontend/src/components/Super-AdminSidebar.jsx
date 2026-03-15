@@ -63,7 +63,11 @@ export default function SuperAdminSidebar({
           </NavLink> */}
 
           <NavLink to="/super-admin/userspage">
-            <FaUsersCog /> <span>Users</span>
+            <FaUsersCog /> <span>Shortlets Owners</span>
+          </NavLink>
+
+          <NavLink to="/super-admin/create-provider">
+            <FaBuilding /> <span>Cleaning Services</span>
           </NavLink>
 
           <NavLink to="/super-admin/community">
