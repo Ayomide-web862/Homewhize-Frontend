@@ -1,5 +1,6 @@
 .sp-services-page {
   width: 100%;
+  padding: 20px 10px;
 }
 
 /* HEADER */
@@ -8,141 +9,189 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
+  gap: 12px;
 }
 
 .sp-section-header h1 {
   margin: 0;
+  font-size: 1.8rem;
   color: #0f4d3c;
+  font-weight: 700;
 }
 
 .sp-section-header p {
   margin: 4px 0 0;
-  color: #777;
-  font-size: 0.9rem;
+  color: #6b7280;
+  font-size: 0.95rem;
 }
 
+/* BUTTON */
+
 .sp-primary-btn {
-  background: #0f4d3c;
+  background: linear-gradient(135deg, #0f4d3c, #136f57);
   color: white;
   border: none;
-  padding: 12px 18px;
-  border-radius: 12px;
+  padding: 12px 20px;
+  border-radius: 14px;
   cursor: pointer;
   display: flex;
   gap: 8px;
   align-items: center;
   font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 18px rgba(15, 77, 60, 0.25);
+}
+
+.sp-primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(15, 77, 60, 0.3);
 }
 
 /* FORM */
 
 .sp-service-form {
-  background: white;
-  padding: 20px;
-  border-radius: 16px;
-  margin-bottom: 28px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 18px;
+  margin-bottom: 32px;
   display: grid;
-  gap: 14px;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+  gap: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f1;
+  animation: fadeIn 0.3s ease;
 }
 
 .form-group {
   display: flex;
   align-items: center;
   gap: 10px;
+  background: #f9fbfa;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #e5ecea;
+}
+
+.form-group svg {
+  color: #0f4d3c;
 }
 
 .sp-service-form input,
 .sp-service-form select,
 .sp-service-form textarea {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   border-radius: 10px;
-  border: 1px solid #e6ece9;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.sp-service-form textarea {
+  min-height: 90px;
+  resize: none;
+}
+
+.sp-service-form input::placeholder,
+.sp-service-form textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* FILE INPUT FIX */
+.sp-service-form input[type="file"] {
+  background: transparent;
+  border: none;
+  padding: 0;
 }
 
 /* SERVICE GRID */
 
 .sp-service-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
 }
 
 /* CARD */
 
 .sp-service-card {
-  background: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
-  transition: transform 0.2s;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eef2f1;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
 }
 
 .sp-service-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
 }
 
-.sp-card-image {
-  height: 160px;
-  background: #f4f7f6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  color: #aaa;
-}
+/* TITLE */
 
-.sp-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.sp-card-content {
-  padding: 16px;
-}
-
-.sp-card-content h3 {
+.sp-service-card h3 {
   margin: 0;
+  font-size: 1.1rem;
+  color: #111827;
+  font-weight: 600;
 }
 
-.category {
+/* CATEGORY TAG */
+
+.sp-service-card span {
   display: inline-block;
-  background: #e7f2ee;
+  background: rgba(15, 77, 60, 0.08);
   color: #0f4d3c;
   padding: 4px 10px;
-  border-radius: 20px;
+  border-radius: 999px;
   font-size: 12px;
-  margin: 8px 0;
+  font-weight: 500;
+  width: fit-content;
 }
 
-.sp-card-meta {
-  display: flex;
-  gap: 14px;
-  margin: 10px 0;
-  font-size: 0.9rem;
+/* PRICE */
+
+.sp-service-card p:nth-of-type(1) {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f4d3c;
+  margin: 4px 0 0;
 }
 
-.availability {
-  color: #777;
+/* DURATION */
+
+.sp-service-card p:nth-of-type(2) {
   font-size: 0.85rem;
+  color: #6b7280;
 }
 
-.sp-card-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 12px;
+/* EMPTY STATE (optional future use) */
+
+.no-services {
+  text-align: center;
+  padding: 40px 20px;
+  color: #9ca3af;
 }
 
-.sp-card-actions button {
-  border: none;
-  background: #f0f4f3;
-  padding: 8px;
-  border-radius: 8px;
-  cursor: pointer;
+/* ANIMATION */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* RESPONSIVE */
@@ -151,6 +200,14 @@
   .sp-section-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+  }
+
+  .sp-primary-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sp-service-form {
+    padding: 18px;
   }
 }

@@ -24,8 +24,8 @@ export default function PaymentVerify() {
         if (!mounted) return;
         if (res.data && res.data.verified) {
           setStatus('success');
-          setMessage('Payment verified successfully. Booking is confirmed.');
-          setTimeout(() => navigate('/'), 2500);
+          setMessage('Payment verified successfully! Your booking has been confirmed and a confirmation email has been sent.');
+          setTimeout(() => navigate('/dashboard'), 3000);
         } else {
           setStatus('failed');
           setMessage('Payment could not be verified.');

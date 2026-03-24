@@ -107,7 +107,12 @@ export default function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/contact" element={<Contact />} />
-            {/* <Route path="/admin/kyc" element={<AdminKYC />} />
+            <Route path="/provider/messages/:conversationId" element={<ServiceProviderMessages roles={["cleaner"]} />} />
+            <Route path="/service-provider/messages/:conversationId" element={<ProtectedRoute roles={["cleaner"]}><ServiceProviderMessages /></ProtectedRoute>} />
+
+
+            
+            {/* <Route path="/admin/kyc" element={<AdminKYC />} />}
             <Route path="/super-admin/dashboard" element={<SuperAdminDashboard />} />
             <Route path="/super-admin/bookings" element={<SuperAdminBookings />} />
             <Route path="/super-admin/kyc" element={<SuperAdminKYC />} />

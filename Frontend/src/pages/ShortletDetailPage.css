@@ -200,3 +200,43 @@
     height: 200px;
   }
 }
+
+/* AVAILABILITY STATUS */
+.availability-status {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #F6EEE2;
+  border-radius: 8px;
+  border-left: 4px solid #0F4D3C;
+}
+
+.availability-status h3 {
+  margin: 0 0 1rem 0;
+  color: #0F4D3C;
+  font-size: 1.2rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.status-badge.available {
+  background: #DFF6EA;
+  color: #0F4D3C;
+}
+
+.status-badge.occupied {
+  background: #FFF1DB;
+  color: #C27B3E;
+}
+
+.booked-dates-info {
+  margin: 1rem 0 0 0;
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+}

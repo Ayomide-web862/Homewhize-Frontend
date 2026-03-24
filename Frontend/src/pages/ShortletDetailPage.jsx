@@ -8,7 +8,7 @@ import "leaflet/dist/leaflet.css";
 import "./ShortletDetailPage.css";
 import { optimizeCloudinaryUrl } from "../utils/imageUtils";
 
-/* ✅ FIX LEAFLET ICON */
+/* FIX LEAFLET ICON */
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
@@ -63,7 +63,7 @@ export default function ShortletDetailPage() {
     touchStartX.current = null;
   };
 
-  // ✅ USE YOUR CUSTOM LOADER
+  // USE YOUR CUSTOM LOADER
   if (loading) return <Loader />;
   if (!shortlet) return <p>Shortlet not found</p>;
 
@@ -105,6 +105,19 @@ export default function ShortletDetailPage() {
         </p>
 
         <p className="description">{shortlet.description}</p>
+
+        {/* AVAILABILITY STATUS */}
+        <div className="availability-status">
+          <h3>Availability</h3>
+          <div className={`status-badge ${shortlet.is_currently_occupied ? 'occupied' : 'available'}`}>
+            {shortlet.is_currently_occupied ? 'Currently Occupied' : 'Available for Booking'}
+          </div>
+          {shortlet.booked_dates && shortlet.booked_dates.split(',').length > 0 && (
+            <p className="booked-dates-info">
+              This property has upcoming bookings. Dates are subject to availability.
+            </p>
+          )}
+        </div>
 
         {/* MAP */}
         {shortlet.latitude && shortlet.longitude && (

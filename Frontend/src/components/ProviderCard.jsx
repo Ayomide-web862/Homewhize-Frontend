@@ -1,129 +1,139 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  FaHome,
-  FaCouch,
-  FaSoap,
-  FaStar,
-  FaCommentDots,
-  FaCalendarCheck
-} from "react-icons/fa";
+  FiStar,
+  FiMessageCircle,
+  FiCalendar,
+  FiMapPin,
+  FiBriefcase
+} from "react-icons/fi";
+
 import "./ProviderCard.css";
 
 export default function ProviderCard({ provider, onChat, onBook }) {
   const navigate = useNavigate();
 
-  const { company_name, description, services = [], categories = [] } =
-    provider || {};
+  const {
+    company_name,
+    description,
+    services = [],
+    location
+  } = provider || {};
 
-  const companyName = company_name || "Provider Name";
+  const name = company_name || "Service Provider";
 
-  const priceRange = services.length
-    ? `₦${Math.min(...services.map((s) => s.price || 0))} - ₦${Math.max(
-        ...services.map((s) => s.price || 0)
-      )}`
-    : "N/A";
-
-  const getCategoryIcon = () => {
-    const first = categories[0] || "";
-
-    if (first.includes("Residential"))
-      return <FaHome className="category-icon" />;
-
-    if (first.includes("Specialized"))
-      return <FaCouch className="category-icon" />;
-
-    if (first.includes("Hygiene"))
-      return <FaSoap className="category-icon" />;
-
-    return <FaHome className="category-icon" />;
-  };
-
-  const initials = companyName
+  const initials = name
     .split(" ")
-    .map((s) => s[0])
+    .map((w) => w[0])
     .slice(0, 2)
     .join("")
     .toUpperCase();
 
-  const serviceTags = services
+  const minPrice = services.length
+    ? Math.min(...services.map((s) => s.price || 0))
+    : null;
+
+  const maxPrice = services.length
+    ? Math.max(...services.map((s) => s.price || 0))
+    : null;
+
+  const serviceNames = services
     .slice(0, 3)
-    .map((s) => s.title || s.name)
+    .map((s) => s.title)
     .filter(Boolean);
 
-  const handleCardClick = () => {
-    navigate(`/provider/${provider?.id}`);
+  const handleClick = () => {
+    navigate(`/provider/${provider.slug}`);
   };
 
   return (
-    <div className="provider-card" onClick={handleCardClick}>
-      <div className="provider-header">
+    <div className="provider-card-modern" onClick={handleClick}>
+      
+      {/* HEADER */}
+      <div className="provider-card-header">
 
-        <div className="provider-avatar">
+        <div className="provider-avatar-modern">
           {initials}
         </div>
 
-        <div className="provider-title">
-          <h3>{companyName}</h3>
+        <div className="provider-header-info">
+          <h3>{name}</h3>
 
-          <div className="provider-rating">
-            <FaStar />
-            <span>4.5</span>
+          <div className="provider-rating-modern">
+            <FiStar />
+            <span>4.8</span>
           </div>
-        </div>
-
-        <div className="category-badge">
-          {getCategoryIcon()}
-          <span>{categories[0] || "Service"}</span>
         </div>
 
       </div>
 
-      <p className="provider-description">
-        {description || "No description provided."}
+      {/* DESCRIPTION */}
+
+      <p className="provider-desc-modern">
+        {description ||
+          "Professional cleaning services delivered with attention to detail and care."}
       </p>
 
-      {serviceTags.length > 0 && (
-        <div className="service-list">
-          {serviceTags.map((tag, i) => (
-            <div className="service-chip" key={i}>
-              {tag}
-            </div>
+      {/* SERVICES */}
+
+      {serviceNames.length > 0 && (
+        <div className="service-tags-modern">
+
+          {serviceNames.map((s, i) => (
+            <span key={i} className="service-tag">
+              <FiBriefcase />
+              {s}
+            </span>
           ))}
+
         </div>
       )}
 
-      <div className="provider-footer">
+      {/* META */}
 
-        <div className="price-range">
-          {priceRange}
-        </div>
+      <div className="provider-meta-modern">
 
-        <div className="provider-actions">
+        {location && (
+          <div className="meta-item">
+            <FiMapPin />
+            <span>{location}</span>
+          </div>
+        )}
 
-          <button
-            className="btn chat"
-            onClick={(e) => {
-              e.stopPropagation();
-              onChat && onChat(provider);
-            }}
-          >
-            <FaCommentDots />
-            Chat
-          </button>
+        {minPrice !== null && (
+          <div className="meta-item price">
+            ₦{minPrice} - ₦{maxPrice}
+          </div>
+        )}
 
-          <button
-            className="btn book"
-            onClick={(e) => {
-              e.stopPropagation();
-              onBook && onBook(provider);
-            }}
-          >
-            <FaCalendarCheck />
-            Book
-          </button>
+      </div>
 
-        </div>
+      {/* ACTIONS */}
+
+      <div className="provider-actions-modern">
+
+        <button
+          className="action-btn chat"
+          onClick={(e) => {
+            e.stopPropagation();
+            onChat && onChat(provider);
+          }}
+        >
+          <FiMessageCircle />
+          Chat
+        </button>
+
+        <button
+          className="action-btn book"
+          onClick={(e) => {
+            e.stopPropagation();
+            onBook && onBook(provider);
+          }}
+        >
+          <FiCalendar />
+          Book
+        </button>
+
       </div>
     </div>
   );

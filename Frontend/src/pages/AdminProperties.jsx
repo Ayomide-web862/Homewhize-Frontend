@@ -99,6 +99,7 @@ export default function AdminProperties() {
     address: "",
     location: "",
     price: "",
+    cautionFee: "",
     propertyType: "Apartment",
     bedrooms: 1,
     bathrooms: 1,
@@ -430,6 +431,18 @@ const handleDeleteProperty = async () => {
 
                   </div>
 
+                  <div className="icon-input">
+                    <FaMoneyBill />
+                    <input
+                      name="cautionFee"
+                      placeholder="Caution Fee (₦)"
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/,/g, "");
+                        setNewProperty(prev => ({ ...prev, cautionFee: value }));
+                      }}
+                    />
+                  </div>
+
                   <p className="input-hint">
                     ⚠️ Enter amount without commas (e.g., 50000)
                   </p>
@@ -459,7 +472,7 @@ const handleDeleteProperty = async () => {
 
                   <select name="status" onChange={handleChange}>
                     <option value="Available">Available</option>
-                    <option value="Booked">Booked</option>
+                    {/* <option value="Booked">Booked</option> */}
                   </select>
                 </div>
 

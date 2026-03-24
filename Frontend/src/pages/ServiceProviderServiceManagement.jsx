@@ -19,7 +19,7 @@ const CATEGORIES = [
 ];
 
 export default function ServiceProviderServiceManagement() {
-  const { slug } = useParams(); // 👈 get slug from route
+  const { slug } = useParams(); // get slug from route
 
   const [provider, setProvider] = useState(null);
   const [services, setServices] = useState([]);

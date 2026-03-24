@@ -160,6 +160,7 @@ export default function ShortletsPage() {
                   bedrooms={item.bedrooms}
                   minStay={1}
                   onClick={() => navigate(`/shortlets/${item.slug || slugify(item.name)}`)}
+                  is_booked={item.is_currently_occupied}
                 />
                 ))
               ) : (
