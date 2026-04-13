@@ -1,0 +1,166 @@
+.service-booking-details-page {
+  min-height: 100vh;
+  background: #f7f9f8;
+}
+
+.details-shell {
+  max-width: 1080px;
+  margin: 36px auto;
+  padding: 24px;
+}
+
+.details-back {
+  border: none;
+  background: transparent;
+  color: #0f4d3c;
+  font-weight: 600;
+  display: inline-flex;
+  gap: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.details-card {
+  background: white;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.details-header h1 {
+  margin: 0;
+  color: #0f4d3c;
+}
+
+.details-header p {
+  margin: 8px 0 0;
+  color: #555;
+}
+
+.status {
+  border-radius: 20px;
+  padding: 10px 16px;
+  text-transform: capitalize;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.status.pending { background: #fff7d9; color: #ad6b00; }
+.status.accepted { background: #e6f7eb; color: #166838; }
+.status.awaiting_payment { background: #e8f3fe; color: #1f5dbd; }
+.status.confirmed { background: #d9f7e3; color: #14532d; }
+.status.rejected { background: #fde8e8; color: #9b1c1c; }
+.status.cancelled { background: #f3f3f3; color: #5e5e5e; }
+.status.in_progress { background: #fff4e6; color: #8b5c00; }
+.status.completed { background: #e8f5ff; color: #0f4d3c; }
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.details-box {
+  background: #f6faf6;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.details-box h3 {
+  margin-top: 0;
+  color: #0f4d3c;
+}
+
+.details-box p {
+  margin: 10px 0 0;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.details-notes {
+  margin-top: 24px;
+  background: #f9faf9;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.details-notes h3 {
+  margin-top: 0;
+}
+
+.details-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.details-meta div {
+  background: #ffffff;
+  border: 1px solid #e6ebe8;
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.details-meta strong {
+  display: block;
+  margin-bottom: 10px;
+  color: #0f4d3c;
+}
+
+.details-message {
+  margin-top: 18px;
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+
+.details-message.success { background: #e7f7ec; color: #14532d; }
+.details-message.error { background: #fde8e8; color: #9b1c1c; }
+
+.details-actions {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.details-actions button {
+  border: none;
+  border-radius: 16px;
+  padding: 14px 18px;
+  cursor: pointer;
+  background: #0f4d3c;
+  color: white;
+  font-weight: 700;
+}
+
+.details-actions button.secondary {
+  background: #eef3ee;
+  color: #0f4d3c;
+}
+
+.details-actions button.danger {
+  background: #de3730;
+}
+
+.details-actions button.cancel {
+  background: #f8d7da;
+  color: #842029;
+}
+
+@media (max-width: 980px) {
+  .details-grid,
+  .details-meta {
+    grid-template-columns: 1fr;
+  }
+}

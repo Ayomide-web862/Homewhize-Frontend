@@ -93,6 +93,10 @@ export default function AdminProperties() {
   const [propertyToDelete, setPropertyToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [propertyToEdit, setPropertyToEdit] = useState(null);
+  const [editStatus, setEditStatus] = useState("Available");
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const [newProperty, setNewProperty] = useState({
     name: "",
@@ -250,6 +254,35 @@ const handleDeleteProperty = async () => {
   }
 };
 
+const openEditModal = (property) => {
+  setPropertyToEdit(property);
+  setEditStatus(property.status || "Available");
+  setShowEditModal(true);
+};
+
+const handleEditProperty = async () => {
+  if (!propertyToEdit || !editStatus) return;
+
+  setIsUpdating(true);
+
+  try {
+    const api = (await import("../api/axios")).default;
+    await api.put(`/properties/${propertyToEdit.id}`, {
+      status: editStatus,
+    });
+
+    await fetchProperties();
+
+    setPopup({ show: true, message: "Property status updated successfully", type: "success" });
+    setShowEditModal(false);
+    setPropertyToEdit(null);
+  } catch (err) {
+    console.error("Edit error:", err);
+    setPopup({ show: true, message: "Failed to update property", type: "error" });
+  } finally {
+    setIsUpdating(false);
+  }
+};
 
 
   const propertyStats = [
@@ -378,13 +411,20 @@ const handleDeleteProperty = async () => {
                   </td>
                   <td className="actions-cell">
                     <button
+                      type="button"
+                      className="edit-btn"
+                      onClick={() => openEditModal(p)}
+                      title="Edit status"
+                    >
+                      <FaEdit />
+                    </button>
+                    <button
+                      type="button"
                       className="delete-btn"
                       onClick={() => confirmDeleteProperty(p)}
                     >
                       <FaTrash />
                     </button>
-
-
                   </td>
                 </tr>
               ))}
@@ -619,6 +659,54 @@ const handleDeleteProperty = async () => {
                   disabled={isDeleting}
                 >
                   {isDeleting ? "Deleting..." : "Delete"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* EDIT PROPERTY STATUS MODAL */}
+        {showEditModal && (
+          <div className="modal-overlay">
+            <div className="modal-content edit-modal">
+              <h3>Edit Property Status</h3>
+
+              <div className="edit-property-info">
+                <p><strong>Property:</strong> {propertyToEdit?.name}</p>
+                <p><strong>Location:</strong> {propertyToEdit?.location}</p>
+              </div>
+
+              <div className="edit-form-group">
+                <label htmlFor="statusSelect">Update Status:</label>
+                <select
+                  id="statusSelect"
+                  value={editStatus}
+                  onChange={(e) => setEditStatus(e.target.value)}
+                  className="status-select"
+                >
+                  <option value="Available">Available</option>
+                  <option value="Booked">Booked</option>
+                </select>
+              </div>
+
+              <div className="edit-modal-actions">
+                <button
+                  className="cancel-btn"
+                  onClick={() => {
+                    setShowEditModal(false);
+                    setPropertyToEdit(null);
+                  }}
+                  disabled={isUpdating}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  className="update-btn"
+                  onClick={handleEditProperty}
+                  disabled={isUpdating || editStatus === propertyToEdit?.status}
+                >
+                  {isUpdating ? "Updating..." : "Update Status"}
                 </button>
               </div>
             </div>

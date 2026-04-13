@@ -105,6 +105,12 @@
   font-size: 1rem;
 }
 
+.caution-fee {
+  color: #C27B3E;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+}
+
 /* MAP */
 .shortlet-map {
   height: 300px;
@@ -202,36 +208,94 @@
 }
 
 /* AVAILABILITY STATUS */
-.availability-status {
+/* AVAILABILITY CARD */
+.availability-card {
   margin: 2rem 0;
-  padding: 1.5rem;
-  background: #F6EEE2;
-  border-radius: 8px;
-  border-left: 4px solid #0F4D3C;
+  padding: 1.5rem 1.6rem;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  border: 1px solid #eee;
 }
 
-.availability-status h3 {
-  margin: 0 0 1rem 0;
-  color: #0F4D3C;
+/* HEADER */
+.availability-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.availability-header h3 {
   font-size: 1.2rem;
+  color: #222;
+  margin: 0;
 }
 
-.status-badge {
-  display: inline-block;
-  padding: 0.5rem 1rem;
+/* STATUS PILL */
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.35rem 0.9rem;
   border-radius: 20px;
+  font-size: 0.85rem;
   font-weight: 600;
-  font-size: 0.9rem;
 }
 
-.status-badge.available {
-  background: #DFF6EA;
-  color: #0F4D3C;
+/* DOT */
+.status-pill .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
 }
 
-.status-badge.occupied {
-  background: #FFF1DB;
+/* AVAILABLE */
+.status-pill.available {
+  background: #E9F9EF;
+  color: #1A7F4B;
+}
+
+.status-pill.available .dot {
+  background: #1A7F4B;
+}
+
+/* OCCUPIED */
+.status-pill.occupied {
+  background: #FFF4E5;
   color: #C27B3E;
+}
+
+.status-pill.occupied .dot {
+  background: #C27B3E;
+}
+
+/* BODY TEXT */
+.availability-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.availability-text {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.availability-subtext {
+  font-size: 0.85rem;
+  color: #777;
+  margin-top: 0.35rem;
+}
+
+.availability-subtext ul {
+  margin: 0.35rem 0 0 1.1rem;
+  padding-left: 0.9rem;
+  list-style-type: disc;
+}
+
+.availability-subtext ul li {
+  margin-bottom: 0.2rem;
 }
 
 .booked-dates-info {

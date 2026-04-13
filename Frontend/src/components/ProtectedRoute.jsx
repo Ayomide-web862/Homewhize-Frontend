@@ -14,6 +14,10 @@ export default function ProtectedRoute({ children, roles }) {
     return children;
   }
 
+  if (!roles || roles.length === 0) {
+    return children;
+  }
+
   if (!roles.includes(user.role)) {
     return <Navigate to="/login" replace />;
   }

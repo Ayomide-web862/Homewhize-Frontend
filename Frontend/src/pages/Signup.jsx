@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
+import { FiEye, FiEyeOff, FiMail, FiLock, FiUser } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import api from "../api/axios";
 import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import "./Auth.css";
 
 export default function Signup() {
@@ -10,7 +10,7 @@ export default function Signup() {
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
 
   const [message, setMessage] = useState("");
@@ -34,9 +34,12 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
+
     if (!isValid) return setMessage("Password does not meet requirements");
-    if (formData.password !== formData.confirmPassword)
+    if (formData.password !== formData.confirmPassword) {
       return setMessage("Passwords do not match");
+    }
 
     try {
       setLoading(true);
@@ -49,66 +52,154 @@ export default function Signup() {
     }
   };
 
-  const handleGoogleSuccess = async (res) => {
-    try {
-      setLoading(true);
-      const decoded = jwtDecode(res.credential);
-      const result = await api.post("/auth/google", { token: res.credential });
-
-      localStorage.setItem("token", result.data.token);
-      localStorage.setItem("user", JSON.stringify(result.data.user));
-      window.location.href = "/";
-    } catch {
-      setMessage("Google signup failed");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="auth-page">
-      <div className="auth-card">
+      <div className="auth-shell">
+        <div className="auth-card">
+          <div className="auth-logo">
+            <img src="/Homewhize.png" alt="HomeWhize Logo" />
+          </div>
 
-        {/* LOGO */}
-        <div className="auth-logo">
-          <img src="/Homewhize.png" alt="HomeWhize Logo" />
+          <span className="auth-badge">Create Account</span>
+
+          <h2 className="auth-title">Join HomeWhize today</h2>
+          <p className="auth-subtext">
+            Create your account and enjoy seamless shortlet bookings and services.
+          </p>
+
+          <form className="auth-form" onSubmit={handleSubmit}>
+            <div className="auth-input-group">
+              <label className="auth-label">Full Name</label>
+              <div className="auth-input-wrap">
+                <span className="auth-input-icon">
+                  <FiUser />
+                </span>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Enter your full name"
+                  className="auth-input"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="auth-input-group">
+              <label className="auth-label">Email Address</label>
+              <div className="auth-input-wrap">
+                <span className="auth-input-icon">
+                  <FiMail />
+                </span>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  className="auth-input"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="auth-input-group">
+              <label className="auth-label">Password</label>
+              <div className="auth-input-wrap">
+                <span className="auth-input-icon">
+                  <FiLock />
+                </span>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Create a password"
+                  className="auth-input auth-input-password"
+                  required
+                />
+                <button
+                  type="button"
+                  className="auth-eye"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <FiEyeOff /> : <FiEye />}
+                </button>
+              </div>
+            </div>
+
+            <div className="password-rules">
+              <p className={rules.upper ? "valid" : "invalid"}>
+                One uppercase letter
+              </p>
+              <p className={rules.lower ? "valid" : "invalid"}>
+                One lowercase letter
+              </p>
+              <p className={rules.number ? "valid" : "invalid"}>
+                One number
+              </p>
+              <p className={rules.special ? "valid" : "invalid"}>
+                One special character (@#$%^&*)
+              </p>
+              <p className={rules.length ? "valid" : "invalid"}>
+                Minimum 8 characters
+              </p>
+            </div>
+
+            <div className="auth-input-group">
+              <label className="auth-label">Confirm Password</label>
+              <div className="auth-input-wrap">
+                <span className="auth-input-icon">
+                  <FiLock />
+                </span>
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Confirm your password"
+                  className="auth-input auth-input-password"
+                  required
+                />
+                <button
+                  type="button"
+                  className="auth-eye"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                >
+                  {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+                </button>
+              </div>
+            </div>
+
+            <button className="auth-btn" disabled={!isValid || loading}>
+              {loading ? (
+                <>
+                  <span className="spinner" />
+                  Creating account...
+                </>
+              ) : (
+                "Sign Up"
+              )}
+            </button>
+          </form>
+
+          <div className="auth-divider">
+            <span>OR</span>
+          </div>
+
+          <div className="auth-google-wrap">
+            <GoogleLogin onSuccess={() => {}} />
+          </div>
+
+          {message && <p className="auth-message">{message}</p>}
+
+          <p className="auth-link-text">
+            Already have an account? <Link to="/login">Log in</Link>
+          </p>
         </div>
-
-        <h2 className="auth-title">Create Account</h2>
-        <p className="auth-subtext">Join the luxury experience</p>
-
-        <form className="auth-form" onSubmit={handleSubmit}>
-          <input type="text" name="name" onChange={handleChange} placeholder="Full Name" className="auth-input" required />
-          <input type="email" name="email" onChange={handleChange} placeholder="Email" className="auth-input" required />
-
-          <div className="auth-password-wrapper">
-            <input type={showPassword ? "text" : "password"} name="password" onChange={handleChange} placeholder="Password" className="auth-input" />
-            <span className="auth-eye" onClick={() => setShowPassword(!showPassword)}>
-              {showPassword ? <FiEyeOff /> : <FiEye />}
-            </span>
-          </div>
-
-          <div className="auth-password-wrapper">
-            <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" onChange={handleChange} placeholder="Confirm Password" className="auth-input" />
-            <span className="auth-eye" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-              {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
-            </span>
-          </div>
-
-          <button className="auth-btn" disabled={!isValid || loading}>
-            {loading ? "Creating account..." : "Sign Up"}
-          </button>
-        </form>
-
-        <p className="auth-divider">OR</p>
-
-        <GoogleLogin onSuccess={handleGoogleSuccess} />
-
-        {message && <p className="auth-message">{message}</p>}
-
-        <p className="auth-link">
-          Already have an account? <a href="/login">Log in</a>
-        </p>
       </div>
     </div>
   );

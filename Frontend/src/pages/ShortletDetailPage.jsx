@@ -43,6 +43,11 @@ export default function ShortletDetailPage() {
   const touchStartX = useRef(null);
 
   const images = Array.isArray(shortlet?.images) ? shortlet.images : [];
+  const bookedDates = Array.isArray(shortlet?.booked_dates)
+    ? shortlet.booked_dates
+    : shortlet?.booked_dates
+      ? String(shortlet.booked_dates).split(',').map((d) => d.trim()).filter(Boolean)
+      : [];
 
   useEffect(() => {
     if (!images.length) return;
@@ -100,6 +105,10 @@ export default function ShortletDetailPage() {
           ₦{Number(shortlet.price).toLocaleString()}/night
         </p>
 
+        <p className="caution-fee">
+          Caution Fee: ₦{Number(shortlet.caution_fee || shortlet.cautionFee || 0).toLocaleString()}
+        </p>
+
         <p className="meta">
           {shortlet.max_guests} guests • {shortlet.bedrooms} bedrooms
         </p>
@@ -107,16 +116,37 @@ export default function ShortletDetailPage() {
         <p className="description">{shortlet.description}</p>
 
         {/* AVAILABILITY STATUS */}
-        <div className="availability-status">
-          <h3>Availability</h3>
-          <div className={`status-badge ${shortlet.is_currently_occupied ? 'occupied' : 'available'}`}>
-            {shortlet.is_currently_occupied ? 'Currently Occupied' : 'Available for Booking'}
+        <div className="availability-card">
+          <div className="availability-header">
+            <h3>Availability</h3>
+            <span className={`status-pill ${shortlet.is_currently_occupied ? 'occupied' : 'available'}`}>
+              <span className="dot"></span>
+              {shortlet.is_currently_occupied ? 'Occupied' : 'Available'}
+            </span>
           </div>
-          {shortlet.booked_dates && shortlet.booked_dates.split(',').length > 0 && (
-            <p className="booked-dates-info">
-              This property has upcoming bookings. Dates are subject to availability.
-            </p>
-          )}
+
+          <div className="availability-body">
+            {shortlet.is_currently_occupied ? (
+              <p className="availability-text">
+                This property is currently occupied. You can check back later or choose another date.
+              </p>
+            ) : (
+              <p className="availability-text">
+                This property is open for booking.
+              </p>
+            )}
+
+            {bookedDates.length > 0 && (
+              <div className="availability-subtext">
+                <p>Booked dates (nights already reserved):</p>
+                <ul>
+                  {bookedDates.map((d) => (
+                    <li key={d}>{d}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* MAP */}

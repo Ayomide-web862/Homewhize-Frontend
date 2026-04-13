@@ -151,22 +151,50 @@
   color: #777;
 }
 
-/* CHAT BUTTON */
+/* SERVICE ACTIONS */
 
-.chat-btn {
-  margin-top: 10px;
+.service-actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.chat-btn,
+.book-btn {
+  width: 100%;
   border: none;
-  background: #0f4d3c;
-  color: white;
   padding: 12px;
   border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   gap: 8px;
   align-items: center;
   transition: background 0.2s;
+}
+
+.chat-btn {
+  background: #0f4d3c;
+  color: white;
+}
+
+.chat-btn:hover {
+  background: #0c3d31;
+}
+
+.book-btn {
+  background: #f6f7f6;
+  color: #0f4d3c;
+}
+
+.book-btn:hover {
+  background: #e8f2ed;
+}
+
+.chat-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }
 
 .chat-btn:hover {

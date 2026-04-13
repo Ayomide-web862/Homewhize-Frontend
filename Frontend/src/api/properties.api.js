@@ -8,3 +8,6 @@ export const createProperty = (formData) =>
 
 export const deleteProperty = (id) =>
   api.delete(`/properties/${id}`);
+
+export const getPublicProperties = () =>
+  api.get("/properties/public");

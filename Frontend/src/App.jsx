@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 import PadupLanding from "./pages/PadupLanding";
+import HomeWhizeLanding from "./pages/HomeWhizeLanding";
 import ShortletsPage from "./pages/ShortletsPage";
 import ShortletDetailPage from "./pages/ShortletDetailPage";
 import ServicesPage from "./pages/ServicesPage";
@@ -26,6 +27,9 @@ import ServiceProviderMessages from "./pages/ServiceProviderMessages";
 import ServiceProviderSettingsPage from "./pages/ServiceProviderSettingsPage";
 import ServiceProviderServiceManagement from "./pages/ServiceProviderServiceManagement";
 import ServicePrServiceProviderKYC from "./pages/ServiceProviderKYC";
+import ServiceBookingForm from "./pages/ServiceBookingForm";
+import ServiceBookingHistory from "./pages/ServiceBookingHistory";
+import ServiceBookingDetails from "./pages/ServiceBookingDetails";
 
 
 
@@ -44,6 +48,7 @@ import SuperAdminRevenueAnalytics from "./pages/SuperAdminRevenueAnalytics";
 import SuperAdminCommunityPage from "./pages/SuperAdminCommunityPage";
 import SuperAdminSettingsPage from "./pages/SuperAdminSettingsPage";
 import SuperAdminCreateProvider from "./pages/SuperAdminCreateProvider";
+import SuperAdminPropertyManagement from "./pages/SuperAdminPropertyManagement";
 
 
 
@@ -90,7 +95,8 @@ export default function App() {
           <Routes>
             {/* OPTION 2: Add as new page */}
             {/* <Route path="/" element={<PadupLanding />} /> */}
-            <Route path="/" element={<ShortletsPage />} />
+            <Route path="/" element={<HomeWhizeLanding />} />
+            <Route path="/shortlets" element={<ShortletsPage />} />
 
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -99,6 +105,21 @@ export default function App() {
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/services/:category" element={<ServiceProvidersPage />} />
             <Route path="/provider/:slug" element={<ProviderDetail />} />
+            <Route path="/provider/:slug/book/:serviceId" element={
+              <ProtectedRoute>
+                <ServiceBookingForm />
+              </ProtectedRoute>
+            } />
+            <Route path="/service-bookings" element={
+              <ProtectedRoute>
+                <ServiceBookingHistory />
+              </ProtectedRoute>
+            } />
+            <Route path="/service-bookings/:id" element={
+              <ProtectedRoute>
+                <ServiceBookingDetails />
+              </ProtectedRoute>
+            } />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/booking" element={<BookingPage />} />
@@ -288,6 +309,14 @@ export default function App() {
               element={
                 <ProtectedRoute roles={["superadmin"]}>
                   <SuperAdminSettingsPage />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/super-admin/properties" 
+              element={
+                <ProtectedRoute roles={["superadmin"]}>
+                  <SuperAdminPropertyManagement />
                 </ProtectedRoute>
               }
             />

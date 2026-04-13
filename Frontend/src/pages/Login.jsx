@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { FiEye, FiEyeOff, FiMail, FiLock } from "react-icons/fi";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../api/axios";
 import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import "./Auth.css";
 
 export default function Login() {
@@ -39,79 +38,102 @@ export default function Login() {
     }
   };
 
-  const handleGoogleSuccess = async (credentialResponse) => {
-    try {
-      const decoded = jwtDecode(credentialResponse.credential);
-      setLoading(true);
-
-      const res = await api.post("/auth/google", {
-        token: credentialResponse.credential,
-      });
-
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-      window.location.href = "/";
-    } catch {
-      setMessage("Google login failed");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="auth-page">
-      <div className="auth-card">
-
-        {/* LOGO */}
-        <div className="auth-logo">
-          <img src="/Homewhize.png" alt="HomeWhize Logo" />
-        </div>
-
-        <h2 className="auth-title">Welcome Back</h2>
-        <p className="auth-subtext">Log in to continue your journey</p>
-
-        <form className="auth-form" onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            onChange={handleChange}
-            placeholder="Email address"
-            className="auth-input"
-            required
-          />
-
-          <div className="auth-password-wrapper">
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              onChange={handleChange}
-              placeholder="Password"
-              className="auth-input"
-              required
-            />
-            <span className="auth-eye" onClick={() => setShowPassword(!showPassword)}>
-              {showPassword ? <FiEyeOff /> : <FiEye />}
-            </span>
+      <div className="auth-shell">
+        <div className="auth-card">
+          <div className="auth-logo">
+            <img src="/Homewhize.png" alt="HomeWhize Logo" />
           </div>
 
-          <button className="auth-btn" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
+          <span className="auth-badge">Welcome Back</span>
 
-        {message && <p className="auth-message error">{message}</p>}
+          <h2 className="auth-title">Log in to your account</h2>
+          <p className="auth-subtext">
+            Access your bookings, properties, and personalized HomeWhize experience.
+          </p>
 
-        <p className="auth-link" onClick={() => navigate("/forgot-password")}>
-          Forgot password?
-        </p>
+          <form className="auth-form" onSubmit={handleSubmit}>
+            <div className="auth-input-group">
+              <label className="auth-label">Email Address</label>
+              <div className="auth-input-wrap">
+                <span className="auth-input-icon">
+                  <FiMail />
+                </span>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  className="auth-input"
+                  required
+                />
+              </div>
+            </div>
 
-        <p className="auth-divider">OR</p>
+            <div className="auth-input-group">
+              <label className="auth-label">Password</label>
+              <div className="auth-input-wrap">
+                <span className="auth-input-icon">
+                  <FiLock />
+                </span>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Enter your password"
+                  className="auth-input auth-input-password"
+                  required
+                />
+                <button
+                  type="button"
+                  className="auth-eye"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <FiEyeOff /> : <FiEye />}
+                </button>
+              </div>
+            </div>
 
-        <GoogleLogin onSuccess={handleGoogleSuccess} />
+            <div className="auth-row">
+              <button
+                type="button"
+                className="auth-forgot"
+                onClick={() => navigate("/forgot-password")}
+              >
+                Forgot password?
+              </button>
+            </div>
 
-        <p className="auth-link">
-          Don’t have an account? <a href="/signup">Sign up</a>
-        </p>
+            <button className="auth-btn" disabled={loading}>
+              {loading ? (
+                <>
+                  <span className="spinner" />
+                  Logging in...
+                </>
+              ) : (
+                "Login"
+              )}
+            </button>
+          </form>
+
+          {message && <p className="auth-message error">{message}</p>}
+
+          <div className="auth-divider">
+            <span>OR</span>
+          </div>
+
+          <div className="auth-google-wrap">
+            <GoogleLogin onSuccess={() => {}} />
+          </div>
+
+          <p className="auth-link-text">
+            Don’t have an account? <Link to="/signup">Sign up</Link>
+          </p>
+        </div>
       </div>
     </div>
   );

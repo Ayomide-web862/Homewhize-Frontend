@@ -1,29 +1,66 @@
-/* Full screen overlay */
+/* FULL SCREEN LOADER */
 .loader-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  background-color: #F6EEE2;
+  background: #f6eee2;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  overflow: hidden;
 }
 
-/* FaHome pulsing animation */
-/* Logo loader */
+/* WRAPPER FOR CLEAN CENTERING */
+.loader-logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* LOGO ANIMATION */
 .loader-logo {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   object-fit: contain;
-  animation: pulse 1s infinite alternate ease-in-out;
+  display: block;
+  animation: logoInOut 1.6s ease-in-out infinite;
+  transform-origin: center;
 }
 
+/* SMOOTH IN-OUT EFFECT */
+@keyframes logoInOut {
+  0% {
+    transform: scale(0.75);
+    opacity: 0.2;
+  }
 
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 0.7; }
-  50% { transform: scale(1.3); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.7; }
+  25% {
+    transform: scale(0.95);
+    opacity: 0.65;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+
+  75% {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(0.75);
+    opacity: 0.2;
+  }
+}
+
+/* SMALL DEVICES */
+@media (max-width: 480px) {
+  .loader-logo {
+    width: 72px;
+    height: 72px;
+  }
 }

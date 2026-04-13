@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import {
   FiClock,
@@ -45,6 +45,8 @@ export default function ProviderDetail() {
 
     return () => clearInterval(interval);
   }, [conversation, chatOpen]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadProvider() {
@@ -260,9 +262,17 @@ export default function ProviderDetail() {
                   </span>
                 </div>
 
-                <button className="chat-btn" onClick={handleChat} disabled={isStartingChat}>
-                  <FiMessageCircle /> {isStartingChat ? "Starting chat..." : "Chat Provider"}
-                </button>
+                <div className="service-actions">
+                  <button className="chat-btn" onClick={handleChat} disabled={isStartingChat}>
+                    <FiMessageCircle /> {isStartingChat ? "Starting chat..." : "Chat Provider"}
+                  </button>
+                  <button
+                    className="book-btn"
+                    onClick={() => navigate(`/provider/${slug}/book/${service.id}`)}
+                  >
+                    Book Service
+                  </button>
+                </div>
               </div>
             </div>
           ))}

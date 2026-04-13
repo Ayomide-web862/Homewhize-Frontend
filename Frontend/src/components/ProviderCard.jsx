@@ -123,7 +123,7 @@ export default function ProviderCard({ provider, onChat, onBook }) {
           Chat
         </button>
 
-        <button
+        {/* <button
           className="action-btn book"
           onClick={(e) => {
             e.stopPropagation();
@@ -132,7 +132,7 @@ export default function ProviderCard({ provider, onChat, onBook }) {
         >
           <FiCalendar />
           Book
-        </button>
+        </button> */}
 
       </div>
     </div>

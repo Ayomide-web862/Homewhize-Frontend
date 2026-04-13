@@ -70,6 +70,11 @@ export default function SuperAdminSidebar({
             <FaBuilding /> <span>Cleaning Services</span>
           </NavLink>
 
+          <NavLink to="/super-admin/properties">
+            <FaBuilding /> <span>Properties</span>
+          </NavLink>
+
+
           <NavLink to="/super-admin/community">
             <FaUsers /> <span>Community</span>
           </NavLink>
