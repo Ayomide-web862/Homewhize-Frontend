@@ -18,10 +18,12 @@ export default function AdminKYC() {
     email: "",
     phone: "",
     address: "",
+    bankCode: "",
     bankName: "",
     accountNumber: ""
   });
 
+  const [banks, setBanks] = useState([]);
   const [idDocument, setIdDocument] = useState(null);
   const [ownershipDocument, setOwnershipDocument] = useState(null);
   const [status, setStatus] = useState("");
@@ -33,9 +35,10 @@ export default function AdminKYC() {
     ownershipDocument: null
   });
 
-  // Get current KYC status on mount
+  // Get current KYC status and banks on mount
   useEffect(() => {
     fetchKYCStatus();
+    fetchBanks();
   }, []);
 
   const fetchKYCStatus = async () => {
@@ -45,6 +48,16 @@ export default function AdminKYC() {
     } catch (err) {
       console.error("Failed to fetch KYC status:", err);
       setStatus("Not Submitted");
+    }
+  };
+
+  const fetchBanks = async () => {
+    try {
+      const res = await api.get("/kyc/banks");
+      setBanks(res.data?.banks || []);
+    } catch (err) {
+      console.error("Failed to fetch banks:", err);
+      setError("Failed to load bank list");
     }
   };
 
@@ -68,7 +81,16 @@ export default function AdminKYC() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
+    if (name === "bankCode") {
+      const selectedBank = banks.find(bank => bank.code === value);
+      setForm(prev => ({
+        ...prev,
+        bankCode: value,
+        bankName: selectedBank ? selectedBank.name : ""
+      }));
+    } else {
+      setForm(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleFileChange = (e, fileType) => {
@@ -107,8 +129,20 @@ export default function AdminKYC() {
     setSuccess("");
 
     // Validate form fields
-    if (!form.fullName || !form.email || !form.phone || !form.address || !form.bankName || !form.accountNumber) {
-      setError("Please fill all fields including bank details");
+    if (!form.fullName || !form.email || !form.phone || !form.address || !form.bankCode || !form.accountNumber) {
+      setError("Please fill all fields including bank selection and account number");
+      return;
+    }
+
+    // Validate bank_code format (should be numeric)
+    if (!/^\d+$/.test(form.bankCode)) {
+      setError("Invalid bank selection");
+      return;
+    }
+
+    // Validate account_number format (should be 10 digits)
+    if (!/^\d{10}$/.test(form.accountNumber)) {
+      setError("Account number must be 10 digits");
       return;
     }
 
@@ -136,6 +170,7 @@ export default function AdminKYC() {
     data.append("phone", form.phone);
     data.append("address", form.address);
     data.append("bankName", form.bankName);
+    data.append("bankCode", form.bankCode);
     data.append("accountNumber", form.accountNumber);
     data.append("idDocument", idDocument);
     data.append("ownershipDocument", ownershipDocument);
@@ -152,7 +187,7 @@ export default function AdminKYC() {
       setStatus("Pending");
       
       // Reset form
-      setForm({ fullName: "", email: "", phone: "", address: "", bankName: "", accountNumber: "" });
+      setForm({ fullName: "", email: "", phone: "", address: "", bankCode: "", bankName: "", accountNumber: "" });
       setIdDocument(null);
       setOwnershipDocument(null);
       setPreviews({ idDocument: null, ownershipDocument: null });
@@ -249,16 +284,22 @@ export default function AdminKYC() {
             </div>
 
             <div className="form-group">
-              <label>Bank Name</label>
+              <label>Select Bank</label>
               <div className="input-icon">
                 <FaUniversity />
-                <input
-                  type="text"
-                  name="bankName"
-                  placeholder="e.g., First Bank, UBA, Guaranty Trust"
-                  value={form.bankName}
+                <select
+                  name="bankCode"
+                  value={form.bankCode}
                   onChange={handleInputChange}
-                />
+                  style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "4px" }}
+                >
+                  <option value="">Select your bank</option>
+                  {banks.map(bank => (
+                    <option key={bank.code} value={bank.code}>
+                      {bank.name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
@@ -269,9 +310,10 @@ export default function AdminKYC() {
                 <input
                   type="text"
                   name="accountNumber"
-                  placeholder="Enter bank account number"
+                  placeholder="Enter 10-digit account number"
                   value={form.accountNumber}
                   onChange={handleInputChange}
+                  maxLength="10"
                 />
               </div>
             </div>
@@ -291,22 +333,42 @@ export default function AdminKYC() {
                   <div className="spinner"></div>
                 )}
                 {previews.idDocument && (
-                  <img
-                    src={previews.idDocument}
-                    alt="ID Preview"
-                    className="preview-img"
-                  />
+                  <div className="file-preview-container">
+                    <img
+                      src={previews.idDocument}
+                      alt="ID Preview"
+                      className="preview-img"
+                    />
+                    <button
+                      type="button"
+                      className="remove-file-btn"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setIdDocument(null);
+                        setPreviews(prev => ({ ...prev, idDocument: null }));
+                      }}
+                      title="Remove file"
+                    >
+                      ×
+                    </button>
+                    <div className="file-info">
+                      <span className="file-name">{idDocument?.name}</span>
+                      <span className="file-size">({(idDocument?.size / 1024 / 1024).toFixed(1)} MB)</span>
+                    </div>
+                  </div>
                 )}
                 {!previews.idDocument && !uploading && (
                   <>
                     <p>Click to upload ID Document</p>
                     <span>National ID / Passport / Driver's License</span>
+                    <small>JPG, PNG, WebP, PDF, DOC, DOCX (Max 10MB)</small>
                   </>
                 )}
               </label>
-              <input 
+              <input
                 id="idDocumentInput"
-                type="file" 
+                type="file"
                 accept="image/*,.pdf,.doc,.docx"
                 onChange={(e) => handleFileChange(e, "id")}
                 style={{ display: "none" }}
@@ -321,22 +383,42 @@ export default function AdminKYC() {
                   <div className="spinner"></div>
                 )}
                 {previews.ownershipDocument && (
-                  <img
-                    src={previews.ownershipDocument}
-                    alt="Ownership Preview"
-                    className="preview-img"
-                  />
+                  <div className="file-preview-container">
+                    <img
+                      src={previews.ownershipDocument}
+                      alt="Ownership Preview"
+                      className="preview-img"
+                    />
+                    <button
+                      type="button"
+                      className="remove-file-btn"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setOwnershipDocument(null);
+                        setPreviews(prev => ({ ...prev, ownershipDocument: null }));
+                      }}
+                      title="Remove file"
+                    >
+                      ×
+                    </button>
+                    <div className="file-info">
+                      <span className="file-name">{ownershipDocument?.name}</span>
+                      <span className="file-size">({(ownershipDocument?.size / 1024 / 1024).toFixed(1)} MB)</span>
+                    </div>
+                  </div>
                 )}
                 {!previews.ownershipDocument && !uploading && (
                   <>
                     <p>Upload Proof of Ownership</p>
                     <span>Property document, C of O, Deed</span>
+                    <small>JPG, PNG, WebP, PDF, DOC, DOCX (Max 10MB)</small>
                   </>
                 )}
               </label>
-              <input 
+              <input
                 id="ownershipDocumentInput"
-                type="file" 
+                type="file"
                 accept="image/*,.pdf,.doc,.docx"
                 onChange={(e) => handleFileChange(e, "ownership")}
                 style={{ display: "none" }}

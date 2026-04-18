@@ -5,6 +5,58 @@ import "./SuperAdminKYC.css";
 import api from "../api/axios";
 import { FaEye, FaCheckCircle, FaTimesCircle, FaDownload } from "react-icons/fa";
 
+// DocumentImage component for displaying images with signed URLs
+const DocumentImage = ({ ownerId, docType, onDownload }) => {
+  const [imageUrl, setImageUrl] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const loadImage = async () => {
+      try {
+        const res = await api.get(`/kyc/signed-url/${ownerId}/${docType}`);
+        const url = res?.data?.url;
+        if (url) {
+          setImageUrl(url);
+        } else {
+          setError(true);
+        }
+      } catch (err) {
+        console.error("Failed to load document image:", err);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadImage();
+  }, [ownerId, docType]);
+
+  if (loading) {
+    return <div className="image-loading">Loading...</div>;
+  }
+
+  if (error || !imageUrl) {
+    return (
+      <div className="image-error">
+        <p>Failed to load image</p>
+        <button onClick={onDownload} className="doc-download-link">
+          <FaDownload /> Download
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={imageUrl}
+      alt={`${docType} Document`}
+      className="kyc-modal-img"
+      onError={() => setError(true)}
+    />
+  );
+};
+
 export default function SuperAdminKYC() {
   const [owners, setOwners] = useState([]);
   const [selectedOwner, setSelectedOwner] = useState(null);
@@ -12,6 +64,7 @@ export default function SuperAdminKYC() {
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("All");
   const [updating, setUpdating] = useState(null);
+  const [signedUrls, setSignedUrls] = useState({});
   
   // Modal state
   const [modalConfig, setModalConfig] = useState({
@@ -112,7 +165,22 @@ const downloadFile = async (id, type) => {
   }
 };
 
-
+  const getSignedUrlForDisplay = async (id, type) => {
+    const key = `${id}-${type}`;
+    if (signedUrls[key]) return signedUrls[key];
+    
+    try {
+      const res = await api.get(`/kyc/signed-url/${id}/${type}`);
+      const url = res?.data?.url;
+      if (url) {
+        setSignedUrls(prev => ({ ...prev, [key]: url }));
+        return url;
+      }
+    } catch (err) {
+      console.error("Failed to get signed URL for display:", err);
+    }
+    return null;
+  };
 
   // Filter owners based on status
   const filteredOwners = filter === "All" 
@@ -258,28 +326,17 @@ const downloadFile = async (id, type) => {
                       {selectedOwner.id_document_url.includes('.pdf') ? (
                         <div className="doc-preview-pdf">
                           <p>PDF Document</p>
-                          <button onClick={() => downloadFile(selectedOwner.id, "id")} download className="doc-download-link">
+                          <button onClick={() => downloadFile(selectedOwner.id, "id")} className="doc-download-link">
                             <FaDownload /> Download
                           </button>
-
                         </div>
                       ) : (
-                        <img
-                          src={`${import.meta.env.VITE_API_BASE_URL}/kyc/download/${selectedOwner.id}/id`}
-                          alt="ID Document"
-                          className="kyc-modal-img"
-                          onError={(e) => {
-                            e.target.style.display = "none";
-                            e.target.nextSibling.style.display = "block";
-                          }}
+                        <DocumentImage 
+                          ownerId={selectedOwner.id} 
+                          docType="id" 
+                          onDownload={() => downloadFile(selectedOwner.id, "id")}
                         />
                       )}
-                      <p className="doc-error" style={{ display: "none" }}>
-                        Failed to load document. 
-                        <button onClick={() => downloadFile(selectedOwner.id, "id")}>
-                          <FaDownload /> Download PDF
-                        </button>
-                      </p>
                     </>
                   ) : (
                     <p>No document uploaded</p>
@@ -293,27 +350,17 @@ const downloadFile = async (id, type) => {
                       {selectedOwner.ownership_document_url.includes('.pdf') ? (
                         <div className="doc-preview-pdf">
                           <p>PDF Document</p>
-                          <button onClick={() => downloadFile(selectedOwner.id, "ownership")} download className="doc-download-link">
+                          <button onClick={() => downloadFile(selectedOwner.id, "ownership")} className="doc-download-link">
                             <FaDownload /> Download
                           </button>
-
                         </div>
                       ) : (
-                        <img
-                          src={`/api/kyc/download/${selectedOwner.id}/ownership`}
-                          alt="Ownership Document"
-                          className="kyc-modal-img"
-                          onError={(e) => {
-                            e.target.style.display = "none";
-                            e.target.nextSibling.style.display = "block";
-                          }}
+                        <DocumentImage 
+                          ownerId={selectedOwner.id} 
+                          docType="ownership" 
+                          onDownload={() => downloadFile(selectedOwner.id, "ownership")}
                         />
                       )}
-                      {/* <p className="doc-error" style={{ display: "none" }}>
-                        <button onClick={() => downloadFile(selectedOwner.id, "ownership")} download className="doc-download-link">
-                          <FaDownload /> Download
-                        </button>
-                      </p> */}
                     </>
                   ) : (
                     <p>No document uploaded</p>

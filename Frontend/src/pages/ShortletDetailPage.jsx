@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Loader from "../components/Loader";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
@@ -23,8 +23,11 @@ L.Icon.Default.mergeOptions({
 export default function ShortletDetailPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [shortlet, setShortlet] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [bookingReference, setBookingReference] = useState(null);
   useEffect(() => {
     (async () => {
       try {
@@ -38,6 +41,19 @@ export default function ShortletDetailPage() {
       }
     })();
   }, [slug]);
+
+  // Check for booking success parameters
+  useEffect(() => {
+    const bookingSuccess = searchParams.get('booking_success');
+    const bookingRef = searchParams.get('booking_reference');
+
+    if (bookingSuccess === '1' && bookingRef) {
+      setBookingReference(bookingRef);
+      setShowSuccessPopup(true);
+      // Clean up URL parameters after showing popup
+      navigate(`/shortlets/${slug}`, { replace: true });
+    }
+  }, [searchParams, navigate, slug]);
   // Hooks for gallery (must be declared unconditionally)
   const [index, setIndex] = useState(0);
   const touchStartX = useRef(null);
@@ -171,6 +187,45 @@ export default function ShortletDetailPage() {
           Book Now
         </button>
       </div>
+
+      {/* Booking Success Popup */}
+      {showSuccessPopup && (
+        <div className="success-popup-overlay" onClick={() => setShowSuccessPopup(false)}>
+          <div className="success-popup" onClick={(e) => e.stopPropagation()}>
+            <div className="success-popup-header">
+              <h2>🎉 Booking Confirmed!</h2>
+              <button
+                className="success-popup-close"
+                onClick={() => setShowSuccessPopup(false)}
+                aria-label="Close popup"
+              >
+                ×
+              </button>
+            </div>
+            <div className="success-popup-body">
+              <p>Your booking has been successfully confirmed!</p>
+              <p className="booking-reference">
+                <strong>Booking Reference:</strong> {bookingReference}
+              </p>
+              <p>You should receive a confirmation email shortly with all the booking details.</p>
+              <div className="success-popup-actions">
+                <button
+                  className="success-popup-btn primary"
+                  onClick={() => setShowSuccessPopup(false)}
+                >
+                  Continue Browsing
+                </button>
+                <button
+                  className="success-popup-btn secondary"
+                  onClick={() => navigate("/profile")}
+                >
+                  View My Bookings
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

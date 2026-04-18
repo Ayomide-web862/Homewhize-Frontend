@@ -298,6 +298,167 @@
   margin-bottom: 0.2rem;
 }
 
+/* BOOKING SUCCESS POPUP */
+.success-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.success-popup {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease-out;
+}
+
+.success-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #eee;
+}
+
+.success-popup-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #222;
+  font-weight: 600;
+}
+
+.success-popup-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.success-popup-close:hover {
+  background-color: #f5f5f5;
+}
+
+.success-popup-body {
+  padding: 2rem;
+}
+
+.success-popup-body p {
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
+  color: #333;
+}
+
+.booking-reference {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+  font-family: monospace;
+  margin: 1rem 0;
+}
+
+.success-popup-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.success-popup-btn {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.success-popup-btn.primary {
+  background: #007bff;
+  color: white;
+}
+
+.success-popup-btn.primary:hover {
+  background: #0056b3;
+}
+
+.success-popup-btn.secondary {
+  background: #f8f9fa;
+  color: #333;
+  border: 1px solid #dee2e6;
+}
+
+.success-popup-btn.secondary:hover {
+  background: #e9ecef;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .success-popup {
+    width: 95%;
+    margin: 1rem;
+  }
+
+  .success-popup-header {
+    padding: 1rem 1.5rem;
+  }
+
+  .success-popup-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .success-popup-body {
+    padding: 1.5rem;
+  }
+
+  .success-popup-actions {
+    flex-direction: column;
+  }
+
+  .success-popup-btn {
+    width: 100%;
+  }
+}
+
 .booked-dates-info {
   margin: 1rem 0 0 0;
   font-size: 0.9rem;

@@ -20,6 +20,7 @@ export default function AdminBookings() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [cancelling, setCancelling] = useState(null);
   const [filteredBookings, setFilteredBookings] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("paid");
@@ -43,6 +44,27 @@ export default function AdminBookings() {
       setError(err.response?.data?.message || "Failed to load bookings");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCancelBooking = async (bookingId, bookingReference) => {
+    if (!window.confirm(`Are you sure you want to cancel booking ${bookingReference}? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      setCancelling(bookingId);
+      const api = (await import("../api/axios")).default;
+      await api.post(`/bookings/${bookingId}/cancel`);
+
+      // Refresh bookings list
+      await fetchBookings();
+      alert(`Booking ${bookingReference} has been cancelled successfully.`);
+    } catch (err) {
+      console.error("Error cancelling booking:", err);
+      alert(err.response?.data?.message || "Failed to cancel booking");
+    } finally {
+      setCancelling(null);
     }
   };
 
@@ -269,6 +291,7 @@ export default function AdminBookings() {
                   <th>Amount</th>
                   <th>Status</th>
                   <th>Contact</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -307,6 +330,17 @@ export default function AdminBookings() {
                         <p>{booking.email}</p>
                         <p>{booking.phone}</p>
                       </div>
+                    </td>
+                    <td className="actions-cell">
+                      {booking.payment_status === 'paid' && booking.stay_outcome !== 'cancelled' && (
+                        <button
+                          className="cancel-btn"
+                          onClick={() => handleCancelBooking(booking.id, booking.booking_reference)}
+                          disabled={cancelling === booking.id}
+                        >
+                          {cancelling === booking.id ? 'Cancelling...' : 'Cancel'}
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}

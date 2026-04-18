@@ -54,8 +54,8 @@ export default function Contact() {
                 <FiClock />
               </div>
               <h3>Working Hours</h3>
-              <p>We are available during business hours to assist you.</p>
-              <span>Monday - Saturday, 8:00 AM - 6:00 PM</span>
+              <p>24/7 Availability</p>
+              <span></span>
             </div>
           </div>
         </section>

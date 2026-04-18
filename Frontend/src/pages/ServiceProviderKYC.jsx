@@ -19,10 +19,12 @@ export default function ServiceProviderKYC() {
     email: "",
     phone: "",
     address: "",
+    bankCode: "",
     bankName: "",
     accountNumber: ""
   });
 
+  const [banks, setBanks] = useState([]);
   const [idDocument, setIdDocument] = useState(null);
   const [ownershipDocument, setOwnershipDocument] = useState(null);
   const [status, setStatus] = useState("");
@@ -36,6 +38,7 @@ export default function ServiceProviderKYC() {
 
   useEffect(() => {
     fetchKYCStatus();
+    fetchBanks();
   }, []);
 
   const fetchKYCStatus = async () => {
@@ -45,6 +48,16 @@ export default function ServiceProviderKYC() {
     } catch (err) {
       console.error(err);
       setStatus("Not Submitted");
+    }
+  };
+
+  const fetchBanks = async () => {
+    try {
+      const res = await api.get("/kyc/banks");
+      setBanks(res.data?.banks || []);
+    } catch (err) {
+      console.error("Failed to fetch banks:", err);
+      setError("Failed to load bank list");
     }
   };
 
@@ -67,6 +80,16 @@ export default function ServiceProviderKYC() {
   const handleInputChange = e => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
+
+    // Auto-fill bank name when bank code is selected
+    if (name === "bankCode") {
+      const selectedBank = banks.find(bank => bank.code === value);
+      if (selectedBank) {
+        setForm(prev => ({ ...prev, bankName: selectedBank.name, bankCode: value }));
+      } else {
+        setForm(prev => ({ ...prev, bankName: "", bankCode: value }));
+      }
+    }
   };
 
   const handleFileChange = (e, fileType) => {
@@ -87,8 +110,13 @@ export default function ServiceProviderKYC() {
     setError("");
     setSuccess("");
 
-    if (!form.fullName || !form.email || !form.phone || !form.address || !form.bankName || !form.accountNumber) {
+    if (!form.fullName || !form.email || !form.phone || !form.address || !form.bankCode || !form.accountNumber) {
       setError("Please fill all fields");
+      return;
+    }
+
+    if (!/^\d+$/.test(form.bankCode)) {
+      setError("Please select a valid bank");
       return;
     }
 
@@ -113,6 +141,7 @@ export default function ServiceProviderKYC() {
         email: "",
         phone: "",
         address: "",
+        bankCode: "",
         bankName: "",
         accountNumber: ""
       });
@@ -207,15 +236,22 @@ export default function ServiceProviderKYC() {
             </div>
 
             <div className="sp-form-group">
-              <label>Bank</label>
+              <label>Select Bank</label>
               <div className="sp-input-icon">
                 <FaUniversity />
-                <input
-                  name="bankName"
-                  placeholder="Enter bank name"
-                  value={form.bankName}
+                <select
+                  name="bankCode"
+                  value={form.bankCode}
                   onChange={handleInputChange}
-                />
+                  style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "4px" }}
+                >
+                  <option value="">Select your bank</option>
+                  {banks.map(bank => (
+                    <option key={bank.code} value={bank.code}>
+                      {bank.name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
@@ -241,17 +277,41 @@ export default function ServiceProviderKYC() {
           <div className="sp-upload-section">
 
             <div className="sp-upload-box">
-              <label htmlFor="idDocumentInput">
+              <label htmlFor="idDocumentInput" style={{ cursor: "pointer", display: "block", width: "100%", height: "100%" }}>
                 <FaFileUpload className="sp-upload-icon" />
 
-                {previews.idDocument && (
-                  <img src={previews.idDocument} alt="" className="sp-preview-img" />
+                {uploading && !previews.idDocument && (
+                  <div className="sp-spinner"></div>
                 )}
 
-                {!previews.idDocument && (
+                {previews.idDocument && (
+                  <div className="sp-file-preview-container">
+                    <img src={previews.idDocument} alt="ID Preview" className="sp-preview-img" />
+                    <button
+                      type="button"
+                      className="sp-remove-file-btn"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setIdDocument(null);
+                        setPreviews(prev => ({ ...prev, idDocument: null }));
+                      }}
+                      title="Remove file"
+                    >
+                      ×
+                    </button>
+                    <div className="sp-file-info">
+                      <span className="sp-file-name">{idDocument?.name}</span>
+                      <span className="sp-file-size">({(idDocument?.size / 1024 / 1024).toFixed(1)} MB)</span>
+                    </div>
+                  </div>
+                )}
+
+                {!previews.idDocument && !uploading && (
                   <>
                     <p>Upload ID Document</p>
                     <span>NIN / Passport / Driver's License</span>
+                    <small>JPG, PNG, WebP, PDF, DOC, DOCX (Max 10MB)</small>
                   </>
                 )}
               </label>
@@ -259,23 +319,48 @@ export default function ServiceProviderKYC() {
               <input
                 id="idDocumentInput"
                 type="file"
+                accept="image/*,.pdf,.doc,.docx"
                 onChange={(e) => handleFileChange(e, "id")}
-                hidden
+                style={{ display: "none" }}
               />
             </div>
 
             <div className="sp-upload-box">
-              <label htmlFor="ownershipDocumentInput">
+              <label htmlFor="ownershipDocumentInput" style={{ cursor: "pointer", display: "block", width: "100%", height: "100%" }}>
                 <FaFileUpload className="sp-upload-icon" />
 
-                {previews.ownershipDocument && (
-                  <img src={previews.ownershipDocument} alt="" className="sp-preview-img" />
+                {uploading && !previews.ownershipDocument && (
+                  <div className="sp-spinner"></div>
                 )}
 
-                {!previews.ownershipDocument && (
+                {previews.ownershipDocument && (
+                  <div className="sp-file-preview-container">
+                    <img src={previews.ownershipDocument} alt="Business Document Preview" className="sp-preview-img" />
+                    <button
+                      type="button"
+                      className="sp-remove-file-btn"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setOwnershipDocument(null);
+                        setPreviews(prev => ({ ...prev, ownershipDocument: null }));
+                      }}
+                      title="Remove file"
+                    >
+                      ×
+                    </button>
+                    <div className="sp-file-info">
+                      <span className="sp-file-name">{ownershipDocument?.name}</span>
+                      <span className="sp-file-size">({(ownershipDocument?.size / 1024 / 1024).toFixed(1)} MB)</span>
+                    </div>
+                  </div>
+                )}
+
+                {!previews.ownershipDocument && !uploading && (
                   <>
                     <p>Upload Business Document</p>
                     <span>CAC, C of O, Deed</span>
+                    <small>JPG, PNG, WebP, PDF, DOC, DOCX (Max 10MB)</small>
                   </>
                 )}
               </label>
@@ -283,8 +368,9 @@ export default function ServiceProviderKYC() {
               <input
                 id="ownershipDocumentInput"
                 type="file"
+                accept="image/*,.pdf,.doc,.docx"
                 onChange={(e) => handleFileChange(e, "ownership")}
-                hidden
+                style={{ display: "none" }}
               />
             </div>
 
