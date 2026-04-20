@@ -25,7 +25,18 @@ export default function PaymentVerify() {
         if (res.data && res.data.verified) {
           setStatus('success');
           setMessage('Payment verified successfully! Your booking has been confirmed and a confirmation email has been sent.');
-          setTimeout(() => navigate('/dashboard'), 3000);
+          
+          // Redirect based on booking type
+          let redirectUrl = '/shortlets'; // default fallback
+          
+          if (res.data.booking_type === 'shortlet' && res.data.property_slug) {
+            redirectUrl = `/shortlets/${res.data.property_slug}`;
+          } else if (res.data.booking_type === 'service') {
+            redirectUrl = '/service-bookings';
+          }
+          // For other booking types, stay with default '/shortlets'
+          
+          setTimeout(() => navigate(redirectUrl), 3000);
         } else {
           setStatus('failed');
           setMessage('Payment could not be verified.');

@@ -17,6 +17,15 @@ export default function BookingPage() {
     type: "info",
   });
 
+  const [formData, setFormData] = useState({
+    full_name: "",
+    email: "",
+    phone: "",
+    check_in: "",
+    check_out: "",
+    guests: 1
+  });
+
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
@@ -106,14 +115,7 @@ export default function BookingPage() {
     );
   }
 
-  const [formData, setFormData] = useState({
-    full_name: "",
-    email: "",
-    phone: "",
-    check_in: "",
-    check_out: "",
-    guests: 1
-  });
+  
 
   const nights =
     formData.check_in && formData.check_out

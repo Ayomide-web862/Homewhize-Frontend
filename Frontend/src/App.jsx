@@ -43,6 +43,7 @@ import AdminSettingsPage from "./pages/AdminSettingsPage";
 import SuperAdminDashboard from "./pages/SuperAdminDashboard";
 import SuperAdminKYC from "./pages/SuperAdminKYC";
 import SuperAdminBookings from "./pages/SuperAdminBookings";
+import SuperAdminSettlement from "./pages/SuperAdminSettlement";
 import SuperAdminUsersPage from "./pages/SuperAdminUsersPage";
 import SuperAdminRevenueAnalytics from "./pages/SuperAdminRevenueAnalytics";
 import SuperAdminCommunityPage from "./pages/SuperAdminCommunityPage";
@@ -265,6 +266,14 @@ export default function App() {
               element={
                 <ProtectedRoute roles={["superadmin"]}>
                   <SuperAdminKYC />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/super-admin/settlement" 
+              element={
+                <ProtectedRoute roles={["superadmin"]}>
+                  <SuperAdminSettlement />
                 </ProtectedRoute>
               }
             />

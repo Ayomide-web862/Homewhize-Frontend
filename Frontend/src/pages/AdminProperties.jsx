@@ -198,13 +198,20 @@ export default function AdminProperties() {
 
     try {
       const formData = new FormData();
-      Object.entries(newProperty).forEach(([k, v]) =>
-        formData.append(k, v)
-      );
-      imgFile.forEach((file) => formData.append("images", file));
+      Object.entries(newProperty).forEach(([k, v]) => {
+        formData.append(k, v);
+      });
+      
+      console.log('[AdminProperties] Files to upload:', imgFile.length);
+      imgFile.forEach((file, idx) => {
+        console.log(`[AdminProperties] Appending file ${idx + 1}: ${file.name} (${file.size} bytes)`);
+        formData.append("images", file);
+      });
 
+      console.log('[AdminProperties] FormData prepared. Sending to API...');
       const api = (await import("../api/axios")).default;
-      await api.post("/properties", formData);
+      const response = await api.post("/properties", formData);
+      console.log('[AdminProperties] API response:', response.data);
 
       await fetchProperties();
       setShowModal(false);
@@ -213,7 +220,8 @@ export default function AdminProperties() {
       previewsRef.current?.forEach((u) => { try { URL.revokeObjectURL(u); } catch (e) {} });
       setImgPreview([]);
       setPopup({ show: true, message: "Property added successfully", type: "success" });
-    } catch {
+    } catch (err) {
+      console.error('[AdminProperties] Error:', err);
       setPopup({ show: true, message: "Failed to add property", type: "error" });
     } finally {
       setIsSubmitting(false);

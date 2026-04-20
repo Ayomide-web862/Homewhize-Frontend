@@ -32,6 +32,91 @@
   background: #1A6F54;
 }
 
+/* STATS GRID */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.stat-card h3 {
+  font-size: 2rem;
+  color: #0F4D3C;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.stat-card p {
+  color: #666;
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* LOADING AND ERROR STATES */
+.loading-spinner {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.error-message {
+  background: #FFE3E3;
+  color: #C94141;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.retry-btn {
+  padding: 10px 18px;
+  background: #0F4D3C;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.retry-btn:hover {
+  background: #1A6F54;
+}
+
+/* INFO SECTIONS */
+.guest-info,
+.property-info,
+.admin-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.guest-info strong,
+.property-info strong,
+.admin-info strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.guest-info small,
+.property-info small,
+.admin-info small {
+  color: #666;
+  font-size: 0.8rem;
+}
+
 /* FILTER BAR */
 .filter-bar {
   display: flex;
@@ -55,8 +140,13 @@
 .filter-btn {
   padding: 10px 18px;
   white-space: nowrap;
+  background: #0F4D3C;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
 }
-
 
 .filter-btn:hover {
   background: #0F4D3C;
@@ -100,19 +190,32 @@
   font-weight: 600;
 }
 
-.status-badge.paid {
+.status-paid {
   background: #DFF6EA;
   color: #0F4D3C;
 }
 
-.status-badge.pending {
+.status-pending {
   background: #FFF1DB;
   color: #C27B3E;
 }
 
-.status-badge.cancelled {
+.status-cancelled {
   background: #FFE3E3;
   color: #C94141;
+}
+
+.status-default {
+  background: #F0F0F0;
+  color: #666;
+}
+
+/* NO DATA STATE */
+.no-data {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  font-style: italic;
 }
 
 /* TABLET */
@@ -124,6 +227,11 @@
   .bookings-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.8rem;
   }
 
   .export-btn {
@@ -156,6 +264,12 @@
   .bookings-table td {
     padding: 10px 8px;
   }
+
+  .guest-info small,
+  .property-info small,
+  .admin-info small {
+    font-size: 0.75rem;
+  }
 }
 
 /* SMALL PHONES */
@@ -166,6 +280,19 @@
 
   .bookings-header h2 {
     font-size: 1.3rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-card h3 {
+    font-size: 1.5rem;
   }
 
   .export-btn {
@@ -191,6 +318,24 @@
   .bookings-table th,
   .bookings-table td {
     padding: 6px 4px;
+  }
+
+  .guest-info,
+  .property-info,
+  .admin-info {
+    gap: 1px;
+  }
+
+  .guest-info strong,
+  .property-info strong,
+  .admin-info strong {
+    font-size: 0.8rem;
+  }
+
+  .guest-info small,
+  .property-info small,
+  .admin-info small {
+    font-size: 0.7rem;
   }
 }
 

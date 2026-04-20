@@ -16,7 +16,7 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 import Navbar from "../components/Navbar";
-import { getPublicProperties } from "../api/properties.api";
+import { getPublicProperties, getPublicPropertiesCount } from "../api/properties.api";
 import "./HomeWhizeLanding.css";
 
 export default function HomeWhizeLanding() {
@@ -26,22 +26,32 @@ export default function HomeWhizeLanding() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchFeaturedHomes = async () => {
+    const fetchData = async () => {
       try {
-        const response = await getPublicProperties();
-        // Set total count from database
-        setPropertyCount(response.data.length);
-        // Take first 3 properties and transform to match expected format
-        const transformed = response.data.slice(0, 3).map(property => ({
-          id: property.id,
-          title: property.name,
-          location: property.location,
-          price: `₦${property.price.toLocaleString()}`,
-          image: property.images && property.images.length > 0 ? property.images[0] : "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80"
-        }));
-        setFeaturedHomes(transformed);
+        // Load properties and count in parallel for optimal performance
+        const [propertiesRes, countRes] = await Promise.allSettled([
+          getPublicProperties(),
+          getPublicPropertiesCount()
+        ]);
+
+        // Set property count (loads faster from lightweight endpoint)
+        if (countRes.status === 'fulfilled' && countRes.value?.data?.count) {
+          setPropertyCount(countRes.value.data.count);
+        }
+
+        // Set featured properties
+        if (propertiesRes.status === 'fulfilled' && propertiesRes.value?.data) {
+          const transformed = propertiesRes.value.data.slice(0, 3).map(property => ({
+            id: property.id,
+            title: property.name,
+            location: property.location,
+            price: `₦${property.price.toLocaleString()}`,
+            image: property.images && property.images.length > 0 ? property.images[0] : "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80"
+          }));
+          setFeaturedHomes(transformed);
+        }
       } catch (error) {
-        console.error("Error fetching featured homes:", error);
+        console.error("Error fetching data:", error);
         // Fallback to hardcoded data if API fails
         setFeaturedHomes([
           {
@@ -71,7 +81,7 @@ export default function HomeWhizeLanding() {
       }
     };
 
-    fetchFeaturedHomes();
+    fetchData();
   }, []);
 
   const features = [

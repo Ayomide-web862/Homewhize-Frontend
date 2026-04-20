@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { FiEye, FiEyeOff, FiMail, FiLock, FiUser } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { GoogleLogin } from "@react-oauth/google";
 import "./Auth.css";
 
 export default function Signup() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,6 +18,33 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    if (!credentialResponse?.credential) {
+      setMessage("Google credential missing. Please try again.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setMessage("");
+      const res = await api.post("/auth/google", {
+        token: credentialResponse.credential,
+      });
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      navigate("/");
+    } catch (err) {
+      console.error("Google signup error:", err);
+      setMessage(err.response?.data?.message || "Google signup failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleError = () => {
+    setMessage("Google Sign-In failed. Try again.");
+  };
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -191,7 +219,11 @@ export default function Signup() {
           </div>
 
           <div className="auth-google-wrap">
-            <GoogleLogin onSuccess={() => {}} />
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              useOneTap={false}
+            />
           </div>
 
           {message && <p className="auth-message">{message}</p>}

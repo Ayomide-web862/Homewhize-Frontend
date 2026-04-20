@@ -81,7 +81,7 @@ export const useShortlets = () => {
       // Cache only the first page
       cacheShortlets(list);
     } catch (err) {
-      console.error("❌ Failed to fetch shortlets:", err);
+      console.error("Failed to fetch shortlets:", err);
       setError("Failed to load shortlets. Please refresh the page.");
       // Don't clear existing data on error
     } finally {
@@ -122,7 +122,7 @@ export const useShortlets = () => {
       setPage(nextPage);
       setHasMore(list.length >= PAGE_LIMIT);
     } catch (err) {
-      console.error("❌ Failed to fetch more shortlets:", err);
+      console.error("Failed to fetch more shortlets:", err);
       // Don't show error for loading more, silently fail
       // User can scroll again to retry
     } finally {

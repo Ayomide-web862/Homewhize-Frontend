@@ -12,6 +12,37 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+    if (!credentialResponse?.credential) {
+      setMessage("Google credential missing. Please try again.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setMessage("");
+      const res = await api.post("/auth/google", {
+        token: credentialResponse.credential,
+      });
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      const role = res.data.user.role;
+      if (role === "superadmin") window.location.href = "/super-admin/dashboard";
+      else if (role === "admin") window.location.href = "/admin/dashboard";
+      else if (role === "cleaner") window.location.href = "/service-provider/dashboard";
+      else window.location.href = "/";
+    } catch (error) {
+      console.error("Google login error:", error);
+      setMessage(error.response?.data?.message || "Google login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleError = () => {
+    setMessage("Google Sign-In failed. Try again.");
+  };
+
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -127,7 +158,11 @@ export default function Login() {
           </div>
 
           <div className="auth-google-wrap">
-            <GoogleLogin onSuccess={() => {}} />
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              useOneTap={false}
+            />
           </div>
 
           <p className="auth-link-text">

@@ -11,3 +11,6 @@ export const deleteProperty = (id) =>
 
 export const getPublicProperties = () =>
   api.get("/properties/public");
+
+export const getPublicPropertiesCount = () =>
+  api.get("/properties/public/count");

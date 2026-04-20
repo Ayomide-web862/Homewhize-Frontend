@@ -42,9 +42,13 @@ export default function SuperAdminSidebar({
             <FaHome /> <span>Dashboard</span>
           </NavLink>
 
-          {/* <NavLink to="/super-admin/bookings">
+          <NavLink to="/super-admin/settlement">
+            <FaMoneyCheckAlt /> <span>Payments</span>
+          </NavLink>
+
+          <NavLink to="/super-admin/bookings">
             <FaBuilding /> <span>Bookings</span>
-          </NavLink> */}
+          </NavLink>
 
           <NavLink to="/super-admin/kyc">
             <FaIdCard /> <span>Owners KYC</span>

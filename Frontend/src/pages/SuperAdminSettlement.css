@@ -1,0 +1,311 @@
+.settlement-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.settlement-header {
+  margin-bottom: 30px;
+}
+
+.settlement-header h2 {
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.settlement-header p {
+  color: #7f8c8d;
+  margin: 0;
+}
+
+.settlement-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #ecf0f1;
+  padding-bottom: 10px;
+}
+
+.tab-button {
+  padding: 12px 20px;
+  border: none;
+  background: #f8f9fa;
+  color: #6c757d;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+  background: #e9ecef;
+}
+
+.tab-button.active {
+  background: #007bff;
+  color: white;
+}
+
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.booking-card {
+  background: white;
+  border: 1px solid #e1e8ed;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.booking-info {
+  flex: 1;
+}
+
+.booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.booking-header h3 {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status.awaiting_review {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.approved {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status.completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.caution_fee_held {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.booking-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.detail-row span:first-child {
+  font-weight: 600;
+  color: #5a6c7d;
+}
+
+.detail-row span:last-child {
+  color: #2c3e50;
+}
+
+.booking-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 200px;
+}
+
+.action-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.action-btn.approve {
+  background: #28a745;
+  color: white;
+}
+
+.action-btn.approve:hover {
+  background: #218838;
+}
+
+.action-btn.refund {
+  background: #ffc107;
+  color: #212529;
+}
+
+.action-btn.refund:hover {
+  background: #e0a800;
+}
+
+.action-btn.release {
+  background: #17a2b8;
+  color: white;
+}
+
+.action-btn.release:hover {
+  background: #138496;
+}
+
+.payout-info {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.payout-info p {
+  margin: 4px 0;
+  color: #6c757d;
+}
+
+.loading, .no-bookings {
+  text-align: center;
+  padding: 40px;
+  color: #6c757d;
+  font-size: 16px;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.review-section {
+  margin-bottom: 20px;
+}
+
+.review-section h4 {
+  margin-bottom: 12px;
+  color: #495057;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 4px;
+}
+
+.review-section p {
+  margin: 6px 0;
+  color: #6c757d;
+}
+
+.review-section label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #495057;
+}
+
+.review-section textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn.cancel {
+  background: #6c757d;
+  color: white;
+}
+
+.btn.cancel:hover {
+  background: #5a6268;
+}
+
+.btn.approve {
+  background: #28a745;
+  color: white;
+}
+
+.btn.approve:hover {
+  background: #218838;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .booking-card {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .booking-actions {
+    min-width: unset;
+  }
+
+  .booking-details {
+    grid-template-columns: 1fr;
+  }
+
+  .settlement-tabs {
+    flex-wrap: wrap;
+  }
+
+  .tab-button {
+    flex: 1;
+    min-width: 120px;
+  }
+}

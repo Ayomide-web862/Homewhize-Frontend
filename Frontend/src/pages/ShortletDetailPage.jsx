@@ -33,9 +33,13 @@ export default function ShortletDetailPage() {
       try {
         const api = (await import("../api/axios")).default;
         const { data } = await api.get(`/properties/public/slug/${slug}`);
+        console.log('[ShortletDetailPage] API response for slug:', slug);
+        console.log('[ShortletDetailPage] Response keys:', Object.keys(data));
+        console.log('[ShortletDetailPage] Images field type:', typeof data.images);
+        console.log('[ShortletDetailPage] Images field content:', data.images);
         setShortlet(data);
       } catch (err) {
-        console.error(err);
+        console.error('[ShortletDetailPage] API Error:', err);
       } finally {
         setLoading(false);
       }
