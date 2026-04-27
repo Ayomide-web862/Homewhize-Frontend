@@ -42,9 +42,9 @@ export default function SuperAdminSidebar({
             <FaHome /> <span>Dashboard</span>
           </NavLink>
 
-          <NavLink to="/super-admin/settlement">
+          {/* <NavLink to="/super-admin/settlement">
             <FaMoneyCheckAlt /> <span>Payments</span>
-          </NavLink>
+          </NavLink> */}
 
           <NavLink to="/super-admin/bookings">
             <FaBuilding /> <span>Bookings</span>

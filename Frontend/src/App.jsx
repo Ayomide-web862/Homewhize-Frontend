@@ -124,7 +124,7 @@ export default function App() {
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/booking" element={<BookingPage />} />
-            <Route path="/payments/verify" element={<PaymentVerify />} />
+            <Route path="/payment/verify" element={<PaymentVerify />} />
             <Route path="/shortlets/:slug" element={<ShortletDetailPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<Terms />} />

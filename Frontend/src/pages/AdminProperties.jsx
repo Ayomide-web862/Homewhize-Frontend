@@ -492,7 +492,7 @@ const handleEditProperty = async () => {
                   </div>
 
                   <p className="input-hint">
-                    ⚠️ Enter amount without commas (e.g., 50000)
+                    ⚠️ Enter amount without commas (e.g., 50000) & Add a service fee of ₦2000 to the caution fee.
                   </p>
 
 
@@ -525,6 +525,9 @@ const handleEditProperty = async () => {
                 </div>
 
                 <div className="icon-textarea">
+                  <p className="input-hint">
+                    Start each sentence on a new line.
+                  </p>
                   <FaInfoCircle />
                   <textarea
                     name="description"
@@ -532,6 +535,7 @@ const handleEditProperty = async () => {
                     onChange={handleChange}
                     rows={4}
                   />
+                  
                 </div>
 
                 <div className="map-coordinates">
