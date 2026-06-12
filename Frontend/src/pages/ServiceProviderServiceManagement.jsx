@@ -10,7 +10,7 @@ import {
 } from "react-icons/fi";
 import "./ServiceProviderServiceManagement.css";
 import ServiceProviderLayout from "../components/ServiceProviderLayout";
-import { createService, getProviderBySlug, getMyProvider } from "../api/providers.api";
+import { createService, deleteService, getProviderBySlug, getMyProvider } from "../api/providers.api";
 
 const CATEGORIES = [
   "Residential & Standard Cleaning",
@@ -24,6 +24,10 @@ export default function ServiceProviderServiceManagement() {
   const [provider, setProvider] = useState(null);
   const [services, setServices] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [serviceToDelete, setServiceToDelete] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeletingService, setIsDeletingService] = useState(false);
+  const [deleteError, setDeleteError] = useState(null);
 
   const [form, setForm] = useState({
     title: "",
@@ -31,7 +35,7 @@ export default function ServiceProviderServiceManagement() {
     description: "",
     price: "",
     duration: "",
-    image: null,
+    images: [],
   });
 
   // 🔹 Load provider info — use slug when present, otherwise load authenticated user's provider
@@ -73,7 +77,7 @@ export default function ServiceProviderServiceManagement() {
     const { name, value, files } = e.target;
     setForm({
       ...form,
-      [name]: files ? files[0] : value,
+      [name]: files ? Array.from(files) : value,
     });
   };
 
@@ -90,10 +94,10 @@ export default function ServiceProviderServiceManagement() {
         description: form.description,
         price: form.price,
         estimatedDuration: form.duration,
-        images: form.image ? [form.image.name] : [],
       };
 
-      const newService = await createService(provider.id, payload);
+      const files = form.images || [];
+      const newService = await createService(provider.id, payload, files);
 
       // update UI immediately
       setServices((prev) => [newService, ...prev]);
@@ -104,13 +108,43 @@ export default function ServiceProviderServiceManagement() {
         description: "",
         price: "",
         duration: "",
-        image: null,
+        images: [],
       });
 
       setShowForm(false);
     } catch (err) {
       console.error("Failed to create service", err);
     }
+  };
+
+  const handleDeleteClick = (service) => {
+    setServiceToDelete(service);
+    setDeleteError(null);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDeleteService = async () => {
+    if (!provider || !serviceToDelete) return;
+    setIsDeletingService(true);
+    setDeleteError(null);
+
+    try {
+      await deleteService(provider.id, serviceToDelete.id);
+      setServices((prev) => prev.filter((item) => item.id !== serviceToDelete.id));
+      setShowDeleteModal(false);
+      setServiceToDelete(null);
+    } catch (err) {
+      console.error("Failed to delete service", err);
+      setDeleteError(err?.response?.data?.message || err?.message || "Failed to delete service. Please try again.");
+    } finally {
+      setIsDeletingService(false);
+    }
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
+    setServiceToDelete(null);
+    setDeleteError(null);
   };
 
   return (
@@ -184,7 +218,7 @@ export default function ServiceProviderServiceManagement() {
 
             <div className="form-group">
               <FiImage />
-              <input type="file" name="image" onChange={handleChange} />
+              <input type="file" name="images" onChange={handleChange} multiple accept="image/*" />
             </div>
 
             <button type="submit" className="sp-primary-btn">
@@ -197,13 +231,63 @@ export default function ServiceProviderServiceManagement() {
         <div className="sp-service-grid">
           {services.map((s) => (
             <div className="sp-service-card" key={s.id}>
-              <h3>{s.title}</h3>
+              <div className="sp-service-card-header">
+                <h3>{s.title}</h3>
+                <button
+                  type="button"
+                  className="sp-delete-btn"
+                  onClick={() => handleDeleteClick(s)}
+                >
+                  <FiTrash2 className="sp-btn-icon" />
+                  {/* <span>Delete</span> */}
+                </button>
+              </div>
               <span>{s.category}</span>
               <p>₦{s.price}</p>
               <p>{s.estimatedDuration}</p>
             </div>
           ))}
         </div>
+
+        {showDeleteModal && serviceToDelete && (
+          <div className="sp-modal-overlay" onClick={cancelDelete}>
+            <div className="sp-delete-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="sp-modal-icon">
+                <FiTrash2 />
+              </div>
+
+              <h2>Delete Service?</h2>
+
+              <p>
+                You are about to permanently delete{" "}
+                <strong>{serviceToDelete.title}</strong>. This action cannot be undone.
+              </p>
+
+              {deleteError && <div className="sp-modal-error">{deleteError}</div>}
+
+              <div className="sp-modal-actions">
+                <button
+                  type="button"
+                  className="sp-modal-cancel-btn"
+                  onClick={cancelDelete}
+                  disabled={isDeletingService}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  className="sp-modal-delete-btn"
+                  onClick={confirmDeleteService}
+                  disabled={isDeletingService}
+                >
+                  <FiTrash2 />
+                  {isDeletingService ? "Deleting..." : "Delete Service"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </ServiceProviderLayout>
   );

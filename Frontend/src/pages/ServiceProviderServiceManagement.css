@@ -211,3 +211,240 @@
     padding: 18px;
   }
 }
+
+
+/* SERVICE CARD HEADER */
+.sp-service-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* DELETE BUTTON */
+.sp-delete-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(220, 38, 38, 0.12);
+
+  background: #fff5f5;
+  color: #dc2626;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.sp-delete-btn svg {
+  font-size: 15px;
+  transition: transform 0.25s ease;
+}
+
+/* HOVER */
+.sp-delete-btn:hover {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(220, 38, 38, 0.18);
+}
+
+.sp-delete-btn:hover svg {
+  transform: scale(1.08);
+}
+
+/* ACTIVE */
+.sp-delete-btn:active {
+  transform: scale(0.97);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .sp-service-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sp-delete-btn {
+    margin-top: 6px;
+  }
+}
+
+
+
+/* DELETE CONFIRMATION MODAL */
+
+.sp-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 77, 60, 0.22);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  animation: spFadeIn 0.25s ease;
+}
+
+.sp-delete-modal {
+  width: 100%;
+  max-width: 430px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 30px 26px;
+  text-align: center;
+
+  border: 1px solid #eef2f1;
+  box-shadow: 0 25px 70px rgba(15, 77, 60, 0.22);
+
+  animation: spModalPop 0.3s ease;
+}
+
+.sp-modal-icon {
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: #fff5f5;
+  color: #dc2626;
+  font-size: 1.55rem;
+
+  box-shadow: 0 10px 24px rgba(220, 38, 38, 0.12);
+}
+
+.sp-delete-modal h2 {
+  margin: 0 0 10px;
+  color: #111827;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.sp-delete-modal p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.sp-delete-modal p strong {
+  color: #0f4d3c;
+  font-weight: 700;
+}
+
+.sp-modal-error {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #fff5f5;
+  color: #b91c1c;
+  font-size: 0.88rem;
+  font-weight: 500;
+  border: 1px solid rgba(220, 38, 38, 0.15);
+}
+
+.sp-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.sp-modal-cancel-btn,
+.sp-modal-delete-btn {
+  flex: 1;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 16px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.sp-modal-cancel-btn {
+  background: #f3f6f5;
+  color: #0f4d3c;
+  border: 1px solid #e5ecea;
+}
+
+.sp-modal-cancel-btn:hover {
+  background: #eaf3f0;
+  transform: translateY(-2px);
+}
+
+.sp-modal-delete-btn {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: #ffffff;
+  box-shadow: 0 8px 22px rgba(220, 38, 38, 0.25);
+}
+
+.sp-modal-delete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(220, 38, 38, 0.3);
+}
+
+.sp-modal-cancel-btn:disabled,
+.sp-modal-delete-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@keyframes spFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spModalPop {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 480px) {
+  .sp-delete-modal {
+    padding: 26px 20px;
+    border-radius: 20px;
+  }
+
+  .sp-modal-actions {
+    flex-direction: column;
+  }
+
+  .sp-modal-cancel-btn,
+  .sp-modal-delete-btn {
+    width: 100%;
+  }
+}

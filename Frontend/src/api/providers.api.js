@@ -22,14 +22,36 @@ export const createProvider = async (payload) => {
   return res.data;
 };
 
-export const createService = async (providerId, payload) => {
-  const res = await api.post(`/providers/${providerId}/services`, payload);
+export const createService = async (providerId, payload, files = null) => {
+  let data = payload;
+  let headers = {};
+
+  if (files && files.length > 0) {
+    const formData = new FormData();
+    Object.keys(payload).forEach(key => {
+      if (payload[key] !== null && payload[key] !== undefined) {
+        formData.append(key, payload[key]);
+      }
+    });
+    files.forEach((file, index) => {
+      formData.append('images', file);
+    });
+    data = formData;
+    headers['Content-Type'] = 'multipart/form-data';
+  }
+
+  const res = await api.post(`/providers/${providerId}/services`, data, { headers });
   return res.data.service;
 };
 
 export const getMyProvider = async () => {
   const res = await api.get('/providers/me');
   return res.data.provider;
+};
+
+export const deleteService = async (providerId, serviceId) => {
+  const res = await api.delete(`/providers/${providerId}/services/${serviceId}`);
+  return res.data;
 };
 
 export const deleteProvider = async (id) => {

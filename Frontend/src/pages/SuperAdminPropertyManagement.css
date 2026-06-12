@@ -14,7 +14,7 @@
 
 .super-admin-property-management .header h1 {
   font-size: 1.9rem;
-  color: #0F4D3C;
+  color: #0f4d3c;
   margin-bottom: 6px;
   font-weight: 700;
 }
@@ -22,6 +22,54 @@
 .super-admin-property-management .header p {
   color: #777;
   font-size: 0.95rem;
+}
+
+/* =========================
+   PAGINATION CONTROLS
+========================= */
+.super-admin-property-management .controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+
+.super-admin-property-management .bottom-controls {
+  margin-top: 32px;
+}
+
+.super-admin-property-management .nav-btn {
+  border: none;
+  background: linear-gradient(135deg, #0f4d3c, #136f57);
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.super-admin-property-management .nav-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(15, 77, 60, 0.25);
+}
+
+.super-admin-property-management .nav-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: #dbe7e3;
+  color: #6b7280;
+  box-shadow: none;
+}
+
+.super-admin-property-management .page-info {
+  font-weight: 600;
+  color: #0f4d3c;
+  background: #f3f8f6;
+  padding: 10px 16px;
+  border-radius: 12px;
 }
 
 /* =========================
@@ -52,9 +100,7 @@
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
-/* =========================
-   CARD HEADER
-========================= */
+/* CARD HEADER */
 .super-admin-property-management .property-header {
   display: flex;
   justify-content: space-between;
@@ -103,18 +149,18 @@
 
 .super-admin-property-management .detail-item svg {
   margin-right: 8px;
-  color: #0F4D3C;
+  color: #0f4d3c;
   min-width: 16px;
 }
 
 /* PRICE */
-.price {
+.super-admin-property-management .price {
   font-size: 1.05rem;
   font-weight: 700;
-  color: #0F4D3C;
+  color: #0f4d3c;
 }
 
-.price small {
+.super-admin-property-management .price small {
   font-size: 0.75rem;
   color: #888;
   margin-left: 4px;
@@ -149,7 +195,6 @@
   padding: 14px 18px 18px;
 }
 
-/* MODERN STATUS */
 .super-admin-property-management .status-badge {
   display: inline-flex;
   align-items: center;
@@ -161,22 +206,19 @@
   text-transform: capitalize;
 }
 
-/* AVAILABLE */
 .super-admin-property-management .status-badge.available {
-  background: #E9F9EF;
-  color: #1A7F4B;
+  background: #e9f9ef;
+  color: #1a7f4b;
 }
 
-/* UNAVAILABLE */
 .super-admin-property-management .status-badge.unavailable {
-  background: #FFF4E5;
-  color: #C27B3E;
+  background: #fff4e5;
+  color: #c27b3e;
 }
 
-/* PENDING */
 .super-admin-property-management .status-badge.pending {
-  background: #EEF2FF;
-  color: #4F46E5;
+  background: #eef2ff;
+  color: #4f46e5;
 }
 
 /* =========================
@@ -213,40 +255,81 @@
 }
 
 /* =========================
-   MODAL (MODERN STYLE)
+   SKELETON LOADING
+========================= */
+.super-admin-property-management .property-card.skeleton {
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.super-admin-property-management .shimmer {
+  display: inline-block;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 0%,
+    #ededed 50%,
+    #f0f0f0 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+
+.super-admin-property-management .shimmer-title {
+  width: 80%;
+  height: 18px;
+  margin-bottom: 10px;
+}
+
+.super-admin-property-management .shimmer-row {
+  width: 100%;
+  height: 12px;
+  margin-bottom: 8px;
+}
+
+/* =========================
+   MODAL
 ========================= */
 .super-admin-property-management .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
+  background: rgba(15, 77, 60, 0.22);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 20px;
 }
 
 .super-admin-property-management .modal {
-  background: #fff;
-  border-radius: 16px;
+  background: #ffffff;
+  border-radius: 20px;
   padding: 28px;
-  max-width: 420px;
-  width: 90%;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  max-width: 430px;
+  width: 100%;
+  box-shadow: 0 25px 70px rgba(15, 77, 60, 0.22);
   animation: fadeIn 0.25s ease;
+  border: 1px solid #eef2f1;
 }
 
 .super-admin-property-management .modal h2 {
   margin-bottom: 10px;
-  font-size: 1.3rem;
-  color: #222;
+  font-size: 1.35rem;
+  color: #111827;
+  font-weight: 700;
 }
 
 .super-admin-property-management .modal p {
   color: #666;
   font-size: 0.95rem;
   margin-bottom: 24px;
-  line-height: 1.5;
+  line-height: 1.6;
+}
+
+.super-admin-property-management .modal p strong {
+  color: #0f4d3c;
 }
 
 /* MODAL BUTTONS */
@@ -257,32 +340,34 @@
 }
 
 .super-admin-property-management .modal-actions button {
-  padding: 10px 18px;
-  border-radius: 8px;
+  padding: 11px 18px;
+  border-radius: 12px;
   font-weight: 600;
   border: none;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: all 0.25s ease;
 }
 
-/* CANCEL */
 .super-admin-property-management .cancel-btn {
-  background: #f2f2f2;
-  color: #555;
+  background: #f3f6f5;
+  color: #0f4d3c;
+  border: 1px solid #e5ecea;
 }
 
-.super-admin-property-management .cancel-btn:hover {
-  background: #e5e5e5;
+.super-admin-property-management .cancel-btn:hover:not(:disabled) {
+  background: #eaf3f0;
+  transform: translateY(-2px);
 }
 
-/* DELETE */
 .super-admin-property-management .delete-confirm-btn {
-  background: #e74c3c;
-  color: white;
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: #ffffff;
+  box-shadow: 0 8px 22px rgba(220, 38, 38, 0.25);
 }
 
-.super-admin-property-management .delete-confirm-btn:hover {
-  background: #c0392b;
+.super-admin-property-management .delete-confirm-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(220, 38, 38, 0.3);
 }
 
 .super-admin-property-management button:disabled {
@@ -291,30 +376,29 @@
 }
 
 /* =========================
-   ANIMATION
+   ANIMATIONS
 ========================= */
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(10px) scale(0.98);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
 
-.super-admin-property-management .controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 18px; }
-.super-admin-property-management .nav-btn { background: #3498db; color: white; border: none; border-radius: 6px; padding: 8px 14px; cursor: pointer; font-weight: 600; }
-.super-admin-property-management .nav-btn:disabled { background: #d6dcdf; cursor: not-allowed; }
-.super-admin-property-management .page-info { font-weight: 600; color: #34495e; }
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
 
-.property-card.skeleton { opacity: 0.65; pointer-events: none; }
-.shimmer { display: inline-block; border-radius: 6px; background: linear-gradient(90deg, #f0f0f0 0%, #ededed 50%, #f0f0f0 100%); background-size: 200% 100%; animation: shimmer 1.2s infinite; }
-.shimmer-title { width: 80%; height: 18px; margin-bottom: 10px; }
-.shimmer-row { width: 100%; height: 12px; margin-bottom: 8px; }
-
-@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  100% {
+    background-position: 200% 0;
+  }
+}
 
 /* =========================
    RESPONSIVE
@@ -329,7 +413,7 @@
   }
 
   .super-admin-property-management .modal {
-    padding: 20px;
+    padding: 22px;
   }
 
   .super-admin-property-management .modal-actions {
@@ -338,5 +422,17 @@
 
   .super-admin-property-management .modal-actions button {
     width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .super-admin-property-management .controls {
+    gap: 10px;
+  }
+
+  .super-admin-property-management .nav-btn,
+  .super-admin-property-management .page-info {
+    width: 100%;
+    text-align: center;
   }
 }

@@ -14,6 +14,7 @@ import {
 import "./ProviderDetail.css";
 import { getProviderBySlug } from "../api/providers.api";
 import { startConversation, sendMessage, getMessages } from "../api/messages.api";
+import { optimizeCloudinaryUrl } from "../utils/imageUtils";
 
 export default function ProviderDetail() {
   const { slug } = useParams();
@@ -238,10 +239,17 @@ export default function ProviderDetail() {
             <div className="service-card" key={service.id}>
               <div className="service-image">
                 {service.images?.length ? (
-                  <img src={service.images[0]} alt={service.title} />
-                ) : (
-                  <div className="placeholder-image"></div>
-                )}
+                  <img 
+                    src={optimizeCloudinaryUrl(service.images[0])} 
+                    alt={service.title} 
+                    onError={(e) => {
+                      console.error('Image failed to load:', service.images[0]);
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'block';
+                    }}
+                  />
+                ) : null}
+                <div className="placeholder-image" style={{ display: service.images?.length ? 'none' : 'block' }}></div>
               </div>
 
               <div className="service-content">
