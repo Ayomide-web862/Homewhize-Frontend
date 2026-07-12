@@ -1,15 +1,29 @@
 import React, { useEffect, useState } from "react";
 import SuperAdminLayout from "../components/Super-AdminLayout";
 import "./SuperAdminCommunityPage.css";
-import { FiImage, FiSend, FiMessageCircle } from "react-icons/fi";
+import { FiImage, FiSend, FiMessageCircle, FiTrash2 } from "react-icons/fi";
 
 export default function SuperAdminCommunityPage() {
   const [postText, setPostText] = useState("");
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [deletingPostId, setDeletingPostId] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [pendingDeletePostId, setPendingDeletePostId] = useState(null);
 
-  const token = localStorage.getItem("token");
+  const getCurrentUserId = () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return null;
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return payload.id ?? payload.userId ?? null;
+    } catch (err) {
+      return null;
+    }
+  };
+
+  const currentUserId = getCurrentUserId();
 
   useEffect(() => {
     fetchPosts();
@@ -52,6 +66,33 @@ export default function SuperAdminCommunityPage() {
     fetchPosts();
   };
 
+  const openDeleteModal = (postId) => {
+    setPendingDeletePostId(postId);
+    setShowDeleteModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setShowDeleteModal(false);
+    setPendingDeletePostId(null);
+  };
+
+  const handleDeletePost = async () => {
+    if (!pendingDeletePostId) return;
+
+    setDeletingPostId(pendingDeletePostId);
+
+    try {
+      const api = (await import("../api/axios")).default;
+      await api.delete(`/community/${pendingDeletePostId}`);
+      setPosts((prev) => prev.filter((post) => post.id !== pendingDeletePostId));
+    } catch (err) {
+      console.error("Delete post failed:", err);
+    } finally {
+      setDeletingPostId(null);
+      closeDeleteModal();
+    }
+  };
+
   return (
     <SuperAdminLayout>
       <div className="community-container">
@@ -89,6 +130,18 @@ export default function SuperAdminCommunityPage() {
         <div className="posts-list">
           {posts.map((post) => (
             <div className="community-card" key={post.id}>
+              <div className="post-card-actions">
+                {currentUserId && Number(post.user_id) === Number(currentUserId) && (
+                  <button
+                    className="delete-post-btn"
+                    onClick={() => openDeleteModal(post.id)}
+                    disabled={deletingPostId === post.id}
+                  >
+                    <FiTrash2 /> {deletingPostId === post.id ? "Deleting..." : "Delete"}
+                  </button>
+                )}
+              </div>
+
               <p className="post-text">{post.content}</p>
 
               {post.images?.length > 0 && (
@@ -107,6 +160,23 @@ export default function SuperAdminCommunityPage() {
             </div>
           ))}
         </div>
+
+        {showDeleteModal && (
+          <div className="delete-modal-overlay" onClick={closeDeleteModal}>
+            <div className="delete-modal" onClick={(e) => e.stopPropagation()}>
+              <h3>Delete post?</h3>
+              <p>This action cannot be undone.</p>
+              <div className="delete-modal-actions">
+                <button className="cancel-delete-btn" onClick={closeDeleteModal}>
+                  Cancel
+                </button>
+                <button className="confirm-delete-btn" onClick={handleDeletePost}>
+                  {deletingPostId ? "Deleting..." : "Delete"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </SuperAdminLayout>
   );

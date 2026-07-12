@@ -216,6 +216,25 @@
   background: #eef4f1;
 }
 
+/* DELETE BUTTON */
+.delete-post-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #ffb3b3;
+  background: #fff2f0;
+  color: #c0392b;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.delete-post-btn:hover {
+  background: #ffe8e2;
+}
+
 /* SHOW MORE COMMENTS BUTTON */
 .show-comments-btn {
   background: transparent;

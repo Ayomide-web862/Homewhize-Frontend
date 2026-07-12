@@ -1,12 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { FaHeart, FaRegHeart} from "react-icons/fa";
-import {FiMessageCircle } from "react-icons/fi";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FiMessageCircle, FiTrash2 } from "react-icons/fi";
 import Navbar from "../components/Navbar";
 import "./CommunityPage.css";
 
 export default function CommunityPage() {
   const [posts, setPosts] = useState([]);
   const [commentText, setCommentText] = useState({});
+
+  const getCurrentUserId = () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return null;
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return payload.id ?? payload.userId ?? null;
+    } catch (err) {
+      return null;
+    }
+  };
+
+  const currentUserId = getCurrentUserId();
 
   useEffect(() => {
     fetchPosts();
@@ -35,8 +48,6 @@ export default function CommunityPage() {
   const handleAddComment = async (postId) => {
     if (!commentText[postId]) return;
 
-    const token = localStorage.getItem("token");
-
     try {
       const api = (await import("../api/axios")).default;
       await api.post(`/community/${postId}/comments`, { comment: commentText[postId] });
@@ -49,8 +60,6 @@ export default function CommunityPage() {
   };
 
   const likePost = async (postId) => {
-  const token = localStorage.getItem("token");
-
   try {
     const api = (await import("../api/axios")).default;
     const { data } = await api.post(`/community/${postId}/like`);
@@ -82,6 +91,17 @@ const loadMore = async (postId) => {
   );
 };
 
+const handleDeletePost = async (postId) => {
+  if (!window.confirm("Delete this post?")) return;
+
+  try {
+    const api = (await import("../api/axios")).default;
+    await api.delete(`/community/${postId}`);
+    setPosts((prev) => prev.filter((post) => post.id !== postId));
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   return (
     <div className="community-page">
@@ -143,6 +163,15 @@ const loadMore = async (postId) => {
                   {post.liked ? <FaHeart /> : <FaRegHeart />}
                   <span>{post.likes}</span>
                 </button>
+
+                {currentUserId && Number(post.user_id) === Number(currentUserId) && (
+                  <button
+                    className="delete-post-btn"
+                    onClick={() => handleDeletePost(post.id)}
+                  >
+                    <FiTrash2 /> Delete
+                  </button>
+                )}
 
                 <button
                   className="show-comments-btn"
