@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FiMessageCircle, FiTrash2 } from "react-icons/fi";
 import Navbar from "../components/Navbar";
+import MediaGallery from "../components/MediaGallery";
 import "./CommunityPage.css";
 
 export default function CommunityPage() {
@@ -119,13 +120,7 @@ const handleDeletePost = async (postId) => {
 
 
               {/* IMAGES */}
-              {post.images?.length > 0 && (
-                <div className="post-images">
-                  {post.images.map((img, i) => (
-                    <img key={i} src={img} alt="post" />
-                  ))}
-                </div>
-              )}
+              {post.images?.length > 0 && <MediaGallery images={post.images} className="community-media-gallery" />}
 
               {/* COMMENTS */}
               <div className="comments-section">

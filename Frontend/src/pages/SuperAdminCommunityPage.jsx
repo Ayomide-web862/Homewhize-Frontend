@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SuperAdminLayout from "../components/Super-AdminLayout";
+import MediaGallery from "../components/MediaGallery";
 import "./SuperAdminCommunityPage.css";
 import { FiImage, FiSend, FiMessageCircle, FiTrash2 } from "react-icons/fi";
 
@@ -11,6 +12,7 @@ export default function SuperAdminCommunityPage() {
   const [deletingPostId, setDeletingPostId] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [pendingDeletePostId, setPendingDeletePostId] = useState(null);
+  const [isPosting, setIsPosting] = useState(false);
 
   const getCurrentUserId = () => {
     try {
@@ -47,7 +49,10 @@ export default function SuperAdminCommunityPage() {
   };
 
   const handlePostSubmit = async () => {
-    if (!postText && images.length === 0) return;
+    if ((!postText || postText.trim() === "") && images.length === 0) return;
+    if (isPosting) return;
+
+    setIsPosting(true);
 
     const formData = new FormData();
     formData.append("content", postText);
@@ -58,12 +63,13 @@ export default function SuperAdminCommunityPage() {
       await api.post("/community", formData);
     } catch (err) {
       console.error("Post submission failed:", err);
+    } finally {
+      setIsPosting(false);
+      setPostText("");
+      setImages([]);
+      setImagePreviews([]);
+      fetchPosts();
     }
-
-    setPostText("");
-    setImages([]);
-    setImagePreviews([]);
-    fetchPosts();
   };
 
   const openDeleteModal = (postId) => {
@@ -120,8 +126,18 @@ export default function SuperAdminCommunityPage() {
               <input type="file" multiple hidden onChange={handleImageChange} />
             </label>
 
-            <button className="post-btn" onClick={handlePostSubmit}>
-              <FiSend /> Post
+            <button className="post-btn" onClick={handlePostSubmit} disabled={isPosting}>
+              {isPosting ? (
+                <>
+                  <span className="post-loading-spinner" />
+                  <span>Posting...</span>
+                </>
+              ) : (
+                <>
+                  <FiSend />
+                  <span>Post</span>
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -144,13 +160,7 @@ export default function SuperAdminCommunityPage() {
 
               <p className="post-text">{post.content}</p>
 
-              {post.images?.length > 0 && (
-                <div className="post-images">
-                  {post.images.map((img, i) => (
-                    <img key={i} src={img} alt="post" />
-                  ))}
-                </div>
-              )}
+              {post.images?.length > 0 && <MediaGallery images={post.images} className="community-media-gallery" />}
 
               <div className="comments-section">
                 <h4>
@@ -177,6 +187,7 @@ export default function SuperAdminCommunityPage() {
             </div>
           </div>
         )}
+
       </div>
     </SuperAdminLayout>
   );
